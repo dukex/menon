@@ -24,6 +24,14 @@ class CoursesControllerTest < ActionController::TestCase
     assert_redirected_to course_path(assigns(:course))
   end
 
+  test "should not create course with name" do
+    assert_no_difference('Course.count') do
+      post :create, course: { name: nil }
+    end
+
+    assert_template :new
+  end
+
   test "should show course" do
     get :show, id: @course
     assert_response :success
