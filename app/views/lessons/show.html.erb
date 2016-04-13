@@ -22,8 +22,7 @@
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  var player, done;
-
+  var player;
   function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
       height: '390',
@@ -38,25 +37,41 @@
   }
 
   function onPlayerReady(event) {
-    done = false;
-    // event.target.playVideo();
+    event.target.playVideo();
   }
 
   function isActive(event) {
-    return event && event.data && event.data == YT.PlayerState.PLAYING && !done;
+    return event && event.data && event.data == YT.PlayerState.PLAYING;
   }
 
   function onPlayerStateChange(event) {
-    if (isActive(event)) {
-      done = true;
-      track(event);
+    track(event);
+    if(event.data == YT.PlayerState.ENDED) {
+      debugger;
+      // TODO: finish
     }
   }
 
   function track(event) {
+    var scheduleTrack = function() {
+      setTimeout(function(){ track(event) }, 2000);
+    }
+
     if(isActive(event)) {
       console.log("send time", player.getCurrentTime());
+      var statusURL = "<%= course_lesson_status_index_path(@course, @lesson) %>"
+
+      fetch(statusURL, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          time: player.getCurrentTime()
+        })
+      }).then(scheduleTrack, scheduleTrack);
     }
-    setTimeout(function(){ track(event) }, 2000);
   }
 </script>

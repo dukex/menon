@@ -6,7 +6,9 @@ Rails.application.routes.draw do
       post :import_youtube, path: "/import/youtube"
     end
 
-    resources :lessons, only: [:show, :destroy]
+    resources :lessons, only: [:show, :destroy] do
+      resources :status, only: [:create]
+    end
   end
 
   root 'courses#index'
