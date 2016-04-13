@@ -1,6 +1,20 @@
-<div id="player"></div>
+<div class="container-fluid" id="lesson">
+  <div class="col-md-3" id="sidebar">
+    <h1><%= @course.name %></h1>
+    <div class="course-progress"></div>
+    <ul class="course-lessons">
+      <% @course.lessons.each do |lesson| %>
+        <li><%= link_to lesson.name, course_lesson_path(@course, lesson) %></li>
+      <% end %>
+    </ul>
+  </div>
 
-<%= link_to "Next", @course %>
+  <div class="col-md-9">
+    <h2><%= @lesson.name %></h2>
+    <div><%= @lesson.description %></div>
+    <div id="player"></div>
+  </div>
+</div>
 
 <script>
   var tag = document.createElement('script');
@@ -25,7 +39,7 @@
 
   function onPlayerReady(event) {
     done = false;
-    event.target.playVideo();
+    // event.target.playVideo();
   }
 
   function isActive(event) {
