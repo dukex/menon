@@ -58,3 +58,4 @@ end
 gem 'devise'
 gem 'simple_form'
 gem 'yt', '~> 0.25.6'
+gem 'bootstrap-sass', '~> 3.3.6'
