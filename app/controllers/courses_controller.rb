@@ -62,7 +62,8 @@ class CoursesController < ApplicationController
                         description: item.description,
                         thumbnail_url: item.thumbnail_url(:high),
                         published_at: item.published_at,
-                        provider_id: item.video.id
+                        provider_id: item.video.id,
+                        position: item.position
     end
 
      redirect_to @course
