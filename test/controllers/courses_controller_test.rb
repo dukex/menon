@@ -54,4 +54,16 @@ class CoursesControllerTest < ActionController::TestCase
 
     assert_redirected_to courses_path
   end
+
+  test "should import youtube playlist" do
+    VCR.use_cassette("youtube-playlist") do
+      playlist_url = "https://www.youtube.com/playlist?list=PLSKbCQY095R4jp6PoFulCDLYIzzdbD1DI"
+
+      assert_difference('@course.lessons.count', 123) do
+        post :import_youtube, url: playlist_url, id: @course.id
+      end
+
+      assert_redirected_to course_path(@course)
+    end
+  end
 end

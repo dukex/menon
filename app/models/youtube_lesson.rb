@@ -1,0 +1,2 @@
+class YoutubeLesson < Lesson
+end

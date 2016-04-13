@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :import_youtube]
 
   def index
     @courses = Course.all
@@ -48,6 +48,26 @@ class CoursesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def import_youtube
+    playlist = Yt::Playlist.new url:  params[:url]
+    # TODO: course thumb playlist.thumbnail_url
+    # TODO: course 'by' playlist.channel_title
+    # TODO: course tags playlist.tags
+
+    @course.lessons.delete_all
+
+    @course.lessons = playlist.playlist_items.map do |item|
+      YoutubeLesson.new name: item.title,
+                        description: item.description,
+                        thumbnail_url: item.thumbnail_url(:high),
+                        published_at: item.published_at,
+                        provider_id: item.video.id
+    end
+
+     redirect_to @course
+  end
+
 
   private
     def set_course
