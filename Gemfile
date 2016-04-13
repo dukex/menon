@@ -53,5 +53,6 @@ group :test do
   gem 'database_cleaner'
 end
 
-
 gem 'devise'
+gem 'simple_form'
+gem 'yt', '~> 0.25.6'
