@@ -10,9 +10,11 @@
   </div>
 
   <div class="col-md-9">
-    <h2><%= @lesson.name %></h2>
-    <div><%= @lesson.description %></div>
-    <div id="player"></div>
+    <div class="lesson-container">
+      <h2><%= @lesson.name %></h2>
+      <div id="player"></div>
+      <div class="description"><%= @lesson.description %></div>
+    </div>
   </div>
 </div>
 
@@ -25,8 +27,8 @@
   var player;
   function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-      height: '390',
-      width: '640',
+      height: document.getElementById("player").clientWidth * 0.6,
+      width: '100%',
       playerVars: { },
       videoId: '<%= @lesson.provider_id %>',
       events: {
