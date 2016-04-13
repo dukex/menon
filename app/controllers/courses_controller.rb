@@ -1,5 +1,7 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :import_youtube]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_public_course, only: :show
+  before_action :set_course, only: [:edit, :update, :destroy, :import_youtube]
 
   def index
     @courses = Course.all
@@ -16,7 +18,7 @@ class CoursesController < ApplicationController
   end
 
   def create
-    @course = Course.new(course_params)
+    @course = current_user.courses.new(course_params)
 
     respond_to do |format|
       if @course.save
@@ -71,8 +73,12 @@ class CoursesController < ApplicationController
 
 
   private
-    def set_course
+    def set_public_course
       @course = Course.find(params[:id])
+    end
+
+    def set_course
+      @course = current_user.courses.find params[:id]
     end
 
     def course_params

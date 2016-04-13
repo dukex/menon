@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+
   resources :courses do
     member do
       post :import_youtube, path: "/import/youtube"
