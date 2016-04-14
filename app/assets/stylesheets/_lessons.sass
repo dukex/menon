@@ -22,12 +22,15 @@ body
     margin: 0
     padding: 0
     list-style: none
-    font-weight: 600
-    border-left: 2px solid #CCC
     li
       display: block
       padding: 25px 60px 0
       font-size: 13px
+      &.finished a
+        color: #AAA
+        font-weight: 500
+      &.current a
+        font-weight: 600
       a
         color: #FFF
 

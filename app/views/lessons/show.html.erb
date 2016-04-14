@@ -1,10 +1,15 @@
 <div class="container-fluid" id="lesson">
   <div class="col-md-3" id="sidebar">
     <h1><%= @course.name %></h1>
-    <div class="course-progress"></div>
+    <div class="course-progress">
+      40%
+    </div>
     <ul class="course-lessons">
+
       <% @course.lessons.each do |lesson| %>
-        <li><%= link_to lesson.name, course_lesson_path(@course, lesson) %></li>
+        <!-- fix it: use helper method to create state class -->
+        <li class="<%= lesson.status_for(current_user).finished ? 'finished' : '' %> <%= lesson.id == @lesson.id ? 'current' : '' %>">
+        <%= link_to lesson.name, course_lesson_path(@course, lesson) %></li>
       <% end %>
     </ul>
   </div>
@@ -24,56 +29,11 @@
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  var player;
   function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: document.getElementById("player").clientWidth * 0.6,
-      width: '100%',
-      playerVars: { },
-      videoId: '<%= @lesson.provider_id %>',
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
-
-  function onPlayerReady(event) {
-    event.target.playVideo();
-  }
-
-  function isActive(event) {
-    return event && event.data && event.data == YT.PlayerState.PLAYING;
-  }
-
-  function onPlayerStateChange(event) {
-    track(event);
-    if(event.data == YT.PlayerState.ENDED) {
-      debugger;
-      // TODO: finish
-    }
-  }
-
-  function track(event) {
-    var scheduleTrack = function() {
-      setTimeout(function(){ track(event) }, 2000);
-    }
-
-    if(isActive(event)) {
-      console.log("send time", player.getCurrentTime());
-      var statusURL = "<%= course_lesson_status_index_path(@course, @lesson) %>"
-
-      fetch(statusURL, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          time: player.getCurrentTime()
-        })
-      }).then(scheduleTrack, scheduleTrack);
-    }
+    setupPlayer(
+      "<%= @lesson.provider_id %>",
+      "<%= course_lesson_status_index_path(@course, @lesson) %>",
+      "<%= finish_course_lesson_status_index_path(@course, @lesson) %>"
+    )
   }
 </script>
