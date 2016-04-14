@@ -2,7 +2,7 @@ class Lesson < ActiveRecord::Base
   belongs_to :course
 
   def status_for(user)
-    LessonStatus.first_or_create user: user, lesson: self
+    LessonStatus.where(user_id: user.id, lesson_id: id).first_or_create!
   end
 
   def finish(user)

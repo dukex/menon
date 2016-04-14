@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20160414041504) do
     t.integer  "lesson_id"
     t.integer  "user_id"
     t.float    "time"
-    t.boolean  "finished"
+    t.boolean  "finished", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
