@@ -2,7 +2,9 @@ require 'test_helper'
 
 class LessonsControllerTest < ActionController::TestCase
   setup do
-    @lesson = create(:lesson)
+    @user = create(:user)
+    sign_in @user
+    @lesson = create(:lesson, course: create(:course, owner: @user))
   end
 
   test "should show lesson" do

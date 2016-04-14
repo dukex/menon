@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_public_course, only: :show
-  before_action :set_course, only: [:edit, :update, :destroy, :import_youtube]
+  before_action :set_course, only: [:edit, :update, :destroy, :import_from_youtube]
 
   def index
     @courses = Course.all
@@ -18,57 +18,42 @@ class CoursesController < ApplicationController
   end
 
   def create
-    @course = current_user.courses.new(course_params)
-
-    respond_to do |format|
-      if @course.save
-        format.html { redirect_to @course, notice: 'Course was successfully created.' }
-        format.json { render :show, status: :created, location: @course }
-      else
-        format.html { render :new }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
-      end
-    end
+    @course = current_user.courses.create course_params
+    respond_with @course
   end
 
   def update
-    respond_to do |format|
-      if @course.update(course_params)
-        format.html { redirect_to @course, notice: 'Course was successfully updated.' }
-        format.json { render :show, status: :ok, location: @course }
-      else
-        format.html { render :edit }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
-      end
-    end
+    @course.update(course_params)
+    respond_with @course
   end
 
   def destroy
     @course.destroy
-    respond_to do |format|
-      format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    respond_with @course
   end
 
-  def import_youtube
-    playlist = Yt::Playlist.new url:  params[:url]
+  def import_from_youtube
+    playlist = Yt::Playlist.new url: params[:url]
     # TODO: course thumb playlist.thumbnail_url
     # TODO: course 'by' playlist.channel_title
     # TODO: course tags playlist.tags
 
-    @course.lessons.delete_all
+    @course.lessons.map(&:destroy)
 
-    @course.lessons = playlist.playlist_items.map do |item|
-      YoutubeLesson.new name: item.title,
-                        description: item.description,
-                        thumbnail_url: item.thumbnail_url(:high),
-                        published_at: item.published_at,
-                        provider_id: item.video.id,
-                        position: item.position
+    lessons = playlist.playlist_items.map do |item|
+      { name: item.title,
+        description: item.description,
+        thumbnail_url: item.thumbnail_url(:high),
+        published_at: item.published_at,
+        provider_id: item.video.id,
+        position: item.position,
+        duration: item.video.duration,
+        course_id: @course.id }
     end
 
-     redirect_to @course
+    YoutubeLesson.create lessons
+
+    redirect_to @course
   end
 
 

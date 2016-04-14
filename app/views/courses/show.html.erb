@@ -11,7 +11,7 @@
   <% end %>
 </ul>
 
-<%= form_tag import_youtube_course_path(@course), method: :post do |f| %>
+<%= form_tag import_from_youtube_course_path(@course), method: :post do |f| %>
   <h3>Import youtube playlist</h3>
   <%= text_field_tag :url %>
   <%= submit_tag :import %>

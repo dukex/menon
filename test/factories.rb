@@ -7,4 +7,10 @@ FactoryGirl.define do
     course
     sequence(:name) { |n| "Lesson #{n}" }
   end
+
+  factory :user do
+    sequence(:email) { |n| "email#{n}@email.com" }
+    password 12345678
+    confirmed_at Date.today
+  end
 end

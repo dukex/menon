@@ -1,26 +1,18 @@
 class LessonsController < ApplicationController
   before_action :authenticate_user!
 
-  before_action :set_course
-  before_action :set_lesson
-
   respond_to :html
 
   def show
+    @course = Course.find params[:course_id]
+    @lesson = @course.lessons.find params[:id]
     respond_with @lesson
   end
 
   def destroy
-    @lesson.destroy
-    redirect_to @course
+    course = current_user.courses.find params[:course_id]
+    lesson = course.lessons.find params[:id]
+    lesson.destroy
+    redirect_to course
   end
-
-  private
-    def set_course
-      @course = Course.find(params[:course_id])
-    end
-
-    def set_lesson
-      @lesson = @course.lessons.find(params[:id])
-    end
 end

@@ -9,11 +9,14 @@ class StatusController < ApplicationController
   respond_to :json
 
   def create
-    @status = LessonStatus.first_or_create user_id: current_user.id,
-                                           lesson_id: @lesson.id
-    @status.time = params[:status][:time]
-    @status.save
-    head :created
+    @status = @lesson.status_for(current_user)
+    @status.update status_params
+    head :no_content
+  end
+
+  def finish
+    @lesson.finish(current_user)
+    head :no_content
   end
 
   private
@@ -23,5 +26,9 @@ class StatusController < ApplicationController
 
     def set_lesson
       @lesson = @course.lessons.find(params[:lesson_id])
+    end
+
+    def status_params
+      params.require(:status).permit(:time, :finished)
     end
 end

@@ -3,11 +3,15 @@ Rails.application.routes.draw do
 
   resources :courses do
     member do
-      post :import_youtube, path: "/import/youtube"
+      post :import_from_youtube, path: "/import/youtube"
     end
 
     resources :lessons, only: [:show, :destroy] do
-      resources :status, only: [:create]
+      resources :status, only: [:create] do
+        collection do
+          post :finish, as: :finish
+        end
+      end
     end
   end
 
