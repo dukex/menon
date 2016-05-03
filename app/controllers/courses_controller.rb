@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_public_course, only: :show
-  before_action :set_course, only: [:edit, :update, :destroy, :import_from_youtube]
+  before_action :set_course, only: [:edit, :update, :destroy]
 
   def index
     @courses = Course.all
@@ -33,27 +33,8 @@ class CoursesController < ApplicationController
   end
 
   def import_from_youtube
-    playlist = Yt::Playlist.new url: params[:url]
-    # TODO: course thumb playlist.thumbnail_url
-    # TODO: course 'by' playlist.channel_title
-    # TODO: course tags playlist.tags
-
-    @course.lessons.map(&:destroy)
-
-    lessons = playlist.playlist_items.map do |item|
-      { name: item.title,
-        description: item.description,
-        thumbnail_url: item.thumbnail_url(:high),
-        published_at: item.published_at,
-        provider_id: item.video.id,
-        position: item.position,
-        duration: item.video.duration,
-        course_id: @course.id }
-    end
-
-    YoutubeLesson.create lessons
-
-    redirect_to @course
+    @course = Course.import_from_youtube params[:url], current_user
+    respond_with @course
   end
 
 

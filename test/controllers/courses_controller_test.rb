@@ -120,14 +120,17 @@ class CoursesControllerTest < ActionController::TestCase
 
   test "should import youtube playlist" do
     sign_in @user
-    @course = create(:course, owner: @user)
+    # @course = create(:course, owner: @user)
 
-    VCR.use_cassette("youtube-playlist") do
+
+    VCR.use_cassette("youtube-playlist", match_requests_on: :path) do
       playlist_url = "https://www.youtube.com/playlist?list=PLSKbCQY095R4jp6PoFulCDLYIzzdbD1DI"
 
-      assert_difference('@course.lessons.count', 123) do
-        post :import_from_youtube, url: playlist_url, id: @course.id
+      assert_difference('Course.count') do
+        post :import_from_youtube, url: playlist_url
       end
+
+      assert_equal @course.owner, @user
 
       @lesson = @course.lessons.first
       assert_equal @lesson.name, 'Día 2 (vídeo 1) - La Función Empresarial: Introducción'

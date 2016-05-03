@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :courses do
-    member do
+    collection do
       post :import_from_youtube, path: "/import/youtube"
     end
 
