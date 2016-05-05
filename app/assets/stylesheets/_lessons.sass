@@ -1,48 +1,60 @@
-body
-  font-family: 'Open Sans', sans-serif
+body.lessons
 
-#sidebar
-  padding: 0
-
-  h1
+  #content
     margin: 0
-    background: #FA7252
-    color: #FFF
-    line-height: 1.5
-    font-size: 30px
-    padding: 40px 30px
-    font-weight: 300
 
-  .course-progress
-    background: #f16645
-    padding: 20px
-
-  .course-lessons
-    background: #313D3B
-    margin: 0
+  #sidebar
+    background: $sidebar-background
     padding: 0
-    list-style: none
-    li
-      display: block
-      padding: 25px 60px 0
-      font-size: 13px
-      &.finished a
-        color: #AAA
-        font-weight: 500
-      &.current a
-        font-weight: 600
-      a
-        color: #FFF
+
+    h1
+      margin: 0
+      color: #FFF
+      line-height: 1.5
+      font-size: 30px
+      padding: 25px
+      font-weight: 300
+    .course-progress
+      background: darken($sidebar-background, 5%)
+      padding: 15px
+      color: #CCC
+      text-align: center
+      font-size: 21px
+      position: relative
+      .bar
+        background: #418A37 // darken($sidebar-background, 10%)
+        position: absolute
+        top: 0
+        left: 0
+        bottom: 0
+      span
+        position: relative
+
+    .course-lessons
+      margin: 0
+      padding: 0
+      list-style: none
+      li
+        display: block
+        padding: 15px 40px
+        font-size: 13px
+        &.finished a
+          color: #AAA
+          font-weight: 500
+        &.current a
+          font-weight: 600
+        a
+          color: #FFF
 
 .lesson-container
-  padding: 10px 20px
-  h2
-    font-weight: 800
-    margin-bottom: 10px
-    border-bottom: 2px solid #ECF0F0
-    padding-bottom: 15px
-  .description
-    padding: 30px 20px 20px
-  #player
-    margin: 0 auto
-    margin-top: 20px
+//   padding: 10px 20px
+//   h2
+//     font-weight: 800
+//     margin-bottom: 10px
+//     border-bottom: 2px solid #ECF0F0
+//     padding-bottom: 15px
+//   .description
+//     padding: 30px 20px 20px
+//   #player
+//     margin: 0 auto
+//     margin-top: 20px

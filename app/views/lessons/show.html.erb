@@ -2,23 +2,27 @@
   <div class="col-md-3" id="sidebar">
     <h1><%= @course.name %></h1>
     <div class="course-progress">
-      40%
+      <div class="bar"></div>
+      <span><%= course_progress_for(current_user, @course) %></span>
     </div>
     <ul class="course-lessons">
-
       <% @course.lessons.each do |lesson| %>
         <!-- fix it: use helper method to create state class -->
-        <li class="<%= lesson.status_for(current_user).finished ? 'finished' : '' %> <%= lesson.id == @lesson.id ? 'current' : '' %>">
-        <%= link_to lesson.name, course_lesson_path(@course, lesson) %></li>
+
+        <li class="<%= lesson_status_class_for(current_user, lesson) %>">
+          <%= link_to lesson.name, course_lesson_path(@course, lesson) %>
+        </li>
       <% end %>
     </ul>
   </div>
 
   <div class="col-md-9">
     <div class="lesson-container">
-      <h2><%= @lesson.name %></h2>
-      <div id="player"></div>
-      <div class="description"><%= @lesson.description %></div>
+      <div class="col-md-12">
+        <h2><%= @lesson.name %></h2>
+        <div id="player"></div>
+        <div class="description"><%= @lesson.description %></div>
+      </div>
     </div>
   </div>
 </div>

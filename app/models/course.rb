@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   has_many :lessons, -> { order('position ASC') }, dependent: :destroy
+  has_many :statuses, class_name: 'LessonStatus', through: :lessons
 
   belongs_to :owner, class_name: "User"
 
@@ -33,5 +34,9 @@ class Course < ActiveRecord::Base
     ensure
       return course
     end
+  end
+
+  def progress_for(user)
+    (statuses.finished.where(user_id: user.id).count*100) / lessons.count
   end
 end

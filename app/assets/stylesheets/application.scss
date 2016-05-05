@@ -1,6 +1,8 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+$logo-color: #344563;
+$sidebar-background: $logo-color;
 
 @import "lessons";
 
