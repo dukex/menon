@@ -2,15 +2,23 @@ _tracker = null
 player = null
 
 window.setupPlayer = (videoId, statusURL, finishURL)->
-  player = new YT.Player 'player',
-    height: document.getElementById("player").clientWidth * 0.6
-    width: '100%'
-    videoId: videoId
-    events:
-      'onReady': ready,
-      'onStateChange': state(statusURL, finishURL)
+  width = $('.lesson-container').width()-10
+  height = (width * 9) / 16
+  try
+    player = new YT.Player 'player',
+      height: height
+      width: width
+      videoId: videoId
+      events:
+        'onReady': ready,
+        'onStateChange': state(statusURL, finishURL)
+  catch
+    window.location.reload()
 
-ready = (e)-> e.target.playVideo()
+
+ready = (e)->
+  $("#player").affix offset: top: 80
+  e.target.playVideo()
 
 state = (statusURL, finishURL)->
   (e)->

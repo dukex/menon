@@ -25,6 +25,4 @@ $(document).on('ready page:load', function(event) {
 
   var progress = $('.course-progress').text();
   $('.course-progress .bar').css("width", progress);
-
-  $('.lesson-container').affix();
 });
