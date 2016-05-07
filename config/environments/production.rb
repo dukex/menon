@@ -79,7 +79,7 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'menon.herokuapp.com', port: 80 }
 
-  config.smtp_settings = {
+  config.action_mailer.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
     :port           => '587',
     :authentication => :plain,
