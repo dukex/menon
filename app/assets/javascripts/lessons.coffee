@@ -4,22 +4,27 @@ player = null
 $(document).on 'page:before-unload', -> clearTrack()
 
 window.setupPlayer = (videoId, statusURL, finishURL)->
-  width = $('.lesson-container').width()-10
+  width = $('.lesson-container').width()-50
   height = (width * 9) / 16
   try
     player = new YT.Player 'player',
       height: height
       width: width
       videoId: videoId
+      playerVars:
+        showinfo: 0
+        autohide: 1
+        rel: 0
       events:
         'onReady': ready,
-        'onStateChange': state(statusURL, finishURL)
+
+    player.addEventListener 'onStateChange', state(statusURL, finishURL)
   catch
-    window.location.reload()
+    # window.location.reload()
 
 
 ready = (e)->
-  $("#player").affix offset: top: 80
+  # $("#player").affix offset: top: 80
   e.target.playVideo()
 
 state = (statusURL, finishURL)->
