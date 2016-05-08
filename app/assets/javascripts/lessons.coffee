@@ -1,6 +1,8 @@
 _tracker = null
 player = null
 
+$(document).on 'page:before-unload', -> clearTrack()
+
 window.setupPlayer = (videoId, statusURL, finishURL)->
   width = $('.lesson-container').width()-10
   height = (width * 9) / 16
