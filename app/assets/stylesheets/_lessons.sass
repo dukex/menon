@@ -43,14 +43,41 @@ body.lessons
           font-weight: 500
         &.current a
           font-weight: 600
+        &.current.finished a
+          color: #FFF
         a
           color: #FFF
 
 .lesson-container
+  padding: 0
+
+a.previous-lesson
+  float: left
+
+a.next-lesson
+  float: right
+
+.lesson-meta
+  background: $logo-color
   overflow: hidden
-  top: 55px
   h2
-    font-weight: 800
+    margin: 0
+    padding: 21px 20px
+    color: #FFF
+    display: inline-block
+    font-weight: 200
+    font-size: 20px
+    text-align: center
+  a
+    display: block
+    margin: 15px
+    background: darken($logo-color, 8%)
+    border: none
+    &:hover
+      background: darken($logo-color, 5%)
+#player
+  margin: 0 auto
+  display: block
 
 #player.affix
   width: 20%

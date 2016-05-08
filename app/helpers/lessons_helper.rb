@@ -5,4 +5,12 @@ module LessonsHelper
     classes.push 'current' if lesson.id == @lesson.id
     classes.join(' ')
   end
+
+  def has_previous_lesson(course, lesson)
+    course.lessons.index(lesson) != 0
+  end
+
+  def has_next_lesson(course, lesson)
+    course.lessons.index(lesson) != course.lessons.count - 1
+  end
 end

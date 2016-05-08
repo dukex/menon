@@ -7,6 +7,10 @@ Rails.application.routes.draw do
     end
 
     resources :lessons, only: [:show, :destroy] do
+      member do
+        get :previous
+        get :next
+      end
       resources :status, only: [:create] do
         collection do
           post :finish, as: :finish
