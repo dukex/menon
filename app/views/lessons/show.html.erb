@@ -10,8 +10,8 @@
         <%= link_to 'Next Lesson', next_course_lesson_path(@course, @lesson), class: 'btn btn-primary next-lesson' %>
       <% end %>
     </div>
-    <div id="player" data-spy="affix" data-offset-top="120"></div>
-    <div class="description"><%= @lesson.description %></div>
+    <div id="player"></div>
+    <div class="description"><%= hyperlink @lesson.description %></div>
   </div>
 
   <div class="col-md-2" id="sidebar">
@@ -23,9 +23,9 @@
     <ul class="course-lessons">
       <% @course.lessons.each do |lesson| %>
         <!-- fix it: use helper method to create state class -->
-
-        <li class="<%= lesson_status_class_for(current_user, lesson) %>">
-          <%= link_to lesson.name, course_lesson_path(@course, lesson) %>
+        <li class="<%= lesson_status_class_for(current_user, lesson, @lesson) %> grid">
+          <%= icon(lesson_icon_for(current_user, lesson, @lesson), class: 'col-md-1') %>
+          <div class="col-md-10"><%= link_to lesson.name, course_lesson_path(@course, lesson) %></div>
         </li>
       <% end %>
     </ul>
