@@ -8,6 +8,11 @@ FactoryGirl.define do
     sequence(:name) { |n| "Lesson #{n}" }
   end
 
+  factory :lesson_status do
+    user
+    lesson
+  end
+
   factory :user do
     sequence(:email) { |n| "email#{n}@email.com" }
     password 12345678
