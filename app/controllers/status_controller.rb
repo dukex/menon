@@ -15,7 +15,7 @@ class StatusController < ApplicationController
   end
 
   def finish
-    @lesson.finish(current_user)
+    @lesson.finish!(current_user)
     head :no_content
   end
 

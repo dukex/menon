@@ -6,7 +6,7 @@ class Lesson < ActiveRecord::Base
     LessonStatus.where(user_id: user.id, lesson_id: id).first_or_create!
   end
 
-  def finish(user)
+  def finish!(user)
     status_for(user).finish!
   end
 end

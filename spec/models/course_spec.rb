@@ -6,21 +6,21 @@ RSpec.describe Course, type: :model do
   it { should belong_to(:owner).class_name('User') }
   it { should validate_presence_of(:name) }
 
-  describe '#progress_for' do 
-    it 'returns the course progress for a user' do 
-      course = create(:course)
-      user = create(:user)
-      lessons = 10.times.map { create(:lesson, course_id: course.id) }
+  let(:user) { create :user }
+  let(:course) { create :course }
+  let!(:lessons) { 10.times.map { create(:lesson, course_id: course.id) } }
 
+  describe '#progress_for' do
+    it 'returns the course progress for a user' do
       expect(course.progress_for(user)).to eql(0)
-      lessons[0..4].map(&:id).each { |id| LessonStatus.create! lesson_id: id, user_id: user.id, finished: true }
+      lessons[0..4].map { |lesson| lesson.finish! user }
       expect(course.progress_for(user)).to eql(50)
-      lessons[5..9].map(&:id).each { |id| LessonStatus.create! lesson_id: id, user_id: user.id, finished: true }
+      lessons[5..9].map { |lesson| lesson.finish! user }
       expect(course.progress_for(user)).to eql(100)
     end
   end
 
-  describe '#import_from_youtube' do 
+  describe '#import_from_youtube' do
     xit 'imports course and lessons from youtube' do
       VCR.use_cassette('youtube-playlist', match_requests_on: [:path] ) do
         playlist_url = 'https://www.youtube.com/playlist?list=PLSKbCQY095R4jp6PoFulCDLYIzzdbD1DI'
