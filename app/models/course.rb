@@ -37,4 +37,8 @@ class Course < ActiveRecord::Base
   def progress_for(user)
     (statuses.finished.where(user_id: user.id).count*100) / lessons.count
   end
+
+  def enrolled?(user)
+    return statuses.where(user_id: user.id).exists?
+  end
 end

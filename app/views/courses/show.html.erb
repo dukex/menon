@@ -1,9 +1,23 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid" id="course">
+  <div class="col-md-9 course-container">
+    <h2> <%= @course.name %> </h2>
+    <div class="description">
+      <h3> About this course </h3>
+      <%= hyperlink @course.description %>
+      <p>(<%= @course.lessons.count %> lessons)</p>
+      <%= link_to course_lesson_path @course, @course.lessons.first do %>
+        <%=  user_signed_in? && @course.enrolled?(current_user) ? 'Resume' : 'Enroll' %>
+      <% end %>
+    </div>
+  </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @course.name %> (<%= @course.lessons.count %> lessons)
-</p>
+  <%= render 'shared/sidebar/lessons', course: @course,
+                                       current_lesson: @lesson,
+                                       has_title: false,
+                                       has_progress: false,
+                                       size: 'col-md-3' %>
+
+<!--
 
 <ul>
   <% @course.lessons.each do |lesson| %>
@@ -11,11 +25,12 @@
   <% end %>
 </ul>
 
-<!-- %= form_tag import_from_youtube_course_path(@course), method: :post do |f| %>
+%= form_tag import_from_youtube_course_path(@course), method: :post do |f| %>
   <h3>Import youtube playlist</h3>
   <-%= text_field_tag :url %>
   <-%= submit_tag :import %>
-<-% end % -->
+<-% end %
 
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>
+-->
