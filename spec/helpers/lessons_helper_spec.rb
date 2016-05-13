@@ -50,7 +50,7 @@ RSpec.describe LessonsHelper, type: :helper do
     end
 
     it 'returns lesson when user is nil' do
-      expect(helper.lesson_icon_for(nil, lesson, nil)).to eql('lesson')
+      expect(helper.lesson_icon_for(nil, lesson, nil)).to eql('circle')
     end
   end
 
