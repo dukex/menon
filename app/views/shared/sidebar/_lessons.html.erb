@@ -1,0 +1,20 @@
+<div class="<%= size %>" id="sidebar">
+  <% if has_title %>
+    <h1><%= link_to course.name, course %></h1>
+  <% end %>
+  <% if has_progress %>
+    <div class="course-progress">
+      <div class="bar"></div>
+      <span><%= course_progress_for(current_user, course) %></span>
+    </div>
+  <% end %>
+  <ul class="course-lessons">
+    <% course.lessons.each do |lesson| %>
+      <!-- fix it: use helper method to create state class -->
+      <li class="<%= lesson_status_class_for(current_user, lesson, @lesson) %> grid">
+        <%= icon(lesson_icon_for(current_user, lesson, current_lesson), class: 'col-md-1') %>
+        <div class="col-md-10"><%= link_to lesson.name, course_lesson_path(course, lesson) %></div>
+      </li>
+    <% end %>
+  </ul>
+</div>

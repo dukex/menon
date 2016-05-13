@@ -1,5 +1,5 @@
 <div class="container-fluid" id="lesson">
-  <div class="col-md-10 lesson-container">
+  <div class="col-md-9 lesson-container">
     <div class="lesson-meta">
       <% if has_previous_lesson(@course, @lesson) %>
         <%= link_to 'Previous Lesson', previous_course_lesson_path(@course,@lesson), class: 'btn btn-primary previous-lesson' %>
@@ -14,22 +14,11 @@
     <div class="description"><%= hyperlink @lesson.description %></div>
   </div>
 
-  <div class="col-md-2" id="sidebar">
-    <h1><%= @course.name %></h1>
-    <div class="course-progress">
-      <div class="bar"></div>
-      <span><%= course_progress_for(current_user, @course) %></span>
-    </div>
-    <ul class="course-lessons">
-      <% @course.lessons.each do |lesson| %>
-        <!-- fix it: use helper method to create state class -->
-        <li class="<%= lesson_status_class_for(current_user, lesson, @lesson) %> grid">
-          <%= icon(lesson_icon_for(current_user, lesson, @lesson), class: 'col-md-1') %>
-          <div class="col-md-10"><%= link_to lesson.name, course_lesson_path(@course, lesson) %></div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <%= render 'shared/sidebar/lessons', course: @course,
+                                       current_lesson: @lesson,
+                                       has_title: true,
+                                       has_progress: true,
+                                       size: 'col-md-3' %>
 </div>
 
 <script data-no-turbolink>
