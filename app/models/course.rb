@@ -1,10 +1,13 @@
 class Course < ActiveRecord::Base
+  extend FriendlyId
   has_many :lessons, -> { order('position ASC') }, dependent: :destroy
   has_many :statuses, class_name: 'LessonStatus', through: :lessons
 
   belongs_to :owner, class_name: "User"
 
   validates :name, presence: true
+
+  friendly_id :name, use: [:slugged, :finders]
 
   def self.import_from_youtube(url, user)
     # TODO: change user params just to id

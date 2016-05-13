@@ -38,3 +38,5 @@ gem 'yt', '~> 0.25.6'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'puma'
 gem 'font-awesome-sass', '~> 4.6.2'
+gem 'friendly_id', '~> 5.1.0'
+
