@@ -7,11 +7,7 @@ PLAYLISTS = [
   "youtube.com/playlist?list=PL-5888xShjYrLX_N42w4EHq-A4_p1YZeP"
 ]
 
-User.all.map(&:destroy)
-Course.all.map(&:destroy)
-
-user = User.create! email: 'user@user.com', password: 'abc12345'
-user.confirm!
+user = User.create! email: 'user@user.com', password: 'abc12345', confirmed_at: Time.now
 
 PLAYLISTS.each do |url|
   Course.import_from_youtube url, user
