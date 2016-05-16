@@ -11,54 +11,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513111640) do
+ActiveRecord::Schema.define(version: 20160515011811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
-  create_table "courses", force: :cascade do |t|
+  create_table "courses", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.integer  "owner_id"
     t.text     "description"
     t.string   "source_url"
     t.string   "thumbnail_url"
     t.string   "slug"
+    t.uuid     "owner_id"
   end
 
-  add_index "courses", ["owner_id"], name: "index_courses_on_owner_id", using: :btree
   add_index "courses", ["slug"], name: "index_courses_on_slug", unique: true, using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
-    t.integer  "sluggable_id",              null: false
     t.string   "sluggable_type", limit: 50
     t.string   "scope"
     t.datetime "created_at"
+    t.uuid     "sluggable_id"
   end
 
   add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
-  create_table "lesson_statuses", force: :cascade do |t|
-    t.integer  "lesson_id"
-    t.integer  "user_id"
+  create_table "lesson_statuses", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.float    "time"
     t.boolean  "finished",   default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.uuid     "lesson_id"
+    t.uuid     "user_id"
   end
 
-  add_index "lesson_statuses", ["lesson_id"], name: "index_lesson_statuses_on_lesson_id", using: :btree
-  add_index "lesson_statuses", ["user_id"], name: "index_lesson_statuses_on_user_id", using: :btree
-
-  create_table "lessons", force: :cascade do |t|
+  create_table "lessons", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
     t.string   "type"
-    t.integer  "course_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "description"
@@ -68,13 +63,13 @@ ActiveRecord::Schema.define(version: 20160513111640) do
     t.integer  "position"
     t.integer  "duration"
     t.string   "slug"
+    t.uuid     "course_id"
   end
 
-  add_index "lessons", ["course_id"], name: "index_lessons_on_course_id", using: :btree
   add_index "lessons", ["provider_id"], name: "index_lessons_on_provider_id", using: :btree
   add_index "lessons", ["slug"], name: "index_lessons_on_slug", unique: true, using: :btree
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -96,6 +91,4 @@ ActiveRecord::Schema.define(version: 20160513111640) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "lesson_statuses", "lessons"
-  add_foreign_key "lesson_statuses", "users"
 end
