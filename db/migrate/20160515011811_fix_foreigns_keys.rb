@@ -10,7 +10,7 @@ class FixForeignsKeys < ActiveRecord::Migration
   private
 
   def uuid(table, colum)
-    execute "ALTER TABLE '#{table}' DROP '#{colum}' CASCADE"
+    execute "ALTER TABLE #{table} DROP #{colum} CASCADE"
     add_column table, "#{colum}_temp", :uuid
     change_table table do |t|
       t.rename "#{colum}_temp", colum
