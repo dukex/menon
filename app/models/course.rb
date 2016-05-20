@@ -38,7 +38,7 @@ class Course < ActiveRecord::Base
   end
 
   def thumbnail_url
-    lessons.first.thumbnail_url
+    lessons.first && lessons.first.thumbnail_url
   end
 
   def progress_for(user)

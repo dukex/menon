@@ -5,12 +5,12 @@ RSpec.describe Lesson, type: :model do
   it { should belong_to(:course) }
 
   describe '#status_for' do
-  	it 'returns status for user' do
+    it 'returns status for user' do
       user = create :user
       lesson = create :lesson
-  		status = create :lesson_status, user_id: user.id, lesson_id: lesson.id
+      status = create :lesson_status, user_id: user.id, lesson_id: lesson.id
       expect(lesson.status_for(user)).to eql(status)
-  	end
+    end
 
     it 'creates status for user when not found' do
       user = create :user

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe LessonsHelper, type: :helper do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
   describe "#lesson_status_class_for" do
     let(:user) { create :user }
     let(:lesson) { create :lesson }
