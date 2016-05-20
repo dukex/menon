@@ -1,11 +1,19 @@
 module Importer
   class Base
-    attr_reader :course, :source_url, :provider
+    attr_accessor :course, :source_url, :provider
 
     def initialize(source_url, owner_id, provider)
        @course = Course.new owner_id: owner_id, source_url: source_url
        @source_url = source_url
        @provider = provider
+    end
+
+    def self.update!(id)
+      course = Course.find id
+      importer = self.new course.source_url, course.owner_id
+      importer.course = course
+      importer.source_url = course.source_url
+      importer.import!
     end
   end
 
@@ -21,14 +29,15 @@ module Importer
                                description: playlist.description
 
       lessons = playlist.playlist_items.map do |item|
-        YoutubeLesson.new name: item.title,
-                          description: item.description,
-                          thumbnail_url: build_thumbail_url(item.video),
-                          published_at: item.published_at,
-                          provider_id: item.video.id,
-                          position: item.position,
-                          duration: item.video.duration,
-                          course_id: course.id
+        YoutubeLesson.find_or_create_by(provider_id: item.video.id) do |lesson|
+          lesson.name = item.title
+          lesson.description = item.description
+          lesson.thumbnail_url = build_thumbail_url(item.video)
+          lesson.published_at = item.published_at
+          lesson.position = item.position
+          lesson.duration = item.video.duration
+          lesson.course_id = course.id
+        end
       end
 
       course.lessons = lessons
