@@ -21,33 +21,34 @@ RSpec.describe Course, type: :model do
   end
 
   describe '#import_from_youtube' do
-    xit 'imports course and lessons from youtube' do
+    it 'imports course and lessons from youtube' do
       VCR.use_cassette('youtube-playlist', match_requests_on: [:path] ) do
-        playlist_url = 'https://www.youtube.com/playlist?list=PLSKbCQY095R4jp6PoFulCDLYIzzdbD1DI'
+        playlist_url = 'https://www.youtube.com/playlist?list=PLZ1LP8tToRpshG-CUxb4KnpOmbLlSZoa-'
         user = create :user
 
-        Course.import_from_youtube playlist_url, user
+        course = Course.import_from_youtube playlist_url, user
+        expect(course).to be_valid
 
-        @course = Course.last
+        @course = Course.find course.id
+
         expect(@course.source_url).to eql(playlist_url)
-        expect(@course.name).to eql('Lecciones de Economía con Jesús Huerta de Soto')
-        expect(@course.description).to eql("Curso de economía impartido por el Profesor Huerta de Soto en la Universidad Rey Juan Carlos de Madrid.\nVídeo original: Instituto Juan de Mariana.\nEdición: Anarcocapitalista.com")
-        expect(@course.thumbnail_url).to eql('https://i.ytimg.com/vi/OLcBWiPLyzU/default.jpg')
+        expect(@course.name).to eql('Test Ruby')
+        expect(@course.description).to eql("Testing a ruby app")
         expect(@course.owner).to eql(user)
 
-        expect(@course.lessons.count).to eql(123)
+        expect(@course.lessons.count).to eql(1)
         lesson = @course.lessons.first
-        expect(lesson.name).to eql('Día 2 (vídeo 1) - La Función Empresarial: Introducción')
-        expect(lesson.duration).to eql(83)
-        expect(lesson.thumbnail_url).to eql('https://i.ytimg.com/vi/OLcBWiPLyzU/hqdefault.jpg')
-        expect(lesson.description).to eql("Lecciones de Economía con Jesús Huerta de Soto.\nVer en contexto: http://www.anarcocapitalista.com/JHSLecciones2.htm#1")
-        expect(lesson.published_at).to eql(Date.parse('Sat, 10 Jan 2015'))
-        expect(lesson.provider_id).to eql('OLcBWiPLyzU')
+        expect(lesson.name).to eql('Simple Testing in Ruby Using Minitest')
+        expect(lesson.duration).to eql(1100)
+        expect(lesson.thumbnail_url).to eql('http://img.youtube.com/vi/kRFH0U5tbt8/hqdefault.jpg')
+        expect(lesson.description).to eql("Writing tests for your app is kinda like ensuring that your car brakes will still work, even if you accidently change the language of your sat-nav to german.  You avoid nasty surprises. Today, Darren Jones is going to show you how to write tests in Ruby using MiniTest. Enjoy!")
+        expect(lesson.published_at).to eql(Date.parse('Mon, 16 May 2016'))
+        expect(lesson.provider_id).to eql('kRFH0U5tbt8')
         expect(lesson.position).to eql(0)
       end
     end
 
-    xit 'don\'t create course and lessons when error' do
+    it 'don\'t create course and lessons when error' do
       VCR.use_cassette('youtube-playlist-error') do
         playlist_url = 'https://www.youtube.com/playlist?list=PLSKbCQY095R4jp6PoFulCDLYIzzdbD1DI'
 
@@ -67,6 +68,16 @@ RSpec.describe Course, type: :model do
     it 'returns true if user has a status for a course lesson' do
       lessons[0].status_for(user)
       expect(course.enrolled?(user)).to eql(true)
+    end
+  end
+
+  describe '#thumbnail_url' do
+    it 'returns the first lesson thumbnail_url' do
+      expect(course.thumbnail_url).to eql(lessons.first.thumbnail_url)
+    end
+
+    it 'returns nil to course without lessons' do
+      expect(create(:course).thumbnail_url).to eql(nil)
     end
   end
 end
