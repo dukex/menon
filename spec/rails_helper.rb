@@ -10,6 +10,32 @@ require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+module YT
+  class Faker
+    def initialize(url)
+      @source_url = url
+    end
+
+    def title
+      'Test Course'
+    end
+
+    def description
+      'Test Description Course'
+    end
+
+    def playlist_items
+      [OpenStruct.new({
+        title: 'Lesson 1',
+        description: 'Description 1',
+        video: OpenStruct.new(id: 'xyy2', duration: 300),
+        position: 1,
+        published_at: Time.new(2015,1,1)
+      })]
+    end
+  end
+end
+
 require 'webmock/rspec'
 WebMock.disable_net_connect!
 

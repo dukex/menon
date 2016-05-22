@@ -2,53 +2,59 @@ module Importer
   class Base
     attr_accessor :course, :source_url, :provider
 
-    def initialize(source_url, owner_id, provider)
-       @course = Course.new owner_id: owner_id, source_url: source_url
-       @source_url = source_url
-       @provider = provider
+    def self.update!(course_id, provider = nil)
+      course = Course.find course_id
+      importer = new(course.source_url, course.owner_id, provider)
+      importer.import!
     end
 
-    def self.update!(id)
-      course = Course.find id
-      importer = self.new course.source_url, course.owner_id
-      importer.course = course
-      importer.source_url = course.source_url
-      importer.import!
+    def initialize(source_url, owner_id, provider = nil)
+       @course = find_course source_url, owner_id
+       @source_url = source_url
+       @provider = provider || default_provider
+    end
+
+    private
+
+    def find_course(source_url, owner_id)
+      Course.where(owner_id: owner_id, source_url: source_url).first_or_initialize
+    end
+
+    def default_provider
+      nil
     end
   end
 
   class Youtube < Base
-    def initialize(source_url, owner_id, provider = Yt::Playlist)
-      super
-    end
-
     def import!
       playlist = provider.new url: source_url
 
-      course.assign_attributes name: playlist.title,
-                               description: playlist.description
+      course.name = playlist.title
+      course.description = playlist.description
+      course.save
 
       lessons = playlist.playlist_items.map do |item|
-        YoutubeLesson.find_or_create_by(provider_id: item.video.id) do |lesson|
+        YoutubeLesson.find_or_create_by(provider_id: item.video.id, course_id: course.id) do |lesson|
           lesson.name = item.title
           lesson.description = item.description
           lesson.thumbnail_url = build_thumbail_url(item.video)
           lesson.published_at = item.published_at
           lesson.position = item.position
           lesson.duration = item.video.duration
-          lesson.course_id = course.id
         end
       end
 
-      course.lessons = lessons
-      course.save
     rescue Yt::Error => error
       course.errors.add(:base, error.kind["message"])
-     ensure
-       return course
+    ensure
+      return course
     end
 
     private
+
+    def default_provider
+      Yt::Playlist
+    end
 
     def build_thumbail_url(video)
       "http://img.youtube.com/vi/#{video.id}/hqdefault.jpg"
