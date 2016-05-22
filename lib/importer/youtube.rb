@@ -31,6 +31,7 @@ module Importer
 
       course.name = playlist.title
       course.description = playlist.description
+      course.thumbnail_url = build_thumbail_url playlist.playlist_items.first.video
       course.save
 
       lessons = playlist.playlist_items.map do |item|

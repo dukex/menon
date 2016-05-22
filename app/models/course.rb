@@ -16,10 +16,6 @@ class Course < ActiveRecord::Base
     importer.import!
   end
 
-  def thumbnail_url
-    lessons.first && lessons.first.thumbnail_url
-  end
-
   def progress_for(user)
     (statuses.finished.where(user_id: user.id).count*100) / lessons.count
   end
