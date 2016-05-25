@@ -13,12 +13,15 @@ module LessonsHelper
     i
   end
 
-  # TODO: test
+  def lesson_title_size_class(course, lesson)
+    small = (has_next_lesson(course, lesson) and has_previous_lesson(course, lesson))
+    small ? 'col-md-6' : 'col-md-9'
+  end
+
   def has_previous_lesson(course, lesson)
     course.lessons.index(lesson) != 0
   end
 
-  # TODO: test
   def has_next_lesson(course, lesson)
     course.lessons.index(lesson) != course.lessons.count - 1
   end
