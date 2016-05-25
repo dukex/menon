@@ -6,8 +6,11 @@
       <%= hyperlink @course.description %>
       <p>(<%= @course.lessons.count %> lessons)</p>
       <%= link_to course_lesson_path @course, @course.lessons.first do %>
-        <%=  user_signed_in? && @course.enrolled?(current_user) ? 'Resume' : 'Enroll' %>
+        <%=  user_signed_in? && @course.enrolled?(current_user) ? 'Resume' : 'Enroll Now' %>
       <% end %>
+    </div>
+    <div>
+
     </div>
   </div>
 
@@ -16,21 +19,3 @@
                                        has_title: false,
                                        has_progress: false,
                                        size: 'col-md-3' %>
-
-<!--
-
-<ul>
-  <% @course.lessons.each do |lesson| %>
-    <li><%= link_to lesson.name, course_lesson_path(@course, lesson) %></li>
-  <% end %>
-</ul>
-
-%= form_tag import_from_youtube_course_path(@course), method: :post do |f| %>
-  <h3>Import youtube playlist</h3>
-  <-%= text_field_tag :url %>
-  <-%= submit_tag :import %>
-<-% end %
-
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>
--->
