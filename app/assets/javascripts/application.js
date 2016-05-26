@@ -12,9 +12,9 @@ var handleEvent = function(eventName, handler) {
 handleEvent("turbolinks:load", function loadPage() {
   var blazy = new Blazy({
     success: function blazySuccess () {
-      var height = $(".course-wrapper")
+      var height = $(".course-wrapper .course")
                     .map(function returnsHeight(){
-                      return this.offsetHeight
+                      return this.offsetHeight+40
                     });
       var maxHeight = Math.max.apply(0, height);
       $('.course-wrapper').css('height', maxHeight);
