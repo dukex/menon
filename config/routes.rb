@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  mount Blazer::Engine, at: 'admin'
+
   resources :courses do
     collection do
       post :import_from_youtube, path: "/import/youtube"
