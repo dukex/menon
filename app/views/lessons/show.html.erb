@@ -21,9 +21,17 @@
 </div>
 
 <script data-no-turbolink>
-  setupPlayer(
-    "<%= @lesson.provider_id %>",
-    "<%= course_lesson_status_index_path(@course, @lesson) %>",
-    "<%= finish_course_lesson_status_index_path(@course, @lesson) %>"
-  )
+  var player = function() {
+   setupPlayer(
+      "<%= @lesson.provider_id %>",
+      "<%= course_lesson_status_index_path(@course, @lesson) %>",
+      "<%= finish_course_lesson_status_index_path(@course, @lesson) %>"
+    )
+  };
+
+  if(typeof setupPlayer == 'undefined') {
+    document.addEventListener('DOMContentLoaded', player);
+  } else {
+    player();
+  }
 </script>

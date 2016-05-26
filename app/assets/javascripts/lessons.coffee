@@ -17,10 +17,16 @@ window.setupPlayer = (videoId, statusURL, finishURL)->
         rel: 0
       events:
         'onReady': ready,
+        'onError': ->
+          Turbolinks.visit(document.location.pathname)
 
     player.addEventListener 'onStateChange', state(statusURL, finishURL)
-  catch
-    # window.location.reload()
+  catch e
+    console.log e
+    if YT.loaded
+      Turbolinks.visit(document.location.pathname)
+    else
+      setTimeout(setupPlayer, 1000)
 
 
 ready = (e)->
