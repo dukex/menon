@@ -1,7 +1,7 @@
 _tracker = null
 player = null
 
-$(document).on 'page:before-unload', -> clearTrack()
+handleEvent "turbolinks:before-cache", clearTrack
 
 window.setupPlayer = (videoId, statusURL, finishURL)->
   width = $('.lesson-container').width()-50
