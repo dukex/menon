@@ -10,14 +10,16 @@ var handleEvent = function(eventName, handler) {
 };
 
 handleEvent("turbolinks:load", function loadPage() {
-  var bLazy = new Blazy();
-
-  var height = $(".course-wrapper").map(function returnsHeight(){
-    return this.offsetHeight
+  var blazy = new Blazy({
+    success: function blazySuccess () {
+      var height = $(".course-wrapper")
+                    .map(function returnsHeight(){
+                      return this.offsetHeight
+                    });
+      var maxHeight = Math.max.apply(0, height);
+      $('.course-wrapper').css('height', maxHeight);
+    }
   });
-  var maxHeight = Math.max.apply(0, height);
-
-  $('.course-wrapper').css('height', maxHeight);
 
   var progress = $('.course-progress').text();
   $('.course-progress .bar').css("width", progress);
