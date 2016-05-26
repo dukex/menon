@@ -30,7 +30,7 @@
   };
 
   if(typeof setupPlayer == 'undefined') {
-    document.addEventListener('DOMContentLoaded', player);
+    document.addEventListener('turbolinks:load', player);
   } else {
     player();
   }

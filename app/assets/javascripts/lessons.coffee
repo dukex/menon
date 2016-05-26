@@ -26,7 +26,7 @@ window.setupPlayer = (videoId, statusURL, finishURL)->
     player.addEventListener 'onStateChange', state(statusURL, finishURL)
   catch e
     console.log e
-    if YT.loaded
+    if YT?.loaded
       Turbolinks.visit(document.location.pathname)
     else
       setTimeout(setupPlayer, 1000)
@@ -59,7 +59,7 @@ track = (url)->
           "Content-Type": "application/json"
           "Accept": "application/json"
         body: JSON.stringify
-          time: player.getCurrentTime()
+          time: player.v.currentTime # player.getCurrentTime()
       .then(track(url), track(url))
     , 2000
 
