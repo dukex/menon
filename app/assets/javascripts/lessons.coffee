@@ -1,6 +1,9 @@
 _tracker = null
 player = null
 
+handleEvent = (eventName, handler) ->
+  document.addEventListener(eventName, handler, false)
+
 handleEvent "turbolinks:before-cache", clearTrack
 
 window.setupPlayer = (videoId, statusURL, finishURL)->

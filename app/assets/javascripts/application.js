@@ -4,7 +4,7 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
-window.handleEvent = function(eventName, handler) {
+var handleEvent = function(eventName, handler) {
   document.addEventListener(eventName, handler, false);
 };
 
