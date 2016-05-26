@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require blazy
 //= require_tree .
 
 var handleEvent = function(eventName, handler) {
@@ -9,6 +10,8 @@ var handleEvent = function(eventName, handler) {
 };
 
 handleEvent("turbolinks:load", function loadPage() {
+  var bLazy = new Blazy();
+
   var height = $(".course-wrapper").map(function returnsHeight(){
     return this.offsetHeight
   });
