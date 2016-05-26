@@ -1,15 +1,15 @@
 <div class="container-fluid" id="lesson">
   <div class="col-md-9 lesson-container">
+    <div id="player"></div>
     <div class="lesson-meta grid">
+      <h2 class="col-md-12 col-sm-12"><%= @lesson.name %></h2>
       <% if has_previous_lesson(@course, @lesson) %>
         <%= link_to 'Previous Lesson', previous_course_lesson_path(@course,@lesson), class: 'btn col-md-3 btn-primary previous-lesson' %>
       <% end %>
-      <h2 class="<%= lesson_title_size_class(@course, @lesson) %>"><%= @lesson.name %></h2>
       <% if has_next_lesson(@course, @lesson) %>
         <%= link_to 'Next Lesson', next_course_lesson_path(@course, @lesson), class: 'btn col-md-3 btn-primary next-lesson' %>
       <% end %>
     </div>
-    <div id="player"></div>
     <div class="description"><%= hyperlink @lesson.description %></div>
   </div>
 

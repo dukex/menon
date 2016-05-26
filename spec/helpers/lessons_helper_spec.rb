@@ -76,18 +76,4 @@ RSpec.describe LessonsHelper, type: :helper do
       expect(helper.has_next_lesson(course, second_lesson)).to be_falsy
     end
   end
-
-  describe '#lesson_title_size_class' do
-    it 'returns the class col-md-6 when has previous or next, else col-md-9' do
-      course = create(:course)
-
-      first_lesson = create(:lesson, course: course)
-      second_lesson = create(:lesson, course: course)
-      third_lesson = create(:lesson, course: course)
-
-      expect(helper.lesson_title_size_class(course, first_lesson)).to eql('col-md-9')
-      expect(helper.lesson_title_size_class(course, second_lesson)).to eql('col-md-6')
-      expect(helper.lesson_title_size_class(course, third_lesson)).to eql('col-md-9')
-    end
-  end
 end
