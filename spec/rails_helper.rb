@@ -55,6 +55,7 @@ end
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, type: :controller
 end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
