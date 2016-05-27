@@ -18,6 +18,7 @@ window.setupPlayer = (videoId, statusURL, finishURL)->
         showinfo: 0
         autohide: 1
         rel: 0
+        origin: window.location.origin
       events:
         'onReady': ready,
         'onError': ->
@@ -32,9 +33,7 @@ window.setupPlayer = (videoId, statusURL, finishURL)->
       setTimeout(setupPlayer, 1000)
 
 
-ready = (e)->
-  # $("#player").affix offset: top: 80
-  e.target.playVideo()
+ready = (e)-> e.target.playVideo()
 
 state = (statusURL, finishURL)->
   (e)->
