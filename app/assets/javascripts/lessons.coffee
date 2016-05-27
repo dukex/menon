@@ -59,7 +59,8 @@ track = (url)->
           "Content-Type": "application/json"
           "Accept": "application/json"
         body: JSON.stringify
-          time: player.v.currentTime # player.getCurrentTime()
+          status:
+            time: player.v.currentTime # player.getCurrentTime()
       .then(track(url), track(url))
     , 2000
 
