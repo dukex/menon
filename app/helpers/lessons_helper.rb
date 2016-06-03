@@ -1,16 +1,24 @@
 module LessonsHelper
   def lesson_status_class_for(user, lesson, current_lesson)
     classes = ['lesson']
-    classes.push 'finished' if user && lesson.status_for(user).finished
-    classes.push 'current' if lesson.id == (current_lesson && current_lesson.id)
+    classes.push 'finished' if lesson_finished?(user, lesson)
+    classes.push 'current' if lesson_current?(lesson, current_lesson)
     classes.join(' ')
   end
 
   def lesson_icon_for(user, lesson, current_lesson)
     i = 'circle'
-    i = 'check-circle-o' if user && lesson.status_for(user).finished
-    i = 'dot-circle-o' if lesson.id == (current_lesson && current_lesson.id)
+    i = 'check-circle-o' if lesson_finished?(user, lesson)
+    i = 'dot-circle-o' if lesson_current?(lesson, current_lesson)
     i
+  end
+
+  def lesson_finished?(user, lesson)
+    user && lesson.status_for(user) && lesson.status_for(user).finished
+  end
+
+  def lesson_current?(lesson, current_lesson)
+    lesson.id == (current_lesson && current_lesson.id)
   end
 
   def has_previous_lesson(course, lesson)
