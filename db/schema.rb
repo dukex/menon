@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603165025) do
+ActiveRecord::Schema.define(version: 20160603225204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,14 +63,15 @@ ActiveRecord::Schema.define(version: 20160603165025) do
   end
 
   create_table "courses", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string   "name",          null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "name",                         null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.text     "description"
     t.string   "source_url"
     t.string   "thumbnail_url"
     t.string   "slug"
     t.uuid     "owner_id"
+    t.string   "language",      default: "en"
   end
 
   add_index "courses", ["slug"], name: "index_courses_on_slug", unique: true, using: :btree
