@@ -9,6 +9,7 @@ FactoryGirl.define do
   end
 
   factory :lesson_status do
+    time 1
     user
     lesson
   end

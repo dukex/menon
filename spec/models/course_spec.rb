@@ -66,7 +66,7 @@ RSpec.describe Course, type: :model do
     end
 
     it 'returns true if user has a status for a course lesson' do
-      lessons[0].status_for(user)
+      lessons[0].status_for(user).save
       expect(course.enrolled?(user)).to eql(true)
     end
   end
