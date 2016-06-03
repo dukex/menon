@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526134658) do
+ActiveRecord::Schema.define(version: 20160603165025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20160526134658) do
   end
 
   create_table "courses", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",          null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "description"
@@ -95,6 +95,8 @@ ActiveRecord::Schema.define(version: 20160526134658) do
     t.uuid     "lesson_id"
     t.uuid     "user_id"
   end
+
+  add_index "lesson_statuses", ["lesson_id", "user_id"], name: "lesson_id_user_id", unique: true, using: :btree
 
   create_table "lessons", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
@@ -136,4 +138,8 @@ ActiveRecord::Schema.define(version: 20160526134658) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "courses", "users", column: "owner_id", name: "owner_id_fk"
+  add_foreign_key "lesson_statuses", "lessons", name: "lesson_id_fk"
+  add_foreign_key "lesson_statuses", "users", name: "user_id_fk"
+  add_foreign_key "lessons", "courses", name: "course_id_fk"
 end

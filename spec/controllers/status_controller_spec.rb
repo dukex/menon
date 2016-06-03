@@ -9,17 +9,20 @@ RSpec.describe StatusController, type: :controller do
       post :create, lesson_id: lesson, course_id: lesson.course, status: { time: 2 }, format: :json
 
       expect(lesson.status_for(user).time).to eql(2.0)
+      expect(LessonStatus.count).to eql(1)
     end
 
     it 'updates user status when exists' do
       sign_in user = create(:user)
       lesson = create :lesson
-      expect(lesson.status_for(user).time).to eql(nil)
+      status = lesson.status_for(user)
+      status.save
 
       post :create, lesson_id: lesson, course_id: lesson.course, status: { time: 20 }, format: :json
 
       expect(lesson.status_for(user).time).to eql(20.0)
       expect(LessonStatus.count).to eql(1)
+      expect(status.reload.time).to eql(20.0)
     end
 
     it 'responds not content' do
