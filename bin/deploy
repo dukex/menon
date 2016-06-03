@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+git checkout production
+git merge --no-ff --rerere-autoupdate -m "Deploy Production BUILD $(date +%d%m%y%H%M%S)" master
+git checkout master
