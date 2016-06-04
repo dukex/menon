@@ -15,14 +15,29 @@ header
   background: #FFF
   border: 1px solid #FFF
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2)
+  overflow: hidden
   h1
+    float: left
     &, a
       color: $logo-color
     margin: 5px 50px
     font-size: 23px
     padding: 10px 0
     font-weight: 700
-
+    span
+      font-size: 18px
+      color: darken($logo-color, 10%)
+      font-style: italic
+      padding: 10px
+  #languages
+    padding: 5px
+    float: right
+    font-size: 11px
+    button
+      border: 1px solid darkblue
+      border-radius: 5px
+      background: #F1F1F1
+      padding: 3px 5px
 
 // content
 
@@ -34,7 +49,7 @@ header
 footer
   text-align: center
   border-top: 1px solid #CCC
-  padding: 10px 10px 0 10px
+  padding: 10px 10px 5px 10px
   font-weight: 700
   i
     color: red

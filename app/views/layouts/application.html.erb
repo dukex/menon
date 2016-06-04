@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Menon</title>
-
+  <title>Mênon - <%= t(:slogan, scope: :application) %></title>
   <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track' => true %>
-
   <meta name="viewport" content="width=device-width">
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= body_classes %>">
   <header>
-    <h1><%= link_to 'Mênon', root_path %></h1>
+    <h1>
+      <%= link_to 'Mênon', root_path %>
+      <span><%= t(:slogan, scope: :application) %></span>
+    </h1>
+    <div id="languages">
+      <button data-lang="en">English</button>
+      <button data-lang="pt">Português</button>
+    <div>
   </header>
 
   <div id="content">

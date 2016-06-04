@@ -23,4 +23,10 @@ handleEvent("turbolinks:load", function loadPage() {
 
   var progress = $('.course-progress').text();
   $('.course-progress .bar').css("width", progress);
+
+  $('#languages button').on('click', function(e) {
+    var target = $(e.target);
+    document.cookie = "locale=" + target.data('lang');
+    Turbolinks.visit();
+  });
 });
