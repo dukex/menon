@@ -1,3 +1,11 @@
+<% content_for :title do %>
+  <%= @course.name %> -
+<% end %>
+
+<% content_for :description do %>
+  <%= @course.description %>
+<% end %>
+
 <div class="container-fluid" id="course">
   <div class="col-md-9 col-sm-12 course-container">
     <h2> <%= @course.name %> </h2>

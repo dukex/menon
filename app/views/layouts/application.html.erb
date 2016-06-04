@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mênon - <%= t(:slogan, scope: :application) %></title>
+  <title>
+    <% if content_for?(:title) %>
+      <%= yield :title %>
+    <% end %>
+    Mênon - <%= t(:slogan, scope: :application) %>
+  </title>
+  <% if content_for?(:description) %>
+    <meta name="description" content="<%= yield :description %>">
+  <% end %>
+
   <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track' => true %>
   <meta name="viewport" content="width=device-width">
   <%= csrf_meta_tags %>

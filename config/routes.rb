@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'sitemap' => "sitemap#index"
+
   devise_for :users
 
   mount Blazer::Engine, at: 'admin'
