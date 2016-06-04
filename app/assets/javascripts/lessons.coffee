@@ -1,9 +1,5 @@
-_tracker = null
-
 handleEvent = (eventName, handler) ->
   document.addEventListener(eventName, handler, false)
-
-handleEvent "turbolinks:before-visit", clearTrack
 
 window.setupPlayer = (videoId, statusURL, finishURL)->
   width = $('.lesson-container').width()-50
@@ -25,43 +21,45 @@ window.setupPlayer = (videoId, statusURL, finishURL)->
   catch e
     if YT?.loaded
     else
-      setTimeout(setupPlayer, 1000)
+      setTimeout ->
+        setupPlayer(videoId, statusURL, finishURL)
+      , 500
 
 
 ready = (e)-> e.target.playVideo()
 
 state = (statusURL, finishURL)->
   (e)->
-    clearTrack()
     switch e.data
       when YT.PlayerState.PLAYING
-      #  track(statusURL, e.target)()
+        track(statusURL, e.target)
       when YT.PlayerState.ENDED
-        finish(finishURL)()
+        finish(finishURL)
 
-clearTrack = -> # window.clearTimeout(_tracker)
+trackRequest = (url, element)->
+  fetch url,
+    method: 'POST'
+    credentials: 'include'
+    headers:
+      "Content-Type": "application/json"
+      "Accept": "application/json"
+    body: JSON.stringify
+      status:
+        time: element.v.currentTime
+  .then ->
+    return if url isnt "#{document.location.pathname}/status"
+    track(url, element);
+
 
 track = (url, element)->
-  ->
-    return unless $('body').hasClass('lessons')
-    _tracker = setTimeout ->
-      fetch url,
-        method: 'POST'
-        credentials: 'include'
-        headers:
-          "Content-Type": "application/json"
-          "Accept": "application/json"
-        body: JSON.stringify
-          status:
-            time: element.v.currentTime
-      .then(track(url, element), track(url, element))
-    , 2000
+  window._tracker = setTimeout ->
+    trackRequest(url, element);
+  , 2000
 
 finish = (url)->
-  ->
-    fetch url,
-      method: 'POST'
-      credentials: 'include'
-      headers:
-        "Content-Type": "application/json"
-        "Accept": "application/json"
+  fetch url,
+    method: 'POST'
+    credentials: 'include'
+    headers:
+      "Content-Type": "application/json"
+      "Accept": "application/json"
