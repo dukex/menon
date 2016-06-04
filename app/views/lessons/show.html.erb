@@ -1,3 +1,11 @@
+<% content_for :title do %>
+  <%= @lesson.name %> - <%= @lesson.course.name %> -
+<% end %>
+
+<% content_for :description do %>
+  <%= @lesson.description %>
+<% end %>
+
 <div class="container-fluid" id="lesson">
   <div class="col-md-9 lesson-container">
     <div id="player"></div>
