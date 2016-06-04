@@ -35,11 +35,11 @@ state = (statusURL, finishURL)->
     clearTrack()
     switch e.data
       when YT.PlayerState.PLAYING
-        track(statusURL, e.target)()
+      #  track(statusURL, e.target)()
       when YT.PlayerState.ENDED
         finish(finishURL)()
 
-clearTrack = -> window.clearTimeout(_tracker)
+clearTrack = -> # window.clearTimeout(_tracker)
 
 track = (url, element)->
   ->
