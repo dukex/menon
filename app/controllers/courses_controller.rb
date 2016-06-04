@@ -2,7 +2,10 @@ class CoursesController < ApplicationController
   before_action :set_course, only: :show
 
   def index
-    @courses = Course.all
+    @q = Course.ransack(params[:q])
+    @courses = @q.result(distinct: true).order(:updated_at)
+
+    @languages = Course.all.map(&:language).uniq
   end
 
   private

@@ -1,5 +1,12 @@
 <div class="container-fluid">
   <div id="courses">
+    <div class="col-md-12 col-sm-12">
+      <form id="language_selection">
+        <label>Language</label>
+        <%= languages_select @languages %>
+      </form>
+    </div>
+
     <% @courses.each do |course| %>
       <div class="course-wrapper col-sm-6 col-md-3">
         <div class="course">
