@@ -228,6 +228,8 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
+    xml-sitemap (1.3.3)
+      builder (>= 2.0)
     yt (0.25.32)
       activesupport
 
@@ -264,6 +266,7 @@ DEPENDENCIES
   vcr
   web-console (~> 2.0)
   webmock
+  xml-sitemap
   yt (~> 0.25.6)
 
 BUNDLED WITH
