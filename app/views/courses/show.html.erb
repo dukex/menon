@@ -2,11 +2,11 @@
   <div class="col-md-9 col-sm-12 course-container">
     <h2> <%= @course.name %> </h2>
     <div class="description">
-      <h3> About this course </h3>
+      <h3><%= t(:about_title, scope: :course) %></h3>
       <%= hyperlink @course.description %>
       <p>(<%= @course.lessons.count %> lessons)</p>
       <%= link_to course_lesson_path @course, @course.lessons.first do %>
-        <%=  user_signed_in? && @course.enrolled?(current_user) ? 'Resume' : 'Enroll Now' %>
+        <%= user_signed_in? && @course.enrolled?(current_user) ? t(:resume, scope: :course) : t(:enroll, scope: :course) %>
       <% end %>
     </div>
     <div>

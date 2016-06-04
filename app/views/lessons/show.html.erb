@@ -4,10 +4,10 @@
     <div class="lesson-meta grid">
       <h2 class="col-md-12 col-sm-12"><%= @lesson.name %></h2>
       <% if has_previous_lesson(@course, @lesson) %>
-        <%= link_to 'Previous Lesson', previous_course_lesson_path(@course,@lesson), class: 'btn col-md-3 btn-primary previous-lesson' %>
+        <%= link_to t(:previous, scope: :lesson), previous_course_lesson_path(@course,@lesson), class: 'btn col-md-3 btn-primary previous-lesson' %>
       <% end %>
       <% if has_next_lesson(@course, @lesson) %>
-        <%= link_to 'Next Lesson', next_course_lesson_path(@course, @lesson), class: 'btn col-md-3 btn-primary next-lesson' %>
+        <%= link_to t(:next, scope: :lesson), next_course_lesson_path(@course, @lesson), class: 'btn col-md-3 btn-primary next-lesson' %>
       <% end %>
     </div>
     <div class="description"><%= hyperlink @lesson.description %></div>

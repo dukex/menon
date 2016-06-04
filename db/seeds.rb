@@ -13,5 +13,22 @@ Course.create!([
   {name: "Intellectual Property", source_url: "https://www.youtube.com/playlist?list=PL8dPuuaLjXtMwV2btpcij8S3YohW9gUGN"},
   {name: "World History 2", source_url: "https://www.youtube.com/playlist?list=PL8dPuuaLjXtNjasccl-WajpONGX3zoY4M"},
   {name: "German for BEGINNERS A1 - FREE Course Lessons 1-100", source_url: "https://www.youtube.com/playlist?list=PLYzp2xhTw9W1Z9RvnCoveC0W7pkwUMHXy"},
-  {name: "Lecciones de Economía con Jesús Huerta de Soto", source_url: "https://www.youtube.com/playlist?list=PLSKbCQY095R4jp6PoFulCDLYIzzdbD1DI"}
+  {name: "Lecciones de Economía con Jesús Huerta de Soto", language: 'es', source_url: "https://www.youtube.com/playlist?list=PLSKbCQY095R4jp6PoFulCDLYIzzdbD1DI"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYqTlnej_at8bu8vgp7-9wjh", name: "Curso Como Estudar"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYry6kq79uVfevzfqoeWadF4", name: "Aula Cantada"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYqqJblqfpgzEy3Y_HGX6gWn", name: "Espanhol"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYqWt8zTIpbbomAWuLcubFiR", name: "Inglês"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYrLX_N42w4EHq-A4_p1YZeP", name: "Física"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYpHiRakCQXlBzyHKf8g1ygq", name: "Redação"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYp6bkqJ9Ro5Z6h_LH8P4kkm", name: "História"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYov4dsPauz7Wcyxp7uAGXiR", name: "Matemática"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYrVMIC8GWrweZoOrdhFf9aF", name: "Português"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYpbX7ZupdqkKPctiWmjEjWt", name: "Biologia"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYot3PtL-rqAtJYV-UHaEqX3", name: "Química"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYpkwIPfr_XPguudB7DXIJEn", name: "Literatura"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYpiIXJW-D4facsmtd_mGPs_", name: "Geografia"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYpwReuVoYZecDp_cECy6Jb0", name: "Sociologia"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYp9xug88gvqAA43g0fzsZEd", name: "Arte"},
+  {language: 'pt', source_url: "https://www.youtube.com/playlist?list=PL-5888xShjYqchEP7nKlQfvaXBe1vlBSL", name: "Filosofia"},
 ])
+

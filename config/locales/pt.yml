@@ -1,0 +1,14 @@
+pt:
+  application:
+    slogan: Agregador de Cursos
+  course:
+    about_title: Sobre esse Curso
+    enroll: Matricular-se Agora
+    enter: Entrar
+    language_selection: Filtrar curso por lingua
+    resume: Continuar
+  lesson:
+    previous: Aula Anterior
+    next: Próxima Aula
+    title: "%{name} Aulas"
+
