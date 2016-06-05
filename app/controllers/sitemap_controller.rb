@@ -13,7 +13,7 @@ class SitemapController < ApplicationController
             video_thumbnail_location: lesson.thumbnail_url,
             video_title: lesson.name,
             video_description: lesson.description,
-            video_content_location: course_lesson_url(course, lesson),
+            video_player_location: "http://www.youtube.com/v/#{lesson.provider_id}?fs=1&hl=en_US&rel=0&hd=1&autoplay=1",
             video_duration: lesson.duration,
             video_publication_date: lesson.published_at
         end
