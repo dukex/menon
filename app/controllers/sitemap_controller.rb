@@ -4,12 +4,11 @@ class SitemapController < ApplicationController
       m.add '/'
 
       Course.includes(:lessons).all.map do |course|
-        m.add course_path(course), updated: course.updated_at, priority: 0.5
+        m.add course_path(course), updated: course.updated_at
 
         course.lessons.all.map do |lesson|
           m.add course_lesson_path(course, lesson),
             updated: lesson.updated_at,
-            priority: 0.9,
             video_thumbnail_location: lesson.thumbnail_url,
             video_title: lesson.name,
             video_description: lesson.description,
