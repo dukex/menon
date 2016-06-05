@@ -1,10 +1,6 @@
 module ApplicationHelper
   def body_classes
-    "#{controller_name} #{action}"
-  end
-
-  def action
-    params[:action]
+    "#{controller_name} #{action_name}"
   end
 
   def languages_select(languages)
