@@ -8,6 +8,7 @@ class LessonStatus < ActiveRecord::Base
 
   def finish!
     self.finished = true
+    self.time ||= 1
     self.save!
   end
 end
