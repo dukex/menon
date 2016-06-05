@@ -15,11 +15,11 @@
   <meta name="viewport" content="width=device-width">
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= body_classes %>">
+<body class="<%= body_classes %>" itemscope itemtype="http://schema.org/WebPage">
   <header>
     <h1>
-      <%= link_to 'Mênon', root_path %>
-      <span><%= t(:slogan, scope: :application) %></span>
+      <%= link_to 'Mênon', root_path, itemprop: "name" %>
+      <span itemprop="about"><%= t(:slogan, scope: :application) %></span>
     </h1>
     <div id="languages">
       <button data-lang="en">English</button>
@@ -31,8 +31,8 @@
     <%= yield %>
   </div>
 
-  <footer>
-    Made with <%= icon 'heart' %> by <a href="http://twitter.com/_dukex">@_dukex</a>
+  <footer itemprop="creator" itemscope itemtype="http://schema.org/Person">
+    Made with <%= icon 'heart' %> by <a href="http://twitter.com/_dukex" itemprop="name">@_dukex</a>
   </footer>
 
   <script src="https://www.youtube.com/iframe_api"></script>
