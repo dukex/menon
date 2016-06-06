@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'account' => "account#show"
+  get 'contact' => "application#contact"
   get 'sitemap' => "sitemap#index"
 
   devise_for :users

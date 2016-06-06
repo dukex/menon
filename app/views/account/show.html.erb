@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <div id="courses">
+    <h2><%= t(:enrollments, scope: :account) %></h2>
+    <% @enrollments.each do |course| %>
+      <div class="course-wrapper col-sm-6 col-md-2" itemprop="mainEntity" itemscope itemtype="http://schema.org/CreativeWork">
+        <div class="course">
+          <img class="b-lazy"
+            itemprop="image"
+            src=""
+            data-src="<%= course.thumbnail_url %>"
+          />
+          <h2 itemprop="name"><%= course.name %></h2>
+          <p itemprop="text"><%= course.description %></p>
+          <%= link_to t(:enter, scope: :course), course, class: 'btn btn-default', itemprop: "url" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
