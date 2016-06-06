@@ -3,6 +3,10 @@ module ApplicationHelper
     "#{controller_name} #{action_name}"
   end
 
+  def nav_class(url)
+    current_page?(url) ? 'active' : ''
+  end
+
   def languages_select(languages)
     select 'q', 'language_eq',
           languages.collect {|l| [translate_language(l), l]},

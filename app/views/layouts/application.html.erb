@@ -19,12 +19,34 @@
   <header>
     <h1>
       <%= link_to 'Mênon', root_path, itemprop: "name" %>
-      <span itemprop="about"><%= t(:slogan, scope: :application) %></span>
+      <!--span itemprop="about"><%= t(:slogan, scope: :application) %></span-->
     </h1>
-    <div id="languages">
+    <!--div id="languages">
       <button data-lang="en">English</button>
       <button data-lang="pt">Português</button>
-    <div>
+    <div-->
+    <nav>
+      <ul>
+        <li class="<%= nav_class(root_path) %>">
+          <%= link_to t(:courses, scope: :nav), root_path  %>
+        </li>
+        <!--li class="<%= nav_class(contact_path) %>">
+          <%= link_to t(:contact, scope: :nav), contact_path %>
+        </li-->
+        <% if user_signed_in? %>
+          <li class="<%= nav_class(account_path) %>">
+            <%= link_to t(:account, scope: :nav), account_path %>
+          </li>
+          <li>
+            <%= link_to t(:logout,scope: :nav), destroy_user_session_path, method: :delete %>
+          </li>
+        <% else %>
+          <li class="<%= nav_class(new_session_path(:user)) %>">
+            <%= link_to t(:sign_in, scope: :nav), new_session_path(:user) %>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
   </header>
 
   <div id="content">
