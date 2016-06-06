@@ -13,12 +13,11 @@
       <h3><%= t(:about_title, scope: :course) %></h3>
       <%= hyperlink @course.description %>
       <p>(<%= @course.lessons.count %> lessons)</p>
-      <%= link_to course_lesson_path @course, @course.lessons.first do %>
+      <%= link_to resume_course_path @course do %>
         <%= user_signed_in? && @course.enrolled?(current_user) ? t(:resume, scope: :course) : t(:enroll, scope: :course) %>
       <% end %>
     </div>
     <div>
-
     </div>
   </div>
 

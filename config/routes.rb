@@ -10,6 +10,10 @@ Rails.application.routes.draw do
       post :import_from_youtube, path: "/import/youtube"
     end
 
+    member do
+      get :resume
+    end
+
     resources :lessons, only: [:show, :destroy] do
       member do
         get :previous

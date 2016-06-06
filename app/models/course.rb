@@ -16,6 +16,15 @@ class Course < ActiveRecord::Base
     importer.import!
   end
 
+  # returns the user current lesson
+  def resume(user)
+    lessons.
+      joins('LEFT JOIN lesson_statuses s ON s.lesson_id = lessons.id').
+      where('s.id IS NULL OR (s.user_id = ? AND s.finished <> true)', user.id).
+      order(:position).limit(1).
+      first
+  end
+
   def progress_for(user)
     (statuses.finished.where(user_id: user.id).count*100) / lessons.count
   end
