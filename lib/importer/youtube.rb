@@ -29,12 +29,17 @@ module Importer
     def import!
       playlist = provider.new url: source_url
 
+      puts "- Importing '#{playlist.title}'"
+
       course.name = playlist.title
       course.description = playlist.description
       course.thumbnail_url = build_thumbail_url playlist.playlist_items.first.video
       course.save
 
+      puts "-- Found #{playlist.playlist_items.count} episodes"
+
       lessons = playlist.playlist_items.map do |item|
+        puts "-- - Importing #{item.title}"
         YoutubeLesson.find_or_create_by(provider_id: item.video.id, course_id: course.id) do |lesson|
           lesson.name = item.title
           lesson.description = item.description
