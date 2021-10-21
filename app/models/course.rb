@@ -5,7 +5,7 @@ class Course < ActiveRecord::Base
   has_many :lessons, -> { order('position ASC') }, dependent: :destroy
   has_many :statuses, class_name: 'LessonStatus', through: :lessons
 
-  belongs_to :owner, class_name: "User"
+  belongs_to :owner, class_name: "User", optional: true
 
   validates :name, presence: true
 

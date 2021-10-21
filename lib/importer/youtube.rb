@@ -3,6 +3,7 @@ module Importer
     attr_accessor :course, :source_url, :provider
 
     def self.update!(course_id, provider = nil)
+      puts "##{course_id} update!"
       course = Course.find course_id
       importer = new(course.source_url, course.owner_id, provider)
       importer.import!
@@ -11,6 +12,7 @@ module Importer
     def initialize(source_url, owner_id, provider = nil)
        @course = find_course source_url, owner_id
        @source_url = source_url
+       debugger
        @provider = provider || default_provider
     end
 
@@ -50,10 +52,10 @@ module Importer
         end
       end
 
-    rescue Yt::Error => error
-      course.errors.add(:base, error.kind["message"])
-    ensure
-      return course
+    # rescue Yt::Error => error
+      # course.errors.add(:base, error.kind["message"])
+    # ensure
+      # return course
     end
 
     private

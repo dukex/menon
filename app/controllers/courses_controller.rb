@@ -16,6 +16,6 @@ class CoursesController < ApplicationController
 
   private
     def set_course
-      @course = Course.find(params[:id])
+      @course = Course.friendly.find(params[:id])
     end
 end
