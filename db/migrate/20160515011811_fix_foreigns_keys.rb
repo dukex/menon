@@ -1,4 +1,4 @@
-class FixForeignsKeys < ActiveRecord::Migration
+class FixForeignsKeys < ActiveRecord::Migration[4.2]
   def change
     uuid :courses, :owner_id
     uuid :friendly_id_slugs, :sluggable_id

@@ -6,7 +6,7 @@ RSpec.describe LessonsController, type: :controller do
       sign_in create(:user)
       lesson = create :lesson
 
-      get :show, id: lesson, course_id: lesson.course
+      get :show, params: { id: lesson.id, course_id: lesson.course.id }
 
       expect(assigns(:lesson)).to eq(lesson)
     end
@@ -15,7 +15,7 @@ RSpec.describe LessonsController, type: :controller do
       sign_in create(:user)
       lesson = create :lesson
 
-      get :show, id: lesson, course_id: lesson.course
+      get :show, params: { id: lesson.id, course_id: lesson.course.id }
 
       expect(response).to render_template('show')
     end
@@ -28,7 +28,7 @@ RSpec.describe LessonsController, type: :controller do
       lesson = create :lesson, course_id: course.id
       next_lesson = create :lesson, course_id: course.id
 
-      get :next, id: lesson, course_id: course
+      get :next, params: { id: lesson.id, course_id: course.id }
 
       expect(response).to redirect_to(course_lesson_path(course, next_lesson))
     end
@@ -38,7 +38,7 @@ RSpec.describe LessonsController, type: :controller do
       course = create :course
       lesson = create :lesson, course_id: course.id
 
-      get :next, id: lesson, course_id: course
+      get :next, params: { id: lesson.id, course_id: course.id }
 
       expect(response).to redirect_to(course_path(course))
     end
@@ -52,7 +52,7 @@ RSpec.describe LessonsController, type: :controller do
       previous_lesson = create :lesson, course_id: course.id
       lesson = create :lesson, course_id: course.id
 
-      get :previous, id: lesson, course_id: course
+      get :previous, params: { id: lesson.id, course_id: course.id }
 
       expect(response).to redirect_to(course_lesson_path(course, previous_lesson))
     end
@@ -62,7 +62,7 @@ RSpec.describe LessonsController, type: :controller do
       course = create :course
       lesson = create :lesson, course_id: course.id
 
-      get :next, id: lesson, course_id: course
+      get :next, params: { id: lesson.id, course_id: course.id }
 
       expect(response).to redirect_to(course_path(course))
     end

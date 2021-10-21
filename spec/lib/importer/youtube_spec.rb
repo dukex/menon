@@ -42,7 +42,7 @@ RSpec.describe Importer::Youtube do
 
         course = importer.import!
 
-        expect(course.errors.get(:base)).to eql(['an error'])
+        expect(course.errors[:base]).to eql(['an error'])
         expect(course.valid?).to be_falsy
       end
 

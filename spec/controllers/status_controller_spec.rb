@@ -6,7 +6,7 @@ RSpec.describe StatusController, type: :controller do
       sign_in user = create(:user)
       lesson = create :lesson
 
-      post :create, lesson_id: lesson, course_id: lesson.course, status: { time: 2 }, format: :json
+      post :create, params: { lesson_id: lesson.id, course_id: lesson.course.id, status: { time: 2 } }, format: :json
 
       expect(lesson.status_for(user).time).to eql(2.0)
       expect(LessonStatus.count).to eql(1)
@@ -18,7 +18,7 @@ RSpec.describe StatusController, type: :controller do
       status = lesson.status_for(user)
       status.save
 
-      post :create, lesson_id: lesson, course_id: lesson.course, status: { time: 20 }, format: :json
+      post :create, params: { lesson_id: lesson.id, course_id: lesson.course.id, status: { time: 20 } }, format: :json
 
       expect(lesson.status_for(user).time).to eql(20.0)
       expect(LessonStatus.count).to eql(1)
@@ -29,7 +29,7 @@ RSpec.describe StatusController, type: :controller do
       sign_in create(:user)
       lesson = create :lesson
 
-      post :create, lesson_id: lesson, course_id: lesson.course, status: { time: 2 }, format: :json
+      post :create, params: { lesson_id: lesson.id, course_id: lesson.course.id, status: { time: 2 } }, format: :json
 
       expect(response).to have_http_status(:no_content)
     end
@@ -40,7 +40,7 @@ RSpec.describe StatusController, type: :controller do
       sign_in user = create(:user)
       lesson = create :lesson
 
-      post :finish, lesson_id: lesson, course_id: lesson.course, format: :json
+      post :finish, params: { lesson_id: lesson.id, course_id: lesson.course.id }, format: :json
 
       expect(lesson.status_for(user).finished).to be_truthy
     end

@@ -1,4 +1,4 @@
-class AddValidations < ActiveRecord::Migration
+class AddValidations < ActiveRecord::Migration[4.2]
   def up
     execute "ALTER TABLE lesson_statuses
       ADD CONSTRAINT time_greater_than_zero CHECK (time > 0)"

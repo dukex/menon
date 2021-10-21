@@ -21,7 +21,7 @@ RSpec.describe CoursesController, type: :controller do
     it 'assigns @course' do
       course = create :course
 
-      get :show, id: course
+      get :show, params: { id: course.id }
 
       expect(assigns(:course)).to eq(course)
     end
@@ -29,7 +29,7 @@ RSpec.describe CoursesController, type: :controller do
     it 'renders the show template' do
       course = create :course
 
-      get :show, id: course
+      get :show, params: { id: course.id }
 
       expect(response).to render_template('show')
     end
@@ -44,19 +44,19 @@ RSpec.describe CoursesController, type: :controller do
       lesson3 = create :lesson, course_id: course.id, position: 3
       lesson1 = create :lesson, course_id: course.id, position: 1
 
-      get :resume, id: course
+      get :resume, params: { id: course.id }
       expect(response).to redirect_to course_lesson_path(course, lesson1)
 
       lesson1.finish! user
-      get :resume, id: course
+      get :resume, params: { id: course.id }
       expect(response).to redirect_to course_lesson_path(course, lesson2)
 
       lesson2.finish! user
-      get :resume, id: course
+      get :resume, params: { id: course.id }
       expect(response).to redirect_to course_lesson_path(course, lesson3)
 
       lesson3.finish! user
-      get :resume, id: course
+      get :resume, params: { id: course.id }
       expect(response).to redirect_to course_path(course)
     end
   end

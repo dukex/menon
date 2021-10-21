@@ -1,6 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :course do
     name 'My Course'
+    owner { association :user }
   end
 
   factory :lesson do

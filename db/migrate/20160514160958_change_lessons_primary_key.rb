@@ -1,4 +1,4 @@
-class ChangeLessonsPrimaryKey < ActiveRecord::Migration
+class ChangeLessonsPrimaryKey < ActiveRecord::Migration[4.2]
   def change
     execute 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp"'
 
