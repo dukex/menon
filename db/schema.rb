@@ -10,131 +10,132 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2016_06_03_225204) do
+ActiveRecord::Schema[7.0].define(version: 20_160_603_225_204) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
+  enable_extension 'plpgsql'
+  enable_extension 'uuid-ossp'
 
-  create_table "blazer_audits", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "query_id"
-    t.text "statement"
-    t.string "data_source"
-    t.datetime "created_at", precision: nil
+  create_table 'blazer_audits', id: :serial, force: :cascade do |t|
+    t.integer 'user_id'
+    t.integer 'query_id'
+    t.text 'statement'
+    t.string 'data_source'
+    t.datetime 'created_at', precision: nil
   end
 
-  create_table "blazer_checks", id: :serial, force: :cascade do |t|
-    t.integer "creator_id"
-    t.integer "query_id"
-    t.string "state"
-    t.string "schedule"
-    t.text "emails"
-    t.boolean "invert"
-    t.datetime "last_run_at", precision: nil
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+  create_table 'blazer_checks', id: :serial, force: :cascade do |t|
+    t.integer 'creator_id'
+    t.integer 'query_id'
+    t.string 'state'
+    t.string 'schedule'
+    t.text 'emails'
+    t.boolean 'invert'
+    t.datetime 'last_run_at', precision: nil
+    t.datetime 'created_at', precision: nil
+    t.datetime 'updated_at', precision: nil
   end
 
-  create_table "blazer_dashboard_queries", id: :serial, force: :cascade do |t|
-    t.integer "dashboard_id"
-    t.integer "query_id"
-    t.integer "position"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+  create_table 'blazer_dashboard_queries', id: :serial, force: :cascade do |t|
+    t.integer 'dashboard_id'
+    t.integer 'query_id'
+    t.integer 'position'
+    t.datetime 'created_at', precision: nil
+    t.datetime 'updated_at', precision: nil
   end
 
-  create_table "blazer_dashboards", id: :serial, force: :cascade do |t|
-    t.integer "creator_id"
-    t.text "name"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+  create_table 'blazer_dashboards', id: :serial, force: :cascade do |t|
+    t.integer 'creator_id'
+    t.text 'name'
+    t.datetime 'created_at', precision: nil
+    t.datetime 'updated_at', precision: nil
   end
 
-  create_table "blazer_queries", id: :serial, force: :cascade do |t|
-    t.integer "creator_id"
-    t.string "name"
-    t.text "description"
-    t.text "statement"
-    t.string "data_source"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+  create_table 'blazer_queries', id: :serial, force: :cascade do |t|
+    t.integer 'creator_id'
+    t.string 'name'
+    t.text 'description'
+    t.text 'statement'
+    t.string 'data_source'
+    t.datetime 'created_at', precision: nil
+    t.datetime 'updated_at', precision: nil
   end
 
-  create_table "courses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.text "description"
-    t.string "source_url"
-    t.string "thumbnail_url"
-    t.string "slug"
-    t.uuid "owner_id"
-    t.string "language", default: "en"
-    t.index ["slug"], name: "index_courses_on_slug", unique: true
+  create_table 'courses', id: :uuid, default: -> { 'uuid_generate_v4()' }, force: :cascade do |t|
+    t.string 'name', null: false
+    t.datetime 'created_at', precision: nil, null: false
+    t.datetime 'updated_at', precision: nil, null: false
+    t.text 'description'
+    t.string 'source_url'
+    t.string 'thumbnail_url'
+    t.string 'slug'
+    t.uuid 'owner_id'
+    t.string 'language', default: 'en'
+    t.index ['slug'], name: 'index_courses_on_slug', unique: true
   end
 
-  create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
-    t.string "slug", null: false
-    t.string "sluggable_type", limit: 50
-    t.string "scope"
-    t.datetime "created_at", precision: nil
-    t.uuid "sluggable_id"
-    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  create_table 'friendly_id_slugs', id: :serial, force: :cascade do |t|
+    t.string 'slug', null: false
+    t.string 'sluggable_type', limit: 50
+    t.string 'scope'
+    t.datetime 'created_at', precision: nil
+    t.uuid 'sluggable_id'
+    t.index %w[slug sluggable_type scope], name: 'index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope',
+                                           unique: true
+    t.index %w[slug sluggable_type], name: 'index_friendly_id_slugs_on_slug_and_sluggable_type'
+    t.index ['sluggable_type'], name: 'index_friendly_id_slugs_on_sluggable_type'
   end
 
-  create_table "lesson_statuses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.float "time"
-    t.boolean "finished"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.uuid "lesson_id"
-    t.uuid "user_id"
-    t.index ["lesson_id", "user_id"], name: "lesson_id_user_id", unique: true
-    t.check_constraint "\"time\" > 0::double precision", name: "time_greater_than_zero"
+  create_table 'lesson_statuses', id: :uuid, default: -> { 'uuid_generate_v4()' }, force: :cascade do |t|
+    t.float 'time'
+    t.boolean 'finished'
+    t.datetime 'created_at', precision: nil, null: false
+    t.datetime 'updated_at', precision: nil, null: false
+    t.uuid 'lesson_id'
+    t.uuid 'user_id'
+    t.index %w[lesson_id user_id], name: 'lesson_id_user_id', unique: true
+    t.check_constraint '"time" > 0::double precision', name: 'time_greater_than_zero'
   end
 
-  create_table "lessons", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "type"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.text "description"
-    t.string "thumbnail_url"
-    t.date "published_at"
-    t.string "provider_id"
-    t.integer "position"
-    t.integer "duration"
-    t.string "slug"
-    t.uuid "course_id"
-    t.index ["provider_id"], name: "index_lessons_on_provider_id"
-    t.index ["slug"], name: "index_lessons_on_slug", unique: true
+  create_table 'lessons', id: :uuid, default: -> { 'uuid_generate_v4()' }, force: :cascade do |t|
+    t.string 'name'
+    t.string 'type'
+    t.datetime 'created_at', precision: nil, null: false
+    t.datetime 'updated_at', precision: nil, null: false
+    t.text 'description'
+    t.string 'thumbnail_url'
+    t.date 'published_at'
+    t.string 'provider_id'
+    t.integer 'position'
+    t.integer 'duration'
+    t.string 'slug'
+    t.uuid 'course_id'
+    t.index ['provider_id'], name: 'index_lessons_on_provider_id'
+    t.index ['slug'], name: 'index_lessons_on_slug', unique: true
   end
 
-  create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at", precision: nil
-    t.datetime "remember_created_at", precision: nil
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at", precision: nil
-    t.datetime "last_sign_in_at", precision: nil
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at", precision: nil
-    t.datetime "confirmation_sent_at", precision: nil
-    t.string "unconfirmed_email"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  create_table 'users', id: :uuid, default: -> { 'uuid_generate_v4()' }, force: :cascade do |t|
+    t.string 'email', default: '', null: false
+    t.string 'encrypted_password', default: '', null: false
+    t.string 'reset_password_token'
+    t.datetime 'reset_password_sent_at', precision: nil
+    t.datetime 'remember_created_at', precision: nil
+    t.integer 'sign_in_count', default: 0, null: false
+    t.datetime 'current_sign_in_at', precision: nil
+    t.datetime 'last_sign_in_at', precision: nil
+    t.inet 'current_sign_in_ip'
+    t.inet 'last_sign_in_ip'
+    t.string 'confirmation_token'
+    t.datetime 'confirmed_at', precision: nil
+    t.datetime 'confirmation_sent_at', precision: nil
+    t.string 'unconfirmed_email'
+    t.datetime 'created_at', precision: nil, null: false
+    t.datetime 'updated_at', precision: nil, null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
 
-  add_foreign_key "courses", "users", column: "owner_id", name: "owner_id_fk"
-  add_foreign_key "lesson_statuses", "lessons", name: "lesson_id_fk"
-  add_foreign_key "lesson_statuses", "users", name: "user_id_fk"
-  add_foreign_key "lessons", "courses", name: "course_id_fk"
+  add_foreign_key 'courses', 'users', column: 'owner_id', name: 'owner_id_fk'
+  add_foreign_key 'lesson_statuses', 'lessons', name: 'lesson_id_fk'
+  add_foreign_key 'lesson_statuses', 'users', name: 'user_id_fk'
+  add_foreign_key 'lessons', 'courses', name: 'course_id_fk'
 end
