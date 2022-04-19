@@ -1,7 +1,8 @@
 
-<h1 class="font-bold text-4xl md:text-6xl lg:text-7xl text-blue-900">  MIT 15.S12 Blockchain and Money, Fall 2018</h1>
+<h1 class="font-bold text-4xl text-blue-900"><%= @course.name %></h1>
 
-<p class="my-5 text-blue-900">This course is for students wishing to explore blockchain technology's potential use - by entrepreneurs & incumbents - to change the world of money and finance.
+<p class="my-5 text-blue-900">
+<%= @course.description %>
 </p>
 
 <div class="flex">
@@ -41,4 +42,6 @@
   </ol>
 </div>
 
-<div class="bg-blue-900 h-20"><button class="w-40 h-11 font-bold text-base rounded-lg bg-green-200 mx-28 my-4">Enroll now for free</button></div>
+<div class="sticky bottom-0 bg-blue-900 h-20 flex items-center justify-center"><button class="w-40 h-11 font-bold text-base rounded-lg bg-green-200">Enroll now for free</button></div>
+
+
