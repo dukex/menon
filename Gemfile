@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 ruby '3.0.3'
@@ -70,4 +72,4 @@ group :test do
   gem 'webdrivers'
 end
 
-gem "tailwindcss-rails", "~> 2.0"
+gem 'tailwindcss-rails', '~> 2.0'
