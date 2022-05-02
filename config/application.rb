@@ -1,10 +1,13 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+# Load environment variables
+Dotenv::Railtie.load
 
 module Menon
   class Application < Rails::Application
