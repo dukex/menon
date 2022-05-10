@@ -28,6 +28,9 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
+# Resque is a Redis-backed Ruby library for creating background jobs, placing them on multiple queues, and processing them later.
+gem 'resque'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
