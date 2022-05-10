@@ -6,8 +6,10 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Load environment variables
-Dotenv::Railtie.load
+unless Rails.env.production?
+  # Load environment variables
+  Dotenv::Railtie.load
+end
 
 module Menon
   class Application < Rails::Application
