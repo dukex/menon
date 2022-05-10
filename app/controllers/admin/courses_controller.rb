@@ -1,5 +1,23 @@
+# frozen_string_literal: true
+
+class PageImport < Administrate::Page::Show
+  def attributes
+    dashboard.import_page_attributes.map do |attr_name|
+      attribute_field(dashboard, resource, attr_name, :show)
+    end
+  end
+end
+
 module Admin
   class CoursesController < Admin::ApplicationController
+    def import
+      requested_resource.start_importation!
+
+      render locals: {
+        page: PageImport.new(dashboard, requested_resource)
+      }
+    end
+
     # Overwrite any of the RESTful controller actions to implement custom behavior
     # For example, you may want to send an email after a foo is updated.
     #
