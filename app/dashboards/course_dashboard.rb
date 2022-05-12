@@ -56,8 +56,9 @@ class CourseDashboard < Administrate::BaseDashboard
   #     open: ->(resources) { resources.where(open: true) }
   #   }.freeze
   COLLECTION_FILTERS = {
-    importing: ->(resources) { resources.where(status: :importing) }
-  }
+    importing: ->(resources) { resources.where(status: :importing) },
+    review: ->(resources) { resources.where("status <> 'reviewed' OR status IS NULL") }
+  }.freeze
   # Overwrite this method to customize how courses are displayed
   # across all pages of the admin dashboard.
   #
