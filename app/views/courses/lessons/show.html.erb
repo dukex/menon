@@ -1,13 +1,16 @@
 <h3 class="text-sm my-3"><%= link_to @lesson.course.name, @lesson.course %></h3>
 <h2 class="font-bold text-4xl"><%= @lesson.name %></h2>
 
-<div class="flex items-center text-2xl my-5">
-  <div class="px-2">
+<div class=" items-center text-2xl my-5">
+  <div class="py-2">
     <span class="block font-bold"><%= @lesson.duration / 60 %></span>
     <span class="block text-base">minutes</span>
   </div>
-  <div class="px-2">
-    <%= image_tag @lesson.thumbnail_url %>
+
+  <div class=" relative h-0 overflow-hidden max-w-full pb-[56%] py-2">
+  <iframe class="absolute top-0 left-0 w-full h-full" id="ytplayer" type="text/html"
+  src="http://www.youtube.com/embed/<%= @lesson.provider_id %>?origin=http://example.com"
+  frameborder="0"></iframe>
   </div>
 </div>
 <p class="my-5">
