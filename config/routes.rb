@@ -16,7 +16,9 @@ Rails.application.routes.draw do
 
   mount Resque::Server, at: '/jobs'
 
-  resources :courses
+  resources :courses, only: %i[index show] do
+    resources :lessons, module: :courses, only: :show
+  end
 
   root to: 'courses#index'
 end

@@ -24,9 +24,11 @@
 
   <ol>
     <% @course.lessons.each do |lesson| %>
-      <li class="flex py-4">
-        <%= image_tag 'play.svg' %>
-        <span class="ml-4 flex-1 font-light"><%= lesson.name %></span>
+      <li class="py-4">
+        <%= link_to course_lesson_url(course_id: @course.to_param, id: lesson.to_param), class: "flex" do %> 
+          <%= image_tag 'play.svg' %>
+          <span class="ml-4 flex-1 font-light"><%= lesson.name %></span>
+        <% end %>
       </li>
     <% end %>
 
