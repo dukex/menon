@@ -18,7 +18,7 @@ module Providers
       puts "- Importing '#{playlist.title}'"
 
       course.name = playlist.title
-      course.description = playlist.description
+      course.description = playlist.description.gsub("\n", '<br />')
       course.thumbnail_url = playlist.thumbnail_url(:high)
       course.status ||= :created
       course.save!
