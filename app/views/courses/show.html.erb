@@ -23,9 +23,9 @@
 
   <ol>
     <% @course.lessons.each do |lesson| %>
-      <li class="flex">
-        <img class="w-14 h-14" src="<%= lesson.thumbnail_url %>">
-        <span class="flex-1 font-light"><%= lesson.name %></span>
+      <li class="flex py-4">
+        <%= image_tag 'play.svg' %>
+        <span class="ml-4 flex-1 font-light"><%= lesson.name %></span>
       </li>
     <% end %>
 
