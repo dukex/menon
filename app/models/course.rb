@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Course < ApplicationRecord
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   include HasProvider
 
   has_many :lessons, class_name: 'Courses::Lesson'

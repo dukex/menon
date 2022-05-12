@@ -55,6 +55,9 @@ gem 'bootsnap', require: false
 # A framework for creating flexible, powerful admin dashboards in Rails
 gem 'administrate'
 
+# FriendlyId is the “Swiss Army bulldozer” of slugging and permalink plugins for ActiveRecord. It allows you to create pretty URL’s and work with human-friendly strings as if they were numeric ids for ActiveRecord models.
+gem 'friendly_id', '~> 5.4.0'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]

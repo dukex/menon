@@ -7,6 +7,6 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @course = Course.reviewed.find(params[:id])
+    @course = Course.reviewed.friendly.find(params[:id])
   end
 end
