@@ -5,10 +5,12 @@ class Course < ApplicationRecord
 
   has_many :lessons, class_name: 'Courses::Lesson'
 
-  validates :status, presence: true
-
   enum status: {
-    created: :created, error: :error, importing: :importing, imported: :imported, reviewed: :reviewed
+    created: 'created',
+    error: 'error',
+    importing: 'importing',
+    imported: 'imported',
+    reviewed: 'reviewed'
   }
 
   # on        status
