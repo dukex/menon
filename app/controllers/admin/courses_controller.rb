@@ -1,21 +1,14 @@
 # frozen_string_literal: true
 
-class PageImport < Administrate::Page::Show
-  def attributes
-    dashboard.import_page_attributes.map do |attr_name|
-      attribute_field(dashboard, resource, attr_name, :show)
-    end
-  end
-end
-
 module Admin
   class CoursesController < Admin::ApplicationController
     def import
       requested_resource.start_importation!
 
-      render locals: {
-        page: PageImport.new(dashboard, requested_resource)
-      }
+      redirect_to(
+        after_resource_updated_path(requested_resource),
+        notice: translate_with_resource('update.success')
+      )
     end
 
     # Overwrite any of the RESTful controller actions to implement custom behavior
