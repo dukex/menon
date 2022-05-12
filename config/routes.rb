@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   mount Resque::Server, at: '/jobs'
 
   resources :courses
+
+  root to: 'courses#index'
 end
