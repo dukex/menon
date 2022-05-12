@@ -12,9 +12,15 @@
   </head>
 
   <body class="bg-blue-50">
-    <%= image_tag "Logo.svg", class: "w-14 h-14" %>
+    <header class="p-3">
+      <%= image_tag "Logo.svg", class: "w-14 h-14" %>
+    </header>
 
-    <%= yield %>
+    <main>
+      <%= yield %>
+    </main>
 
+    <footer class="p-3">
+    </footer>
   </body>
 </html>
