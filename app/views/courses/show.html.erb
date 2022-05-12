@@ -1,8 +1,10 @@
+<% content_for :title, "#{@course.name}" %>
+<% content_for :description, sanitize(@course.description, tags: %w(), attributes: %w()) %>
 
 <h1 class="font-bold text-4xl"><%= @course.name %></h1>
 
 <p class="my-5">
- <%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
+  <%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
 </p>
 
 <div class="grid grid-cols-3 gap-2 text-2xl my-5">
@@ -36,4 +38,16 @@
   <button class="font-bold px-4 py-2 rounded-lg bg-brand-500">Enroll now for free</button>
 </div>
 
-
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "<%= @course.name %>",
+      "description": "<%= sanitize(@course.description, tags: %w(), attributes: %w()) %>",
+      "provider": {
+        "@type": "Organization",
+        "name": "<%= @course.creator_name %>",
+        "sameAs": "<%= @course.creator_url %>"
+      }
+    }
+</script>

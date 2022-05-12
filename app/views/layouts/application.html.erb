@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Menon</title>
+    <title><%= yield(:title).presence || "Courses" %> - Menon</title>
+    <meta name="description" content="<%= yield(:description).presence || "Free online courses" %>">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
