@@ -2,7 +2,7 @@
 <h1 class="font-bold text-4xl text-blue-900"><%= @course.name %></h1>
 
 <p class="my-5 text-blue-900">
-<%= @course.description %>
+<%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
 </p>
 
 <div class="flex">
