@@ -17,6 +17,8 @@ class CourseDashboard < Administrate::BaseDashboard
     language: Field::String,
     description: Field::Text,
     source_url: Field::String,
+    creator_name: Field::String,
+    creator_url: Field::String,
     thumbnail_url: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
