@@ -1,5 +1,8 @@
 module Courses
   class Lesson < ActiveRecord::Base
+    extend FriendlyId
+    friendly_id :name, use: :slugged
+
     belongs_to :course
     validates :course_id, presence: true
 
