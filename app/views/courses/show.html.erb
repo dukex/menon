@@ -5,7 +5,7 @@
  <%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
 </p>
 
-<div class="grid grid-cols-3 gap-2 text-2xl">
+<div class="grid grid-cols-3 gap-2 text-2xl my-5">
   <div>
     <span class="block"><%= @course.lessons.count%></span>
     <span class="block">vídeos</span>
@@ -18,15 +18,14 @@
   <img src="<%= @course.thumbnail_url %>" class="w-21 h-21">
 </div>
 
-<div class="shadow-gray bg-white rounded-3xl ml-3 mr-3">
-  <h2 class="font-bold text-2xlmr-6 my-4">Lessons</h2>
+<div class="shadow-gray bg-white rounded-3xl p-4">
+  <h2 class="font-bold mb-2">Lessons</h2>
 
   <ol>
-
     <% @course.lessons.each do |lesson| %>
-      <li class="flex p-2">
-        <img class="flex-none w-14 h-14" src="<%= lesson.thumbnail_url %>">
-        <span class="flex-1"><%= lesson.name %></span>
+      <li class="flex">
+        <img class="w-14 h-14" src="<%= lesson.thumbnail_url %>">
+        <span class="flex-1 font-light"><%= lesson.name %></span>
       </li>
     <% end %>
 
