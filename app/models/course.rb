@@ -33,7 +33,7 @@ class Course < ApplicationRecord
   def can?(target)
     case target
     when :import
-      [:created, :error, nil].include?(status)
+      created? || error? || status.nil?
     end
   end
 end
