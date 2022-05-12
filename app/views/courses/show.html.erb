@@ -1,19 +1,25 @@
 
-<h1 class="font-bold text-4xl text-blue-900"><%= @course.name %></h1>
+<h1 class="font-bold text-4xl"><%= @course.name %></h1>
 
-<p class="my-5 text-blue-900">
-<%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
+<p class="my-5">
+ <%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
 </p>
 
-<div class="flex">
-  <div><span class="text-blue-900 block text-3xl px-4"><%= @course.lessons.count%></span><span class="text-blue-900 text-3xl block px-4">vídeos</span></div>
-  <div><span class="text-blue-900 text-3xl block px-4"><%= @course.lessons.map { |lesson| lesson.duration }.sum / 3600 %></span><span class="text-blue-900 text-3xl block px-4">hours</span></div>
+<div class="grid grid-cols-3 gap-2 text-2xl">
+  <div>
+    <span class="block"><%= @course.lessons.count%></span>
+    <span class="block">vídeos</span>
+  </div>
+  <div>
+    <span class="block"><%= @course.lessons.map { |lesson| lesson.duration }.sum / 3600 %></span>
+    <span class="block">hours</span>
+  </div>
 
   <img src="<%= @course.thumbnail_url %>" class="w-21 h-21">
 </div>
 
 <div class="shadow-gray bg-white rounded-3xl ml-3 mr-3">
-  <h2 class="font-bold text-2xl text-blue-900 mr-6 my-4">Lessons</h2>
+  <h2 class="font-bold text-2xlmr-6 my-4">Lessons</h2>
 
   <ol>
 
