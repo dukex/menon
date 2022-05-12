@@ -34,7 +34,7 @@ as well as a link to its edit page.
       t("administrate.actions.import_resource", name: page.page_title),
       [:import, namespace, page.resource],
       class: "button",
-    ) if valid_action?(:import) && show_action?(:import, page.resource) %>
+    ) if valid_action?(:import) && show_action?(:import, page.resource) && page.resource.can?(:import) %>
   </div>
 </header>
 

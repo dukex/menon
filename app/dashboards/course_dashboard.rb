@@ -43,7 +43,7 @@ class CourseDashboard < Administrate::BaseDashboard
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = ATTRIBUTE_TYPES.keys - %i[created_at updated_at owner lessons]
+  FORM_ATTRIBUTES = ATTRIBUTE_TYPES.keys - %i[id slug thumbnail_url created_at updated_at owner_id lessons]
 
   # COLLECTION_FILTERS
   # a hash that defines filters that can be used while searching via the search

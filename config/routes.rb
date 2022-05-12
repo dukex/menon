@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       resources :youtube_lessons, except: :index
     end
 
-    resources :courses, only: %i[index show edit new destroy] do
+    resources :courses do
       get :import, on: :member
     end
   end
