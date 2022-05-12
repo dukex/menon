@@ -13,8 +13,15 @@
   </head>
 
   <body class="bg-blue-50 text-blue-900 text-base">
-    <header class="p-3">
-      <%= image_tag "Logo.svg", class: "w-14 h-14" %>
+    <header class="flex p-3">
+      <h1 class="-indent-[5000px]">
+        Menon
+      </h1>
+      <%=
+        link_to root_url do
+          image_tag "Logo.svg", class: "w-14 h-14"
+        end
+      %>
     </header>
 
     <main class="p-3">
