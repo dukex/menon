@@ -2,4 +2,4 @@ en:
   hello: "Hello world"
   administrate:
     actions:
-      import_resource: "Import %{name}"
+      import_resource: "Import"

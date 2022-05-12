@@ -31,7 +31,7 @@ as well as a link to its edit page.
     ) if valid_action?(:edit) && show_action?(:edit, page.resource) %>
 
     <%= link_to(
-      t("administrate.actions.import_resource", name: page.page_title),
+      t("administrate.actions.import_resource"),
       [:import, namespace, page.resource],
       class: "button",
     ) if valid_action?(:import) && show_action?(:import, page.resource) && page.resource.can?(:import) %>
