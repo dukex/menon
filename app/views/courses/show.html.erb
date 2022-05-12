@@ -7,17 +7,16 @@
   <%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
 </p>
 
-<div class="grid grid-cols-3 gap-2 text-2xl my-5">
-  <div>
-    <span class="block"><%= @course.lessons.count%></span>
-    <span class="block">vídeos</span>
+<div class="flex items-center text-2xl my-5">
+  <div class="px-2">
+    <span class="block font-bold"><%= @course.lessons.count%></span>
+    <span class="block text-base">vídeos</span>
   </div>
-  <div>
-    <span class="block"><%= @course.lessons.map { |lesson| lesson.duration }.sum / 3600 %></span>
-    <span class="block">hours</span>
+  <span class="block pl-5 mr-5 h-8 border-blue-900 border-r-2"></span>
+  <div class="px-2">
+    <span class="block font-bold"><%= @course.lessons.map { |lesson| lesson.duration }.sum / 3600 %></span>
+    <span class="block text-base">hours</span>
   </div>
-
-  <img src="<%= @course.thumbnail_url %>" class="w-21 h-21">
 </div>
 
 <div class="drop-shadow-md mb-8 bg-white rounded-3xl p-4">
