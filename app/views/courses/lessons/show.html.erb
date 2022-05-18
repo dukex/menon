@@ -1,1 +1,46 @@
-<%= @lesson.name %>
+<h3 class="text-sm my-3"><%= link_to @lesson.course.name, @lesson.course %></h3>
+<h2 class="font-bold text-4xl"><%= @lesson.name %></h2>
+
+<div class=" items-center text-2xl my-5">
+  <div class="py-2">
+    <span class="block font-bold"><%= @lesson.duration / 60 %></span>
+    <span class="block text-base">minutes</span>
+  </div>
+
+  <div class=" relative h-0 overflow-hidden max-w-full pb-[56%] py-2">
+  <iframe class="absolute top-0 left-0 w-full h-full" id="ytplayer" type="text/html"
+  src="http://www.youtube.com/embed/<%= @lesson.provider_id %>?origin=http://example.com"
+  frameborder="0"></iframe>
+  </div>
+</div>
+<p class="my-5">
+  <%= sanitize @lesson.description, tags: %w(ul ol li br), attributes: %w(class) %>
+</p>
+
+<% courses_lessons = @lesson.course.lessons.order("position ASC").select("position, name, slug").to_a %>
+
+<% if courses_lessons.last.position != @lesson.position %> 
+  <div class="drop-shadow-md mb-8 bg-white rounded-3xl p-4">
+    <h2 class="font-bold mb-2">Next Lessons</h2>
+
+    <ol>
+      <% courses_lessons.each do |lesson| %>
+        <% if lesson.position > @lesson.position %>
+          <li class="py-4">
+            <%= link_to course_lesson_url(course_id: @lesson.course.to_param, id: lesson.to_param), class: "flex" do %> 
+              <%= image_tag 'play.svg' %>
+              <span class="ml-4 flex-1 font-light"><%= lesson.name %></span>
+            <% end %>
+          </li>
+        <% end %>
+    <% end %>         
+    </ol>   
+  </div>
+<% end %>
+
+<!-- div class="sticky bottom-0 bg-blue-900 p-4 flex items-center justify-center">
+  <button class="font-bold px-4 py-2 rounded-lg bg-brand-500">Enroll now for free</button>
+</div -->
+
+
+

@@ -23,7 +23,7 @@
   <h2 class="font-bold mb-2">Lessons</h2>
 
   <ol>
-    <% @course.lessons.each do |lesson| %>
+    <% @course.lessons.order("position ASC").each do |lesson| %>
       <li class="py-4">
         <%= link_to course_lesson_url(course_id: @course.to_param, id: lesson.to_param), class: "flex" do %> 
           <%= image_tag 'play.svg' %>
