@@ -9,12 +9,12 @@
 
 <div class="flex items-center text-2xl my-5">
   <div class="px-2">
-    <span class="block font-bold"><%= @course.lessons.count%></span>
+    <span class="block font-bold"><%= @course.lessons_ordered.to_a.size%></span>
     <span class="block text-base">vídeos</span>
   </div>
   <span class="block pl-5 mr-5 h-8 border-blue-900 border-r-2"></span>
   <div class="px-2">
-    <span class="block font-bold"><%= @course.lessons.map { |lesson| lesson.duration }.sum / 3600 %></span>
+    <span class="block font-bold"><%= @course.lessons_ordered.map { |lesson| lesson.duration }.sum / 3600 %></span>
     <span class="block text-base">hours</span>
   </div>
 </div>
@@ -23,7 +23,7 @@
   <h2 class="font-bold mb-2">Lessons</h2>
 
   <ol>
-    <% @course.lessons.order("position ASC").each do |lesson| %>
+    <% @course.lessons_ordered.each do |lesson| %>
       <li class="py-4">
         <%= link_to course_lesson_url(course_id: @course.to_param, id: lesson.to_param), class: "flex" do %> 
           <%= image_tag 'play.svg' %>
