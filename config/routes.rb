@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/sitemap', to: "sitemap#index"
+
   mount Resque::Server, at: '/jobs'
 
   resources :courses, only: %i[index show] do
