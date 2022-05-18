@@ -1,22 +1,22 @@
-<h3 class="text-sm my-3"><%= link_to @lesson.course.name, @lesson.course %></h3>
+<h3 class="text-sm my-3 underline"><%= link_to @lesson.course.name, @lesson.course %></h3>
 <h2 class="font-bold text-4xl"><%= @lesson.name %></h2>
+<div class="flex flex-col lg:flex-row-reverse">
+  <div class="items-center text-2xl my-5 w-full lg:w-2/3 lg:pl-4">
+    <div class="py-2 lg:hidden">
+      <span class="block font-bold"><%= @lesson.duration / 60 %></span>
+      <span class="block text-base">minutes</span>
+    </div>
 
-<div class=" items-center text-2xl my-5">
-  <div class="py-2">
-    <span class="block font-bold"><%= @lesson.duration / 60 %></span>
-    <span class="block text-base">minutes</span>
+    <div class=" relative h-0 overflow-hidden max-w-full pb-[56%] py-2">
+    <iframe class="absolute top-0 left-0 w-full h-full" id="ytplayer" type="text/html"
+    src="http://www.youtube.com/embed/<%= @lesson.provider_id %>?origin=http://example.com"
+    frameborder="0"></iframe>
+    </div>
   </div>
-
-  <div class=" relative h-0 overflow-hidden max-w-full pb-[56%] py-2">
-  <iframe class="absolute top-0 left-0 w-full h-full" id="ytplayer" type="text/html"
-  src="http://www.youtube.com/embed/<%= @lesson.provider_id %>?origin=http://example.com"
-  frameborder="0"></iframe>
-  </div>
+  <p class="my-5 w-full lg:w-1/3">
+    <%= sanitize @lesson.description, tags: %w(ul ol li br), attributes: %w(class) %>
+  </p>
 </div>
-<p class="my-5">
-  <%= sanitize @lesson.description, tags: %w(ul ol li br), attributes: %w(class) %>
-</p>
-
 <% courses_lessons = @lesson.course.lessons.order("position ASC").select("position, name, slug").to_a %>
 
 <% if courses_lessons.last.position != @lesson.position %> 
