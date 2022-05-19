@@ -16,6 +16,10 @@ class Course < ApplicationRecord
     reviewed: 'reviewed'
   }
 
+  def lessons_ordered
+    lessons.order('position ASC')
+  end
+
   # on        status
   # create: - created
   # import: - imported
