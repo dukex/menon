@@ -41,7 +41,7 @@ on_worker_boot do
   ActiveRecord::Base.establish_connection
 end
 
-on_worker_fork do
+before_fork do
   FileUtils.touch('/tmp/app-initialized')
 end
 
