@@ -8,15 +8,14 @@
   </url>
   <% @courses.each do |course| %>
     <url>
-      <loc>https://menon.courses/courses/<%= course.slug %></loc>
+      <loc>https://menon.courses/<%= course.slug %></loc>
       <lastmod><%= course.updated_at.strftime("%Y-%m-%d") %></lastmod>
       <priority>0.75</priority>
     </url>
-
     
     <% course.lessons.each do |lesson| %>
       <url>
-        <loc>https://menon.courses/courses/<%= course.slug %>/lessons/<%= lesson.slug %></loc>
+        <loc>https://menon.courses/<%= course.slug %>/lessons/<%= lesson.slug %></loc>
         <lastmod><%= lesson.updated_at.strftime("%Y-%m-%d") %></lastmod>
         <priority>1</priority>
       </url>
