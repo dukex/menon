@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
   <head>
     <title><%= yield(:title).presence || "Courses" %> - Menon</title>
     <meta name="description" content="<%= yield(:description).presence || "Free online courses" %>">
@@ -21,14 +21,14 @@
 
   <body class="bg-blue-50 text-blue-900 text-base">
     <header class="flex p-3 max-w-screen-lg mx-auto">
-      <h1 class="-indent-[5000px]">
-        Menon
+      <h1>
+      
+      <%= link_to root_url do %>
+         <%= image_tag "Logo.svg", class: "w-14 h-14", alt: "logo" %>
+         <span class="-indent-[5000px] inline-block">Menon</span>
+
+      <% end %>
       </h1>
-      <%=
-        link_to root_url do
-          image_tag "Logo.svg", class: "w-14 h-14"
-        end
-      %>
     </header>
 
     <main class="p-3 max-w-screen-lg mx-auto">
