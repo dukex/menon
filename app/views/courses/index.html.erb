@@ -26,7 +26,7 @@
             },
             "url": "<%= course_url(course) %>",
           },
-        }<%= (index + 1) < @courses.size ? "," : "" %>
+        }<%= (index + 1) < @courses.to_a.size ? "," : "" %>
       <% end %>
       ]
     }
