@@ -1,2 +1,2 @@
-web: bin/start-nginx bin/rails server -e $RAILS_ENV
+web: bin/start-nginx bundle exec puma -C config/puma.rb
 resque: QUEUE=* bin/rake resque:work
