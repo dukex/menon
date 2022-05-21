@@ -21,6 +21,10 @@ module Providers
       course.description = playlist.description.gsub("\n", '<br />')
       course.thumbnail_url = playlist.thumbnail_url(:high)
       course.status ||= :created
+
+      course.creator_name = playlist.channel_title
+      course.creator_url = "https://youtube.com/channel/#{playlist.channel_id}"
+
       course.save!
     end
 
