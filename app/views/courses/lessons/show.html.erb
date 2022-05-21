@@ -32,7 +32,7 @@
       <% courses_lessons.each do |lesson| %>
         <% if lesson.position > @lesson.position %>
           <li class="py-4">
-            <%= link_to course_lesson_url(course_id: @lesson.course.to_param, id: lesson.to_param), class: "flex" do %> 
+            <%= link_to course_lesson_url(course_id: @lesson.course.to_param, id: lesson.to_param.presence || lesson.id), class: "flex" do %> 
               <%= image_tag 'play.svg', width: "40px", height: "40px", alt: "Start lesson" %>
               <span class="ml-4 flex-1 font-light"><%= lesson.name %></span>
             <% end %>
@@ -48,4 +48,15 @@
 </div -->
 
 
-
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+          "@type": "VideoObject",
+            "name": "<%= @lesson.name %>",
+            "description": "<%= sanitize(@lesson.description, tags: %w(), attributes: %w()).gsub("\n", "") %>",
+            "thumbnailUrl": "<%= @lesson.thumbnail_url %>",
+            "url": "<%= course_lesson_url(@lesson.course.to_param, @lesson.to_param.presence || @lesson.id) %>",
+            "uploadDate": "<%= @lesson.created_at %>",
+            "duration": "<%= ActiveSupport::Duration.build(@lesson.duration).iso8601 %>"
+        }
+</script>
