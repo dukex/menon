@@ -7,7 +7,7 @@
   <%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
 </p>
 
-<%= lesson_count = @course.lessons_ordered.to_a.size %>
+<% lesson_count = @course.lessons_ordered.to_a.size %>
 
 <div class="flex items-center text-2xl my-5">
   <div class="px-2">
