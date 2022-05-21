@@ -9,6 +9,7 @@ module StaticCache
 
   included do
     def static_cache!
+      return unless Rails.env.production?
       return unless response.status == 200
 
       filename = Rails.root.join('public', request.path.gsub(%r{^/}, ''), 'index.html')
