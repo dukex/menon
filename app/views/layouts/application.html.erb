@@ -15,6 +15,10 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#80EECD">
     <meta name="msapplication-TileColor" content="#80EECD">
     <meta name="theme-color" content="#ffffff">
+    <% if Rails.application.config.real_env.production? %>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2309414464751824"
+        crossorigin="anonymous"></script>
+    <% end %>
   </head>
 
   <body class="bg-blue-50 text-blue-900 text-base">
@@ -35,9 +39,5 @@
 
     <footer class="p-3 max-w-screen-lg mx-auto">
     </footer>
-
-    <% if Rails.application.config.real_env.production? %>
-      <script async data-ad-client="ca-pub-2309414464751824" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
-    <% end %>
   </body>
 </html>
