@@ -6,6 +6,13 @@ module Courses
 
     def show
       @lesson = course.lessons.friendly.find(params[:id])
+
+      if request.path != course_lesson_path(
+        @course.to_param, @lesson.to_param
+      )
+        redirect_to course_lesson_path(@course.to_param, @lesson.to_param),
+                    status: :moved_permanently
+      end
     end
 
     private
