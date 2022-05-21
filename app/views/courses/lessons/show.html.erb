@@ -1,5 +1,7 @@
-<h3 class="text-sm my-3 underline"><%= link_to @lesson.course.name, @lesson.course %></h3>
-<h2 class="font-bold text-4xl"><%= @lesson.name %></h2>
+<hgroup class="flex flex-col-reverse">
+  <h2 class="font-bold text-4xl"><%= @lesson.name %></h2>
+  <h3 class="text-sm my-3 underline"><%= link_to @lesson.course.name, @lesson.course %></h3>
+</hgroup>
 <div class="flex flex-col lg:flex-row-reverse">
   <div class="items-center text-2xl my-5 w-full lg:w-2/3 lg:pl-4">
     <div class="py-2 lg:hidden">
@@ -8,7 +10,7 @@
     </div>
 
     <div class=" relative h-0 overflow-hidden max-w-full pb-[56%] py-2">
-    <iframe class="absolute top-0 left-0 w-full h-full" id="ytplayer" type="text/html"
+    <iframe title="Lesson video" class="absolute top-0 left-0 w-full h-full" id="ytplayer" type="text/html"
     src="http://www.youtube.com/embed/<%= @lesson.provider_id %>?origin=http://example.com"
     frameborder="0"></iframe>
     </div>
@@ -28,7 +30,7 @@
         <% if lesson.position > @lesson.position %>
           <li class="py-4">
             <%= link_to course_lesson_url(course_id: @lesson.course.to_param, id: lesson.to_param), class: "flex" do %> 
-              <%= image_tag 'play.svg' %>
+              <%= image_tag 'play.svg', alt: "Start lesson" %>
               <span class="ml-4 flex-1 font-light"><%= lesson.name %></span>
             <% end %>
           </li>
