@@ -32,8 +32,10 @@ http {
 	}
 
   server {
+    listen <%= ENV["PORT"] %>;
+    keepalive_timeout 5;
     server_name www.menon.courses;
-    return 302 https://menon.courses$request_uri;
+    return 301 https://menon.courses$request_uri;
   }
 
 	server {
