@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_18_232404) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_22_190031) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -74,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_232404) do
     t.string "status"
     t.string "creator_name"
     t.string "creator_url"
+    t.string "category"
     t.index ["slug"], name: "index_courses_on_slug", unique: true
     t.index ["source_url"], name: "index_courses_on_source_url", unique: true
     t.index ["status", "slug"], name: "index_courses_on_status_and_slug"
