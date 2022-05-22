@@ -89,8 +89,8 @@
             "thumbnailUrl": "<%= lesson.thumbnail_url %>",
             "url": "<%= course_lesson_url(@course.to_param, lesson.to_param) %>",
             "uploadDate": "<%= lesson.created_at %>",
-            "duration": "<%= ActiveSupport::Duration.build(lesson.duration).iso8601 %>",
-          },
+            "duration": "<%= ActiveSupport::Duration.build(lesson.duration).iso8601 %>"
+          }
         }<%= (index + 1) < lesson_count ? "," : "" %>
       <% end %>
       ]

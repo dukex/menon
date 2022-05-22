@@ -79,6 +79,7 @@
             "description": "<%= sanitize(@lesson.description, tags: %w(), attributes: %w()).gsub("\n", "") %>",
             "thumbnailUrl": "<%= @lesson.thumbnail_url %>",
             "url": "<%= course_lesson_url(@lesson.course.to_param, @lesson.to_param.presence || @lesson.id) %>",
+            "contentUrl": "<%= course_lesson_url(@lesson.course.to_param, @lesson.to_param.presence || @lesson.id) %>",
             "uploadDate": "<%= @lesson.created_at %>",
             "duration": "<%= ActiveSupport::Duration.build(@lesson.duration).iso8601 %>"
         }
