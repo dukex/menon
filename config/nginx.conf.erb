@@ -43,6 +43,10 @@ http {
 		server_name menon.courses;
 		keepalive_timeout 5;
 
+    location ~ /courses {
+      rewrite ^/courses/(.*)$ https://menon.courses:443/$1 permanent;
+    }
+
 		location / {
 			if ($http_x_forwarded_proto != "https") {
 			  return 301 https://$host$request_uri;
