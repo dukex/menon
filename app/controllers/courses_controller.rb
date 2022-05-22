@@ -4,7 +4,7 @@
 class CoursesController < ApplicationController
   include StaticCache
 
-  static_cache! %i[index show]
+  static_cache! %i[show]
 
   def index
     unless request.path.start_with?('/language/') || request.path == '/'
