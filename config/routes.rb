@@ -3,16 +3,16 @@
 require 'resque/server'
 
 Rails.application.routes.draw do
-  namespace :admin do
-    namespace :courses do
-      resources :lessons, only: [:index]
-      resources :youtube_lessons, except: :index
-    end
+  # namespace :admin do
+  #   namespace :courses do
+  #     resources :lessons, only: [:index]
+  #     resources :youtube_lessons, except: :index
+  #   end
 
-    resources :courses do
-      get :import, on: :member
-    end
-  end
+  #   resources :courses do
+  #     get :import, on: :member
+  #   end
+  # end
 
   get '/sitemap', to: 'sitemap#index'
 
