@@ -1,33 +1,3 @@
 <h1 class="font-bold text-4xl">Courses</h1>
 
-<ul class="my-8">
-  <% @courses.each do |course| %>
-    <li class="my-4"><%= link_to course.name, course %></li>
-  <% end %>
-</ul>
-
-<script type="application/ld+json">
-  {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "itemListElement": [
-      <% @courses.each_with_index do |course, index| %>
- {
-          "@type": "ListItem",
-          "position": "<%= index + 1 %>",
-          "item": {
-            "@type": "Course",
-            "name": "<%= course.name %>",
-            "description": "<%= sanitize(course.description, tags: %w(), attributes: %w()).gsub("\n", "") %>",
-            "provider": {
-              "@type": "Organization",
-              "name": "<%= course.creator_name %>",
-              "sameAs": "<%= course.creator_url %>"
-            },
-            "url": "<%= course_url(course) %>",
-          },
-        }<%= (index + 1) < @courses.to_a.size ? "," : "" %>
-      <% end %>
-      ]
-    }
-</script>
+<%= render 'components/course_list', courses: @courses %>

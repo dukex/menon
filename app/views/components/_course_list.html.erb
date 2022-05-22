@@ -1,0 +1,33 @@
+<ul class="my-8 grid gap-2 grid-cols-2 lg:grid-cols-5		">
+  <% courses.each do |course| %>
+    <li class="w-auto">
+      <%= render 'components/course_card', course: course %>
+    </li>
+  <% end %>
+</ul>
+
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+      <% courses.each_with_index do |course, index| %>
+ {
+          "@type": "ListItem",
+          "position": "<%= index + 1 %>",
+          "item": {
+            "@type": "Course",
+            "name": "<%= course.name %>",
+            "description": "<%= sanitize(course.description, tags: %w(), attributes: %w()).gsub("\n", "") %>",
+            "provider": {
+              "@type": "Organization",
+              "name": "<%= course.creator_name %>",
+              "sameAs": "<%= course.creator_url %>"
+            },
+            "url": "<%= course_url(course) %>",
+          },
+        }<%= (index + 1) < courses.to_a.size ? "," : "" %>
+      <% end %>
+      ]
+    }
+</script>
