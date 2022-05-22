@@ -1,6 +1,25 @@
 <% content_for :title, "#{@course.name}" %>
 <% content_for :description, sanitize(@course.description, tags: %w(), attributes: %w()) %>
 
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Courses",
+        "item": "<%= courses_url %>"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "<%= @course.name %>",
+        "item": "<%= course_url(@course) %>"
+      }]
+    }
+</script>
+
 <h1 class="font-bold text-4xl"><%= @course.name %></h1>
 
 <p class="my-5">
