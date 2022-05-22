@@ -1,13 +1,14 @@
-<ul class="my-8 grid gap-2 grid-cols-2 lg:grid-cols-5		">
-  <% courses.each do |course| %>
-    <li class="w-auto">
-      <%= render 'components/course_card', course: course %>
-    </li>
-  <% end %>
-</ul>
+<% if courses.to_a.size > 0 %>
+  <ul class="my-8 grid gap-2 grid-cols-2 lg:grid-cols-5		">
+    <% courses.each do |course| %>
+      <li class="w-auto">
+        <%= render 'components/course_card', course: course %>
+      </li>
+    <% end %>
+  </ul>
 
-<script type="application/ld+json">
-  {
+  <script type="application/ld+json">
+    {
       "@context": "https://schema.org",
       "@type": "ItemList",
       "itemListElement": [
@@ -30,4 +31,8 @@
       <% end %>
       ]
     }
-</script>
+  </script>
+<% else %>
+  <p class="font-bold my-10">No courses found</p>
+<% end %>
+

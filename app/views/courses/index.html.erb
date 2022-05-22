@@ -1,4 +1,4 @@
-<h1 class="font-bold text-4xl">Courses</h1>
+<h1 class="font-bold text-4xl">Courses <%= "in #{params[:language]}" if params[:language] %></h1>
 
 <%= render 'components/course_list', courses: @courses %>
 

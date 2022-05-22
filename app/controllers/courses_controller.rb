@@ -7,9 +7,11 @@ class CoursesController < ApplicationController
   static_cache! %i[index show]
 
   def index
-    return redirect_to root_url, status: :moved_permanently if request.path != '/'
+    unless request.path.start_with?('/language/') || request.path == '/'
+      return redirect_to root_url, status: :moved_permanently
+    end
 
-    @courses = Course.reviewed
+    @courses = Course.reviewed.in_language(params[:language])
   end
 
   def show

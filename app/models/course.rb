@@ -20,6 +20,8 @@ class Course < ApplicationRecord
     lessons.order('position ASC')
   end
 
+  scope :in_language, ->(language = nil) { where(language: language) if language.present? }
+
   # on        status
   # create: - created
   # import: - imported
