@@ -40,6 +40,29 @@ http {
 
 	server {
 		listen <%= ENV["PORT"] %>;
+		server_name cache.menon.courses;
+		keepalive_timeout 5;
+    
+    root /app/public; 
+
+    location ~* ^/assets/ {
+			if ($http_x_forwarded_proto != "https") {
+			  return 301 https://$host$request_uri;
+			}
+
+      expires 1y;
+      add_header Cache-Control public;
+
+      break;
+    }
+
+    location / {
+      return 301 https://menon.courses$request_uri;
+    }
+	}
+
+	server {
+		listen <%= ENV["PORT"] %>;
 		server_name menon.courses;
 		keepalive_timeout 5;
 
