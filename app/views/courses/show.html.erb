@@ -81,16 +81,16 @@
       "@type": "ItemList",
       "itemListElement": [
       <% @course.lessons_ordered.each_with_index do |lesson, index| %>
- {
+        {
           "@type": "VideoObject",
           "position": "<%= index + 1 %>",
-            "name": "<%= lesson.name %>",
-            "description": "<%= sanitize(lesson.description, tags: %w(), attributes: %w()).gsub("\n", "") %>",
-            "thumbnailUrl": "<%= lesson.thumbnail_url %>",
-            "url": "<%= course_lesson_url(@course.to_param, lesson.to_param) %>",
-            "uploadDate": "<%= lesson.created_at %>",
-            "duration": "<%= ActiveSupport::Duration.build(lesson.duration).iso8601 %>"
-          }
+          "name": "<%= lesson.name %>",
+          "description": "<%= sanitize(lesson.description, tags: %w(), attributes: %w()).gsub("\n", "") %>",
+          "thumbnailUrl": "<%= lesson.thumbnail_url %>",
+          "url": "<%= course_lesson_url(@course.to_param, lesson.to_param) %>",
+          "contentUrl": "<%= course_lesson_url(@course.to_param, lesson.to_param) %>",
+          "uploadDate": "<%= lesson.created_at %>",
+          "duration": "<%= ActiveSupport::Duration.build(lesson.duration).iso8601 %>"
         }<%= (index + 1) < lesson_count ? "," : "" %>
       <% end %>
       ]
