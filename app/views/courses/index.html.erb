@@ -1,6 +1,28 @@
-<h1 class="font-bold text-4xl">Courses <%= "in #{params[:language]}" if params[:language] %></h1>
+<h1><%= t ".title" %></h1>
+<h2><%= t ".subtitle.html" %></h2>
 
-<%= render 'components/course_list', courses: @courses %>
+<section>
+  <h3>Featured Courses</h3>
+  <%= render 'components/course_list', courses: @courses %>
+</section>
+
+<section>
+  <h3>Latest Courses</h3>
+  <%= render 'components/course_list', courses: @courses %>
+  <%= link_to t(".more_courses", category: "recently updated"), root_url %>
+</section>
+
+<section>
+  <h3>Top Categories</h3>
+
+  <h4>Tech</h4>
+  <%= render 'components/course_list', courses: @courses %>
+  <%= link_to t(".more_courses", category: "tech"), root_url %>
+
+  <h4>Languages</h4>
+  <%= render 'components/course_list', courses: @courses %>
+  <%= link_to t(".more_courses", category: "languages"), root_url %>
+</section>
 
 <script type="application/ld+json">
   {

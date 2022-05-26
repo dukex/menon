@@ -1,5 +1,10 @@
 en:
-  hello: "Hello world"
   administrate:
     actions:
       import_resource: "Import"
+  courses:
+    index:
+      title: "The greatest courses portal."
+      subtitle:
+        html: "Sharing knowledge <strong>for free</strong> for millions people around the world!"
+      more_courses: "See more %{category} courses >"
