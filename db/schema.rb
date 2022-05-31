@@ -10,55 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_22_190031) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_31_222743) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-
-  create_table "blazer_audits", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "query_id"
-    t.text "statement"
-    t.string "data_source"
-    t.datetime "created_at", precision: nil
-  end
-
-  create_table "blazer_checks", id: :serial, force: :cascade do |t|
-    t.integer "creator_id"
-    t.integer "query_id"
-    t.string "state"
-    t.string "schedule"
-    t.text "emails"
-    t.boolean "invert"
-    t.datetime "last_run_at", precision: nil
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-  end
-
-  create_table "blazer_dashboard_queries", id: :serial, force: :cascade do |t|
-    t.integer "dashboard_id"
-    t.integer "query_id"
-    t.integer "position"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-  end
-
-  create_table "blazer_dashboards", id: :serial, force: :cascade do |t|
-    t.integer "creator_id"
-    t.text "name"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-  end
-
-  create_table "blazer_queries", id: :serial, force: :cascade do |t|
-    t.integer "creator_id"
-    t.string "name"
-    t.text "description"
-    t.text "statement"
-    t.string "data_source"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-  end
 
   create_table "courses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "name", null: false
