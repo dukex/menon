@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # end
 
   get '/sitemap', to: 'sitemap#index'
-  get '/sitemap/:skip', to: 'sitemap#show'
+  get '/sitemap/:type/:page', to: 'sitemap#show'
 
   mount Resque::Server, at: '/jobs'
 
