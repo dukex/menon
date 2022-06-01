@@ -22,6 +22,8 @@ class Course < ApplicationRecord
 
   scope :in_language, ->(language = nil) { where(language: language) if language.present? }
 
+  validates :source_url, uniqueness: true
+
   # on        status
   # create: - created
   # import: - imported
