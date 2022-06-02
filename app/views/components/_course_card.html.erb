@@ -2,8 +2,5 @@
   <%= link_to course, class: "h-full" do %>
     <%= image_tag course.thumbnail_url, loading: "lazy", alt: "" %>
     <h2 class="font-bold text-md"><%= course.name %></h2>
-    <p class="text-sm italic my-2"><%= course.creator_name %></p>
-    <p class="text-base"><%= sanitize(course.description, tags: %w(), attributes: %w()).truncate(100) %></p>
-    <span class="mt-4 px-2 py-2 rounded-lg bg-brand-500 text-center block p-2 bg-brand-500">Enroll for free now</span>
   <% end %>
 <% end %>
