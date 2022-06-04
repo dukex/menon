@@ -10,8 +10,6 @@ module Providers
     def import!
       import_course!
       import_lessons!
-    rescue Yt::Errors::Forbidden => e
-      @course.retry_soon!
     end
 
     private
