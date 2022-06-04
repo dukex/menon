@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_31_222743) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_04_132200) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
@@ -30,6 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_31_222743) do
     t.string "creator_name"
     t.string "creator_url"
     t.string "category"
+    t.boolean "featured"
     t.index ["slug"], name: "index_courses_on_slug", unique: true
     t.index ["source_url"], name: "index_courses_on_source_url", unique: true
     t.index ["status", "slug"], name: "index_courses_on_status_and_slug"
@@ -47,8 +49,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_31_222743) do
   end
 
   create_table "lesson_statuses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.float "time"
-    t.boolean "finished"
+    t.float "time", null: false
+    t.boolean "finished", default: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.uuid "lesson_id"
@@ -99,4 +101,92 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_31_222743) do
   add_foreign_key "lesson_statuses", "lessons", name: "lesson_id_fk"
   add_foreign_key "lesson_statuses", "users", name: "user_id_fk"
   add_foreign_key "lessons", "courses", name: "course_id_fk"
+
+  create_view "courses_homepages", sql_definition: <<-SQL
+      WITH base AS (
+           SELECT courses.id,
+              courses.name,
+              courses.created_at,
+              courses.updated_at,
+              courses.description,
+              courses.source_url,
+              courses.thumbnail_url,
+              courses.slug,
+              courses.owner_id,
+              courses.language,
+              courses.published_at,
+              courses.status,
+              courses.creator_name,
+              courses.creator_url,
+              courses.category,
+              courses.featured
+             FROM courses
+            WHERE ((courses.status)::text = 'reviewed'::text)
+          ), latest AS (
+           SELECT 'latest'::text AS section,
+              base.id,
+              base.name,
+              base.created_at,
+              base.updated_at,
+              base.description,
+              base.source_url,
+              base.thumbnail_url,
+              base.slug,
+              base.owner_id,
+              base.language,
+              base.published_at,
+              base.status,
+              base.creator_name,
+              base.creator_url,
+              base.category,
+              base.featured
+             FROM base
+            ORDER BY base.updated_at DESC
+          ), featured AS (
+           SELECT 'featured'::text AS section,
+              latest.name,
+              latest.category
+             FROM latest
+            WHERE (latest.featured = true)
+            ORDER BY latest.updated_at DESC
+          ), top_categories AS (
+           SELECT 'top_categories'::text AS section,
+              latest.name,
+              latest.category,
+              rank() OVER (PARTITION BY latest.category ORDER BY latest.updated_at DESC) AS rank
+             FROM latest
+            WHERE ((latest.category)::text = 'tech'::text)
+            ORDER BY latest.updated_at DESC
+          ), top_categories_filtered AS (
+           SELECT top_categories.section,
+              top_categories.name,
+              top_categories.category,
+              top_categories.rank
+             FROM top_categories
+            WHERE (top_categories.rank <= 2)
+          ), result AS (
+          ( SELECT featured.section,
+              featured.name,
+              featured.category
+             FROM featured
+           LIMIT 5)
+          UNION
+          ( SELECT latest.section,
+              latest.name,
+              latest.category
+             FROM latest
+           LIMIT 5)
+          UNION
+          ( SELECT top_categories_filtered.section,
+              top_categories_filtered.name,
+              top_categories_filtered.category
+             FROM top_categories_filtered
+           LIMIT 4)
+          )
+   SELECT result.section,
+      result.name,
+      result.category
+     FROM result
+    ORDER BY result.section;
+  SQL
 end
