@@ -14,7 +14,8 @@ class Course < ApplicationRecord
     importing: 'importing',
     imported: 'imported',
     reviewed: 'reviewed',
-    retry_soon: 'retry_soon'
+    retry_soon: 'retry_soon',
+    delete_request: 'delete_request'
   }
 
   def lessons_ordered
