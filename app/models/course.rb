@@ -13,7 +13,8 @@ class Course < ApplicationRecord
     error: 'error',
     importing: 'importing',
     imported: 'imported',
-    reviewed: 'reviewed'
+    reviewed: 'reviewed',
+    retry_soon: 'retry_soon'
   }
 
   def lessons_ordered
