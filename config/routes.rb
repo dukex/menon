@@ -5,6 +5,7 @@ require 'resque/server'
 Rails.application.routes.draw do
   get '/sitemap', to: 'sitemap#index'
   get '/sitemap/:type/:page', to: 'sitemap#show'
+  get '/sitemap/:page-:type', to: 'sitemap#show'
 
   mount Resque::Server, at: '/jobs'
 
