@@ -32,6 +32,6 @@ class SitemapController < ApplicationController
       .includes(:course)
       .where(course: { status: :reviewed })
       .where.not(course: { id: nil })
-      .order('lessons.updated_at DESC')
+      .order('courses_lessons.updated_at DESC')
   end
 end
