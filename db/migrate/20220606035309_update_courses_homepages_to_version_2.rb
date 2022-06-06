@@ -1,8 +1,9 @@
 class UpdateCoursesHomepagesToVersion2 < ActiveRecord::Migration[7.0]
   def change
-    update_view :courses_homepages,
-      version: 2,
-      revert_to_version: 1,
-      materialized: true
+    drop_view :courses_homepages,
+              materialized: false
+
+    create_view :courses_homepages,
+                materialized: true
   end
 end

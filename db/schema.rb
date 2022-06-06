@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_04_132200) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_06_035309) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -102,7 +102,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_04_132200) do
   add_foreign_key "lesson_statuses", "users", name: "user_id_fk"
   add_foreign_key "lessons", "courses", name: "course_id_fk"
 
-  create_view "courses_homepages", sql_definition: <<-SQL
+  create_view "courses_categories", materialized: true, sql_definition: <<-SQL
+      SELECT split_part((courses.category)::text, '/'::text, 1) AS category,
+      split_part((courses.category)::text, '/'::text, 2) AS sub_category,
+      count(*) AS courses
+     FROM courses
+    GROUP BY (split_part((courses.category)::text, '/'::text, 1)), (split_part((courses.category)::text, '/'::text, 2));
+  SQL
+  create_view "courses_homepages", materialized: true, sql_definition: <<-SQL
       WITH base AS (
            SELECT courses.id,
               courses.name,
