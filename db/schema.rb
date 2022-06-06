@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_06_042946) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_06_122353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -37,6 +37,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_042946) do
     t.index ["status", "slug"], name: "index_courses_on_status_and_slug"
   end
 
+  create_table "courses_lessons", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "type"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.text "description"
+    t.string "thumbnail_url"
+    t.date "published_at"
+    t.string "provider_id"
+    t.integer "position"
+    t.integer "duration"
+    t.string "slug"
+    t.uuid "course_id"
+    t.index ["provider_id"], name: "index_courses_lessons_on_provider_id"
+    t.index ["slug"], name: "index_courses_lessons_on_slug", unique: true
+  end
+
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
     t.string "sluggable_type", limit: 50
@@ -57,23 +74,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_042946) do
     t.uuid "user_id"
     t.index ["lesson_id", "user_id"], name: "lesson_id_user_id", unique: true
     t.check_constraint "\"time\" > 0::double precision", name: "time_greater_than_zero"
-  end
-
-  create_table "lessons", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "type"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.text "description"
-    t.string "thumbnail_url"
-    t.date "published_at"
-    t.string "provider_id"
-    t.integer "position"
-    t.integer "duration"
-    t.string "slug"
-    t.uuid "course_id"
-    t.index ["provider_id"], name: "index_lessons_on_provider_id"
-    t.index ["slug"], name: "index_lessons_on_slug", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -98,9 +98,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_042946) do
   end
 
   add_foreign_key "courses", "users", column: "owner_id", name: "owner_id_fk"
-  add_foreign_key "lesson_statuses", "lessons", name: "lesson_id_fk"
+  add_foreign_key "courses_lessons", "courses", name: "course_id_fk"
+  add_foreign_key "lesson_statuses", "courses_lessons", column: "lesson_id", name: "lesson_id_fk"
   add_foreign_key "lesson_statuses", "users", name: "user_id_fk"
-  add_foreign_key "lessons", "courses", name: "course_id_fk"
 
   create_view "courses_categories", materialized: true, sql_definition: <<-SQL
       SELECT split_part((courses.category)::text, '/'::text, 1) AS category,
