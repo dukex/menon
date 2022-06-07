@@ -7,4 +7,10 @@ en:
       title: "The greatest courses portal."
       subtitle:
         html: "Sharing knowledge <strong>for free</strong> for millions people around the world!"
+      featured_courses: "Featured Courses"
+      latest_courses: "Latest Courses"
+      top_categories: "Top Categories"
+      tech: "Tech"
+      languages: "Languages"
       more_courses: "See more %{category} courses >"
+
