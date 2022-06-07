@@ -10,55 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_22_190031) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_06_122353) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-
-  create_table "blazer_audits", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "query_id"
-    t.text "statement"
-    t.string "data_source"
-    t.datetime "created_at", precision: nil
-  end
-
-  create_table "blazer_checks", id: :serial, force: :cascade do |t|
-    t.integer "creator_id"
-    t.integer "query_id"
-    t.string "state"
-    t.string "schedule"
-    t.text "emails"
-    t.boolean "invert"
-    t.datetime "last_run_at", precision: nil
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-  end
-
-  create_table "blazer_dashboard_queries", id: :serial, force: :cascade do |t|
-    t.integer "dashboard_id"
-    t.integer "query_id"
-    t.integer "position"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-  end
-
-  create_table "blazer_dashboards", id: :serial, force: :cascade do |t|
-    t.integer "creator_id"
-    t.text "name"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-  end
-
-  create_table "blazer_queries", id: :serial, force: :cascade do |t|
-    t.integer "creator_id"
-    t.string "name"
-    t.text "description"
-    t.text "statement"
-    t.string "data_source"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-  end
 
   create_table "courses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -75,9 +31,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_22_190031) do
     t.string "creator_name"
     t.string "creator_url"
     t.string "category"
+    t.boolean "featured"
     t.index ["slug"], name: "index_courses_on_slug", unique: true
     t.index ["source_url"], name: "index_courses_on_source_url", unique: true
     t.index ["status", "slug"], name: "index_courses_on_status_and_slug"
+  end
+
+  create_table "courses_lessons", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "type"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.text "description"
+    t.string "thumbnail_url"
+    t.date "published_at"
+    t.string "provider_id"
+    t.integer "position"
+    t.integer "duration"
+    t.string "slug"
+    t.uuid "course_id"
+    t.index ["provider_id"], name: "index_courses_lessons_on_provider_id"
+    t.index ["slug"], name: "index_courses_lessons_on_slug", unique: true
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -92,31 +66,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_22_190031) do
   end
 
   create_table "lesson_statuses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.float "time"
-    t.boolean "finished"
+    t.float "time", null: false
+    t.boolean "finished", default: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.uuid "lesson_id"
     t.uuid "user_id"
     t.index ["lesson_id", "user_id"], name: "lesson_id_user_id", unique: true
     t.check_constraint "\"time\" > 0::double precision", name: "time_greater_than_zero"
-  end
-
-  create_table "lessons", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "type"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.text "description"
-    t.string "thumbnail_url"
-    t.date "published_at"
-    t.string "provider_id"
-    t.integer "position"
-    t.integer "duration"
-    t.string "slug"
-    t.uuid "course_id"
-    t.index ["provider_id"], name: "index_lessons_on_provider_id"
-    t.index ["slug"], name: "index_lessons_on_slug", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -141,7 +98,108 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_22_190031) do
   end
 
   add_foreign_key "courses", "users", column: "owner_id", name: "owner_id_fk"
-  add_foreign_key "lesson_statuses", "lessons", name: "lesson_id_fk"
+  add_foreign_key "courses_lessons", "courses", name: "course_id_fk"
+  add_foreign_key "lesson_statuses", "courses_lessons", column: "lesson_id", name: "lesson_id_fk"
   add_foreign_key "lesson_statuses", "users", name: "user_id_fk"
-  add_foreign_key "lessons", "courses", name: "course_id_fk"
+
+  create_view "courses_categories", materialized: true, sql_definition: <<-SQL
+      SELECT split_part((courses.category)::text, '/'::text, 1) AS category,
+      split_part((courses.category)::text, '/'::text, 2) AS sub_category,
+      count(*) AS courses
+     FROM courses
+    GROUP BY (split_part((courses.category)::text, '/'::text, 1)), (split_part((courses.category)::text, '/'::text, 2));
+  SQL
+  create_view "courses_homepages", materialized: true, sql_definition: <<-SQL
+      WITH base AS (
+           SELECT courses.id,
+              courses.name,
+              courses.created_at,
+              courses.updated_at,
+              courses.description,
+              courses.source_url,
+              courses.thumbnail_url,
+              courses.slug,
+              courses.owner_id,
+              courses.language,
+              courses.published_at,
+              courses.status,
+              courses.creator_name,
+              courses.creator_url,
+              courses.category,
+              courses.featured
+             FROM courses
+            WHERE ((courses.status)::text = 'reviewed'::text)
+          ), latest AS (
+           SELECT 'latest'::text AS section,
+              base.id,
+              base.name,
+              base.created_at,
+              base.updated_at,
+              base.description,
+              base.source_url,
+              base.thumbnail_url,
+              base.slug,
+              base.owner_id,
+              base.language,
+              base.published_at,
+              base.status,
+              base.creator_name,
+              base.creator_url,
+              base.category,
+              base.featured
+             FROM base
+            ORDER BY base.updated_at DESC
+          ), featured AS (
+           SELECT 'featured'::text AS section,
+              latest.name,
+              latest.category
+             FROM latest
+            WHERE (latest.featured = true)
+            ORDER BY latest.updated_at DESC
+          ), top_categories AS (
+           SELECT 'top_categories'::text AS section,
+              latest.name,
+              latest.category,
+              rank() OVER (PARTITION BY latest.category ORDER BY latest.updated_at DESC) AS rank
+             FROM latest
+            WHERE ((latest.category)::text = 'tech'::text)
+            ORDER BY latest.updated_at DESC
+          ), top_categories_filtered AS (
+           SELECT top_categories.section,
+              top_categories.name,
+              top_categories.category,
+              top_categories.rank
+             FROM top_categories
+            WHERE (top_categories.rank <= 2)
+          ), result AS (
+          ( SELECT featured.section,
+              featured.name,
+              featured.category
+             FROM featured
+           LIMIT 5)
+          UNION
+          ( SELECT latest.section,
+              latest.name,
+              latest.category
+             FROM latest
+           LIMIT 5)
+          UNION
+          ( SELECT top_categories_filtered.section,
+              top_categories_filtered.name,
+              top_categories_filtered.category
+             FROM top_categories_filtered
+           LIMIT 4)
+          )
+   SELECT result.section,
+      result.name,
+      result.category
+     FROM result
+    ORDER BY result.section;
+  SQL
+  create_view "courses_languages", materialized: true, sql_definition: <<-SQL
+      SELECT courses.language,
+      count(*) AS courses
+     FROM courses
+    GROUP BY courses.language;
+  SQL
 end
