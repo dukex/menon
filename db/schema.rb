@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_07_032331) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -187,7 +187,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_032331) do
               featured.creator_name,
               featured.creator_url
              FROM featured
-           LIMIT 5)
+           LIMIT 4)
           UNION
           ( SELECT latest.section,
               latest.name,
@@ -198,7 +198,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_032331) do
               latest.creator_name,
               latest.creator_url
              FROM latest
-           LIMIT 5)
+           LIMIT 4)
           UNION
           ( SELECT top_categories_filtered.section,
               top_categories_filtered.name,
@@ -209,7 +209,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_032331) do
               top_categories_filtered.creator_name,
               top_categories_filtered.creator_url
              FROM top_categories_filtered
-           LIMIT 4)
+           LIMIT 2)
           )
    SELECT result.section,
       result.name,
