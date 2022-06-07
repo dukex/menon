@@ -25,7 +25,7 @@
               "name": "<%= course.creator_name %>",
               "sameAs": "<%= course.creator_url %>"
             },
-            "url": "<%= course_url(course) %>"
+            "url": "<%= course_url(course.slug) %>"
           }
         }<%= (index + 1) < courses.to_a.size ? "," : "" %>
       <% end %>

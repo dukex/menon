@@ -86,4 +86,7 @@ end
 
 gem 'tailwindcss-rails', '~> 2.0'
 
-gem "scenic", "~> 1.6"
+gem 'scenic', '~> 1.6'
+
+# Draper adds an object-oriented layer of presentation logic to your Rails application.
+gem 'draper'

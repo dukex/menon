@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_06_122353) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_07_032331) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -109,97 +109,117 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_122353) do
      FROM courses
     GROUP BY (split_part((courses.category)::text, '/'::text, 1)), (split_part((courses.category)::text, '/'::text, 2));
   SQL
+  create_view "courses_languages", materialized: true, sql_definition: <<-SQL
+      SELECT courses.language,
+      count(*) AS courses
+     FROM courses
+    GROUP BY courses.language;
+  SQL
   create_view "courses_homepages", materialized: true, sql_definition: <<-SQL
       WITH base AS (
-           SELECT courses.id,
-              courses.name,
-              courses.created_at,
+           SELECT courses.slug,
               courses.updated_at,
-              courses.description,
-              courses.source_url,
-              courses.thumbnail_url,
-              courses.slug,
-              courses.owner_id,
-              courses.language,
-              courses.published_at,
-              courses.status,
-              courses.creator_name,
-              courses.creator_url,
+              courses.featured,
               courses.category,
-              courses.featured
+              courses.name,
+              courses.thumbnail_url,
+              courses.description,
+              courses.creator_name,
+              courses.creator_url
              FROM courses
             WHERE ((courses.status)::text = 'reviewed'::text)
           ), latest AS (
            SELECT 'latest'::text AS section,
-              base.id,
-              base.name,
-              base.created_at,
-              base.updated_at,
-              base.description,
-              base.source_url,
-              base.thumbnail_url,
               base.slug,
-              base.owner_id,
-              base.language,
-              base.published_at,
-              base.status,
-              base.creator_name,
-              base.creator_url,
+              base.featured,
+              base.updated_at,
               base.category,
-              base.featured
+              base.name,
+              base.thumbnail_url,
+              base.description,
+              base.creator_name,
+              base.creator_url
              FROM base
             ORDER BY base.updated_at DESC
           ), featured AS (
            SELECT 'featured'::text AS section,
+              latest.slug,
+              latest.category,
               latest.name,
-              latest.category
+              latest.thumbnail_url,
+              latest.description,
+              latest.creator_name,
+              latest.creator_url
              FROM latest
             WHERE (latest.featured = true)
             ORDER BY latest.updated_at DESC
           ), top_categories AS (
            SELECT 'top_categories'::text AS section,
-              latest.name,
               latest.category,
+              latest.name,
+              latest.slug,
+              latest.thumbnail_url,
+              latest.description,
+              latest.creator_name,
+              latest.creator_url,
               rank() OVER (PARTITION BY latest.category ORDER BY latest.updated_at DESC) AS rank
              FROM latest
             WHERE ((latest.category)::text = 'tech'::text)
             ORDER BY latest.updated_at DESC
           ), top_categories_filtered AS (
            SELECT top_categories.section,
-              top_categories.name,
+              top_categories.slug,
               top_categories.category,
-              top_categories.rank
+              top_categories.name,
+              top_categories.thumbnail_url,
+              top_categories.description,
+              top_categories.creator_name,
+              top_categories.creator_url
              FROM top_categories
             WHERE (top_categories.rank <= 2)
           ), result AS (
           ( SELECT featured.section,
               featured.name,
-              featured.category
+              featured.category,
+              featured.thumbnail_url,
+              featured.description,
+              featured.slug,
+              featured.creator_name,
+              featured.creator_url
              FROM featured
            LIMIT 5)
           UNION
           ( SELECT latest.section,
               latest.name,
-              latest.category
+              latest.category,
+              latest.thumbnail_url,
+              latest.description,
+              latest.slug,
+              latest.creator_name,
+              latest.creator_url
              FROM latest
            LIMIT 5)
           UNION
           ( SELECT top_categories_filtered.section,
               top_categories_filtered.name,
-              top_categories_filtered.category
+              top_categories_filtered.category,
+              top_categories_filtered.thumbnail_url,
+              top_categories_filtered.description,
+              top_categories_filtered.slug,
+              top_categories_filtered.creator_name,
+              top_categories_filtered.creator_url
              FROM top_categories_filtered
            LIMIT 4)
           )
    SELECT result.section,
       result.name,
-      result.category
+      result.category,
+      result.thumbnail_url,
+      result.description,
+      result.slug,
+      result.creator_name,
+      result.creator_url
      FROM result
     ORDER BY result.section;
-  SQL
-  create_view "courses_languages", materialized: true, sql_definition: <<-SQL
-      SELECT courses.language,
-      count(*) AS courses
-     FROM courses
-    GROUP BY courses.language;
   SQL
 end

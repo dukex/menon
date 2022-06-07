@@ -11,7 +11,7 @@ class CoursesController < ApplicationController
       return redirect_to root_url, status: :moved_permanently
     end
 
-    @courses = Course.reviewed.in_language(params[:language])
+    @courses = Courses::HomepageDecorator.decorate(Courses::Homepage.all)
   end
 
   def show
