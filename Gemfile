@@ -89,3 +89,5 @@ gem 'tailwindcss-rails', '~> 2.0'
 gem 'scenic', '~> 1.6'
 
 gem 'puma_worker_killer'
+
+gem "scout_apm", "~> 5.1"
