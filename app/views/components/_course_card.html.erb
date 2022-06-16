@@ -1,17 +1,15 @@
-<%= render "components/card", url: course_path(course), action_label: t('.action') do %>
-  <%= image_tag course.thumbnail_url, loading: "lazy", alt: "#{course.name} thumbnail", class: "mb-2" %>
-  <h2 class="font-bold text-md mb-2"><%= course.name %></h2>
+<%= render "components/card", url: course_path(course.slug), action_label: t('.action') do %>
+  <%= image_tag course.thumbnail_url, loading: "lazy", alt: "#{course.name} thumbnail", class: "mb-2 flex-none" %>
+  <h2 class="font-bold text-md mb-4 flex-auto"><%= course.name %></h2>
 
-  <div class="flex text-sm">
-    <div>
-      <span class="material-icons text-sm">play_lesson</span>
-      <%= course.lessons.count %> lessons
+  <div class="flex flex-col text-base justify-between flex-none">
+    <div class="flex items-center mb-2">
+      <%= render "components/icons/video-camera", classes: "h-6 w-6", stroke_width: 1 %> 
+      <span class="ml-1"><%= course.lessons.count %> lessons</span>
     </div>
-    <div>
-      <span class="material-icons">
-        attach_money
-      </span>
-      for free
+    <div class="flex items-center text-yellow">
+      <%= render "components/icons/currency-dollar", classes: "h-6 w-6", stroke_width: 1 %> 
+      <span class="ml-1">for free</span>
     </div>
   </div>
 <% end %>
