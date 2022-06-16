@@ -1,6 +1,17 @@
-<%= render "components/card" do %>
-  <%= link_to course_path(course.slug), class: "h-full" do %>
-    <%= image_tag course.thumbnail_url, loading: "lazy", alt: "" %>
-    <h2 class="font-bold text-md"><%= course.name %></h2>
-  <% end %>
+<%= render "components/card", url: course_path(course), action_label: t('.action') do %>
+  <%= image_tag course.thumbnail_url, loading: "lazy", alt: "#{course.name} thumbnail", class: "mb-2" %>
+  <h2 class="font-bold text-md mb-2"><%= course.name %></h2>
+
+  <div class="flex text-sm">
+    <div>
+      <span class="material-icons text-sm">play_lesson</span>
+      <%= course.lessons.count %> lessons
+    </div>
+    <div>
+      <span class="material-icons">
+        attach_money
+      </span>
+      for free
+    </div>
+  </div>
 <% end %>
