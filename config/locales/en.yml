@@ -2,6 +2,9 @@ en:
   administrate:
     actions:
       import_resource: "Import"
+  components:
+    course_card:
+      action: Go to course page
   courses:
     index:
       title: "The greatest courses portal."
