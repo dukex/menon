@@ -13,7 +13,9 @@ class Course < ApplicationRecord
     error: 'error',
     importing: 'importing',
     imported: 'imported',
-    reviewed: 'reviewed'
+    reviewed: 'reviewed',
+    retry_soon: 'retry_soon',
+    delete_request: 'delete_request'
   }
 
   def lessons_ordered
@@ -21,6 +23,8 @@ class Course < ApplicationRecord
   end
 
   scope :in_language, ->(language = nil) { where(language: language) if language.present? }
+
+  validates :source_url, uniqueness: true
 
   # on        status
   # create: - created

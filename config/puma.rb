@@ -43,6 +43,10 @@ end
 
 before_fork do
   FileUtils.touch('/tmp/app-initialized')
+
+  require 'puma_worker_killer'
+
+  PumaWorkerKiller.enable_rolling_restart
 end
 
 # Allow puma to be restarted by `bin/rails restart` command.
