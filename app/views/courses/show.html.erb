@@ -26,16 +26,14 @@
   <%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
 </p>
 
-<% lesson_count = @course.lessons_ordered.to_a.size %>
-
 <div class="flex items-center text-2xl my-5">
   <div class="px-2">
-    <span class="block font-bold"><%= lesson_count %></span>
+    <span class="block font-bold"><%= @course.lessons_count %></span>
     <span class="block text-base">vídeos</span>
   </div>
   <span class="block pl-5 mr-5 h-8 border-blue-900 border-r-2"></span>
   <div class="px-2">
-    <span class="block font-bold"><%= @course.lessons_ordered.map { |lesson| lesson.duration }.sum / 3600 %></span>
+    <span class="block font-bold"><%= @course.hours %></span>
     <span class="block text-base">hours</span>
   </div>
 </div>
@@ -91,7 +89,7 @@
           "contentUrl": "<%= course_lesson_url(@course.to_param, lesson.to_param) %>",
           "uploadDate": "<%= lesson.created_at %>",
           "duration": "<%= ActiveSupport::Duration.build(lesson.duration).iso8601 %>"
-        }<%= (index + 1) < lesson_count ? "," : "" %>
+        }<%= (index + 1) < @course.lessons_count ? "," : "" %>
       <% end %>
       ]
     }
