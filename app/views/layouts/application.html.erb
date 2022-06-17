@@ -15,6 +15,9 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#80EECD">
     <meta name="msapplication-TileColor" content="#80EECD">
     <meta name="theme-color" content="#ffffff">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
     <% if Rails.application.config.real_env.production? %>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2309414464751824"
         crossorigin="anonymous"></script>
@@ -24,7 +27,7 @@
   <body class="bg-blue-50 text-blue-900 text-base">
     <header class="flex p-3 max-w-screen-lg mx-auto">
       <h1>
-      
+
       <%= link_to root_url do %>
          <%= image_tag "Logo.svg", class: "w-14 h-14", alt: "logo" %>
          <span class="-indent-[5000px] inline-block">Menon</span>

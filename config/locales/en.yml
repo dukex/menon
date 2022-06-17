@@ -1,5 +1,18 @@
 en:
-  hello: "Hello world"
   administrate:
     actions:
       import_resource: "Import"
+  components:
+    course_card:
+      action: Go to course page
+  courses:
+    index:
+      title: "The greatest courses portal."
+      subtitle:
+        html: "Sharing knowledge <strong>for free</strong> for millions people around the world!"
+      featured_courses: "Featured Courses"
+      latest_courses: "Latest Courses"
+      top_categories: "Top Categories"
+      tech: "Tech"
+      languages: "Languages"
+      more_courses: "See more %{category} courses >"
