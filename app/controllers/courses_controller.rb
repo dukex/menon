@@ -11,11 +11,11 @@ class CoursesController < ApplicationController
       return redirect_to root_url, status: :moved_permanently
     end
 
-    @courses = Course.reviewed.in_language(params[:language])
+    @courses = Courses::HomepageListDecorator.decorate(Courses::Homepage.all)
   end
 
   def show
-    @course = Course.reviewed.friendly.find(params[:id])
+    @course = Course.reviewed.friendly.find(params[:id]).decorate
 
     redirect_to course_path(@course), status: :moved_permanently if request.path != course_path(@course)
   end

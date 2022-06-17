@@ -1,5 +1,5 @@
 <% if courses.to_a.size > 0 %>
-  <ul class="my-8 grid gap-2 grid-cols-2 lg:grid-cols-5		">
+  <ul class="my-8 grid gap-2 grid-cols-2 lg:grid-cols-4">
     <% courses.each do |course| %>
       <li class="w-auto">
         <%= render 'components/course_card', course: course %>
@@ -25,7 +25,7 @@
               "name": "<%= course.creator_name %>",
               "sameAs": "<%= course.creator_url %>"
             },
-            "url": "<%= course_url(course) %>"
+            "url": "<%= course_url(course.slug) %>"
           }
         }<%= (index + 1) < courses.to_a.size ? "," : "" %>
       <% end %>
