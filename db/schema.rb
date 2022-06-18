@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_18_210654) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_18_213028) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
@@ -65,8 +66,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_18_210654) do
   end
 
   create_table "lesson_statuses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.float "time"
-    t.boolean "finished"
+    t.float "time", null: false
+    t.boolean "finished", default: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.uuid "lesson_id"
@@ -120,14 +121,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_18_210654) do
               courses.slug,
               courses.updated_at,
               courses.featured,
-              courses.category,
+              split_part((courses.category)::text, '/'::text, 1) AS category,
               courses.name,
               courses.thumbnail_url,
               courses.description,
               courses.creator_name,
               courses.creator_url
              FROM courses
-            WHERE ((courses.status)::text = 'reviewed'::text)
+            WHERE (((courses.status)::text = 'reviewed'::text) AND (courses.description IS NOT NULL) AND (courses.description <> ''::text))
           ), latest AS (
            SELECT 'latest'::text AS section,
               base.id,
@@ -167,8 +168,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_18_210654) do
               latest.creator_url,
               rank() OVER (PARTITION BY latest.category ORDER BY latest.updated_at DESC) AS rank
              FROM latest
-            WHERE ((latest.category)::text = ANY ((ARRAY['tech'::character varying, 'music'::character varying, 'design'::character varying, 'business'::character varying, 'sports'::character varying])::text[]))
-            ORDER BY latest.updated_at DESC
+            WHERE (latest.category = ANY (ARRAY['tech'::text, 'music'::text, 'design'::text, 'business'::text, 'sports'::text]))
           ), top_categories_filtered AS (
            SELECT top_categories.section,
               top_categories.id,
@@ -206,7 +206,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_18_210654) do
              FROM latest
            LIMIT 4)
           UNION
-          ( SELECT top_categories_filtered.section,
+           SELECT top_categories_filtered.section,
               top_categories_filtered.id,
               top_categories_filtered.name,
               top_categories_filtered.category,
@@ -216,7 +216,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_18_210654) do
               top_categories_filtered.creator_name,
               top_categories_filtered.creator_url
              FROM top_categories_filtered
-           LIMIT 2)
           )
    SELECT result.section,
       result.id,
