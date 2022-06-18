@@ -10,9 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_18_210654) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
@@ -66,8 +65,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
   end
 
   create_table "lesson_statuses", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.float "time", null: false
-    t.boolean "finished", default: false
+    t.float "time"
+    t.boolean "finished"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.uuid "lesson_id"
@@ -117,7 +116,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
   SQL
   create_view "courses_homepages", materialized: true, sql_definition: <<-SQL
       WITH base AS (
-           SELECT courses.slug,
+           SELECT courses.id,
+              courses.slug,
               courses.updated_at,
               courses.featured,
               courses.category,
@@ -130,6 +130,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
             WHERE ((courses.status)::text = 'reviewed'::text)
           ), latest AS (
            SELECT 'latest'::text AS section,
+              base.id,
               base.slug,
               base.featured,
               base.updated_at,
@@ -143,6 +144,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
             ORDER BY base.updated_at DESC
           ), featured AS (
            SELECT 'featured'::text AS section,
+              latest.id,
               latest.slug,
               latest.category,
               latest.name,
@@ -155,6 +157,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
             ORDER BY latest.updated_at DESC
           ), top_categories AS (
            SELECT 'top_categories'::text AS section,
+              latest.id,
               latest.category,
               latest.name,
               latest.slug,
@@ -164,10 +167,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
               latest.creator_url,
               rank() OVER (PARTITION BY latest.category ORDER BY latest.updated_at DESC) AS rank
              FROM latest
-            WHERE ((latest.category)::text = 'tech'::text)
+            WHERE ((latest.category)::text = ANY ((ARRAY['tech'::character varying, 'music'::character varying, 'design'::character varying, 'business'::character varying, 'sports'::character varying])::text[]))
             ORDER BY latest.updated_at DESC
           ), top_categories_filtered AS (
            SELECT top_categories.section,
+              top_categories.id,
               top_categories.slug,
               top_categories.category,
               top_categories.name,
@@ -179,6 +183,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
             WHERE (top_categories.rank <= 2)
           ), result AS (
           ( SELECT featured.section,
+              featured.id,
               featured.name,
               featured.category,
               featured.thumbnail_url,
@@ -190,6 +195,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
            LIMIT 4)
           UNION
           ( SELECT latest.section,
+              latest.id,
               latest.name,
               latest.category,
               latest.thumbnail_url,
@@ -201,6 +207,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
            LIMIT 4)
           UNION
           ( SELECT top_categories_filtered.section,
+              top_categories_filtered.id,
               top_categories_filtered.name,
               top_categories_filtered.category,
               top_categories_filtered.thumbnail_url,
@@ -212,6 +219,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_143915) do
            LIMIT 2)
           )
    SELECT result.section,
+      result.id,
       result.name,
       result.category,
       result.thumbnail_url,

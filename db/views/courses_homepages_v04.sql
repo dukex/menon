@@ -39,11 +39,11 @@
 -- SELECT * FROM top_categories_filtered
 
 , result AS (
-    (SELECT section, name, category, thumbnail_url, description, slug, creator_name, creator_url FROM featured LIMIT 4)
+    (SELECT section, name, category, thumbnail_url, description, slug, creator_name, creator_url FROM featured LIMIT 5)
     UNION
-    (SELECT section, name, category, thumbnail_url, description, slug, creator_name, creator_url FROM latest LIMIT 4)
+    (SELECT section, name, category, thumbnail_url, description, slug, creator_name, creator_url FROM latest LIMIT 5)
     UNION
-    (SELECT section, name, category, thumbnail_url, description, slug, creator_name, creator_url FROM top_categories_filtered LIMIT 2)
+    (SELECT section, name, category, thumbnail_url, description, slug, creator_name, creator_url FROM top_categories_filtered LIMIT 4)
 )
 
 SELECT * FROM result
