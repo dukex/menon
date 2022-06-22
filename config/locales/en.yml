@@ -19,7 +19,7 @@ en:
         other: "%{count} hours"
   courses:
     index:
-      title: "The greatest courses portal."
+      title: "The greatest courses portal online."
       subtitle:
         html: "Sharing knowledge <strong>for free</strong> for millions people around the world!"
       featured_courses: "Featured Courses"

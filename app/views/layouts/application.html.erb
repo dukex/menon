@@ -24,21 +24,19 @@
     <% end %>
   </head>
 
-  <body class="bg-blue-50 text-blue-900 text-base">
+  <body class="bg-blue-100 text-purple-500 text-base">
     <header class="flex p-3 max-w-screen-lg mx-auto">
-      <h1>
-
-      <%= link_to root_url do %>
-         <%= image_tag "Logo.svg", class: "w-14 h-14", alt: "logo" %>
-         <span class="-indent-[5000px] inline-block">Menon</span>
-
+      <%= link_to root_url, class: "mr-2" do %>
+        <%= image_tag "Logo.svg", class: "w-14 h-14", alt: "logo" %>
       <% end %>
+      <h1 class="flex font-bold text-2xl items-center" >
+        <%= link_to root_url do %>
+          Menon
+        <% end %>
       </h1>
     </header>
 
-    <main class="p-3 max-w-screen-lg mx-auto">
-      <%= yield %>
-    </main>
+    <%= yield %>
 
     <footer class="p-3 max-w-screen-lg mx-auto">
     </footer>
