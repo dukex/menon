@@ -1,8 +1,9 @@
 <% content_for :title, "#{@course.name}" %>
 <% content_for :description, sanitize(@course.description, tags: %w(), attributes: %w()) %>
 
-<script type="application/ld+json">
-  {
+<main class="p-3 max-w-screen-lg mx-auto">
+  <script type="application/ld+json">
+    {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [{
@@ -18,48 +19,48 @@
         "item": "<%= course_url(@course) %>"
       }]
     }
-</script>
+  </script>
 
-<h1 class="font-bold text-4xl"><%= @course.name %></h1>
+  <h2 class="font-bold text-4xl"><%= @course.name %></h2>
 
-<p class="my-5">
+  <p class="my-5">
   <%= sanitize @course.description, tags: %w(ul ol li br), attributes: %w(class) %>
-</p>
+  </p>
 
-<div class="flex items-center text-2xl my-5">
-  <div class="px-2">
-    <span class="block font-bold"><%= @course.lessons_count %></span>
-    <span class="block text-base">vídeos</span>
+  <div class="flex items-center text-2xl my-5">
+    <div class="px-2">
+      <span class="block font-bold"><%= @course.lessons_count %></span>
+      <span class="block text-base">vídeos</span>
+    </div>
+    <span class="block pl-5 mr-5 h-8 border-blue-900 border-r-2"></span>
+    <div class="px-2">
+      <span class="block font-bold"><%= @course.hours %></span>
+      <span class="block text-base">hours</span>
+    </div>
   </div>
-  <span class="block pl-5 mr-5 h-8 border-blue-900 border-r-2"></span>
-  <div class="px-2">
-    <span class="block font-bold"><%= @course.hours %></span>
-    <span class="block text-base">hours</span>
+
+  <div class="drop-shadow-md mb-8 bg-white rounded-3xl p-4">
+    <h2 class="font-bold mb-2">Lessons</h2>
+
+    <ol>
+      <% @course.lessons_ordered.each do |lesson| %>
+        <li class="py-4">
+          <%= link_to course_lesson_url(course_id: @course.to_param, id: lesson.to_param), class: "flex" do %> 
+            <%= image_tag 'play.svg', width: "40px", height: "40px", alt: "Start lesson" %>
+            <span class="ml-4 flex-1 font-light"><%= lesson.name %></span>
+          <% end %>
+        </li>
+      <% end %>
+
+    </ol>
   </div>
-</div>
 
-<div class="drop-shadow-md mb-8 bg-white rounded-3xl p-4">
-  <h2 class="font-bold mb-2">Lessons</h2>
+  <!-- div class="sticky bottom-0 bg-blue-900 p-4 flex items-center justify-center">
+    <button class="font-bold px-4 py-2 rounded-lg bg-brand-500">Enroll now for free</button>
+    </div -->
 
-  <ol>
-    <% @course.lessons_ordered.each do |lesson| %>
-      <li class="py-4">
-        <%= link_to course_lesson_url(course_id: @course.to_param, id: lesson.to_param), class: "flex" do %> 
-          <%= image_tag 'play.svg', width: "40px", height: "40px", alt: "Start lesson" %>
-          <span class="ml-4 flex-1 font-light"><%= lesson.name %></span>
-        <% end %>
-      </li>
-    <% end %>
-
-  </ol>
-</div>
-
-<!-- div class="sticky bottom-0 bg-blue-900 p-4 flex items-center justify-center">
-  <button class="font-bold px-4 py-2 rounded-lg bg-brand-500">Enroll now for free</button>
-</div -->
-
-<script type="application/ld+json">
-  {
+    <script type="application/ld+json">
+      {
       "@context": "https://schema.org",
       "@type": "Course",
       "name": "<%= @course.name %>",
@@ -70,16 +71,16 @@
         "sameAs": "<%= @course.creator_url %>"
       }
     }
-</script>
+    </script>
 
 
-<script type="application/ld+json">
-  {
+    <script type="application/ld+json">
+      {
       "@context": "https://schema.org",
       "@type": "ItemList",
       "itemListElement": [
       <% @course.lessons_ordered.each_with_index do |lesson, index| %>
-        {
+ {
           "@type": "VideoObject",
           "position": "<%= index + 1 %>",
           "name": "<%= lesson.name %>",
@@ -93,4 +94,5 @@
       <% end %>
       ]
     }
-</script>
+    </script>
+</main>
