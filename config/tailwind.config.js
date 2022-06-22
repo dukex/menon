@@ -1,5 +1,3 @@
-const { gray, blue } = require('tailwindcss/colors')
-
 module.exports = {
   content: [
     './app/helpers/**/*.rb',
@@ -8,33 +6,44 @@ module.exports = {
   ],
   theme: {
     colors: {
-      white: "#FFF",
-      gray,
-      blue,
-      red: {
-        100: "#FB87A0",
-        300: "#FFEAEF",
-        500: "#FEB4C4",
-        700: "#F86282",
-        900: "#F34067"
-      },
       brand: {
-        100: "#80EECD",
-        300: "#EAFEF8",
-        500: "#B0F8E3",
-        700: "#58DFB6",
-        900: "#35C89C"
+        default: "#80EECD",
+        dark: "#080135"
+      },
+      blue: {
+        900: "#35C89C",
+        700: "#35C89C",
+        300: "#B0F8E3",
+        100: "#EAFEF8"
+      },
+      gray: {
+        900: "#111827",
+        700: "#374151",
+        500: "#6B7280",
+        300: "#E5E7EB",
+        100: "#F9FAFB"
+      },
+      pink: {
+        900: "#F34067",
+        700: "#F86282",
+        500: "#FB87A0",
+        300: "#FEB4C4",
+        100: "#FFEAEF"
       },
       yellow: {
-        100: "#FFD189",
-        300: "#FFF7EA",
-        500: "#FFE2B5",
+        900: "#FFB544",
         700: "#FFC264",
-        900: "#FFB544"
-      }
-    },
-    extend: {
-
+        500: "#FFD189",
+        300: "#FFE2B5",
+        100: "#FFF7EA"
+      },
+      purple: {
+        700: "#201562",
+        500: "#3B2E86",
+        300: "#D7D3EE",
+        100: "#F1F0F8"
+      },
+      white: "#FFF"
     },
   },
   plugins: [
