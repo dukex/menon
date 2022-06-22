@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_18_213359) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_22_030332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -225,8 +225,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_18_213359) do
       result.description,
       result.slug,
       result.creator_name,
-      result.creator_url
-     FROM result
+      result.creator_url,
+      count(lessons.id) AS lessons_count,
+      (sum(lessons.duration) / 3600) AS hours
+     FROM (result
+       LEFT JOIN courses_lessons lessons ON ((lessons.course_id = result.id)))
+    GROUP BY result.section, result.id, result.name, result.category, result.thumbnail_url, result.description, result.slug, result.creator_name, result.creator_url
     ORDER BY result.section;
   SQL
 end
