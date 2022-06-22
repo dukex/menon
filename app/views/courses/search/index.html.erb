@@ -1,0 +1,33 @@
+<%# content_for :title, "#{@course.name}" %>
+<%# content_for :description, sanitize(@course.description, tags: %w(), attributes: %w()) %>
+
+
+<main class="p-3 max-w-screen-lg mx-auto">
+  <section>
+    <h3 class="font-bold text-3xl">Search</h3>
+
+    <div class="grid-cols-5 gap-4 grid">
+      <div>
+        <h4>Refine your search</h4>
+        <ul>
+          <% @facets.group_by { |f| f['attr'] }.each do |section, facets| %>
+            <li>
+              <h5><%= section %></h5>
+              <ul>
+                <% facets.each do |facet|  %>
+                  <li>
+                    <%= link_to facet['value'], tag_search_index_url(tag: [params[:tag], facet['tag']]), class: " underline" %>
+                    (<%= facet['count'] %>)
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="col-span-4">
+        <%= render 'components/course_list', courses: @courses %>
+      </div>
+    </div>
+  </section>
+</main>

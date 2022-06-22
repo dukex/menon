@@ -26,7 +26,7 @@
       <% @courses.top_categories.each do |category, courses| %>
         <h4 class="font-bold text-lg mt-5 mb-8"><%= t ".#{category}" %></h4>
         <%= render 'components/course_list', courses: courses %>
-        <%# <%= link_to t(".more_courses", category: t(".#{category}")), root_url, class: "text-right block underline" %> 
+        <%= link_to t(".more_courses", category: t(".#{category}")), tag_search_index_url(tag: "category:#{category}"), class: "text-right block underline" %>
       <% end %>
     </section>
   <% end %>

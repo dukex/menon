@@ -10,11 +10,13 @@ Rails.application.routes.draw do
   mount Resque::Server, at: '/jobs'
 
   resources :courses, path: '/', only: %i[index show] do
-    collection do
-      get '/language/:language', to: 'courses#index'
-    end
-
     resources :lessons, module: :courses, only: :show
+    collection do
+      resources :search, module: :courses, only: :index do
+        get '/:q', to: 'search#index', on: :collection, as: :query
+        get '/tag/:tag', to: 'search#index', on: :collection, as: :tag
+      end
+    end
   end
 
   root to: 'courses#index'

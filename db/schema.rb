@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_22_030332) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_22_055652) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_22_030332) do
     t.string "creator_url"
     t.string "category"
     t.boolean "featured"
+    t.virtual "searchable", type: :tsvector, as: "(setweight(to_tsvector('english'::regconfig, (COALESCE(name, ''::character varying))::text), 'A'::\"char\") || setweight(to_tsvector('english'::regconfig, COALESCE(description, ''::text)), 'B'::\"char\"))", stored: true
+    t.index ["searchable"], name: "index_courses_on_searchable", using: :gin
     t.index ["slug"], name: "index_courses_on_slug", unique: true
     t.index ["source_url"], name: "index_courses_on_source_url", unique: true
     t.index ["status", "slug"], name: "index_courses_on_status_and_slug"
@@ -232,5 +234,34 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_22_030332) do
        LEFT JOIN courses_lessons lessons ON ((lessons.course_id = result.id)))
     GROUP BY result.section, result.id, result.name, result.category, result.thumbnail_url, result.description, result.slug, result.creator_name, result.creator_url
     ORDER BY result.section;
+  SQL
+  create_view "courses_searches", materialized: true, sql_definition: <<-SQL
+      WITH result AS (
+           SELECT courses.id,
+              courses.name,
+              courses.category,
+              courses.thumbnail_url,
+              courses.description,
+              courses.slug,
+              courses.creator_name,
+              courses.creator_url,
+              array_to_tsvector(array_remove(ARRAY[(('category:'::text || split_part((courses.category)::text, '/'::text, 1)) || ''::text), (('subcategory:'::text || split_part((courses.category)::text, '/'::text, 2)) || ''::text), (('language:'::text || (courses.language)::text) || ''::text)], NULL::text)) AS tags
+             FROM courses
+            WHERE (((courses.status)::text = 'reviewed'::text) AND (courses.description IS NOT NULL) AND (courses.description <> ''::text))
+          )
+   SELECT result.id,
+      result.name,
+      result.category,
+      result.thumbnail_url,
+      result.description,
+      result.slug,
+      result.creator_name,
+      result.creator_url,
+      result.tags,
+      count(lessons.id) AS lessons_count,
+      (sum(lessons.duration) / 3600) AS hours
+     FROM (result
+       LEFT JOIN courses_lessons lessons ON ((lessons.course_id = result.id)))
+    GROUP BY result.id, result.name, result.category, result.thumbnail_url, result.description, result.slug, result.creator_name, result.creator_url, result.tags;
   SQL
 end
