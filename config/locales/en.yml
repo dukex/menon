@@ -5,6 +5,18 @@ en:
   components:
     course_card:
       action: Go to course page
+      lessons:
+        zero: no video
+        one: 1 video
+        other: "%{count} videos"
+      price:
+        zero: for free
+        one: $1
+        other: "$%{count}"
+      hours:
+        zero: for free
+        one: 1 hour
+        other: "%{count} hours"
   courses:
     index:
       title: "The greatest courses portal."
