@@ -25,15 +25,18 @@
   </head>
 
   <body class="bg-blue-100 text-purple-500 text-base">
-    <header class="flex p-3 max-w-screen-lg mx-auto">
-      <%= link_to root_url, class: "mr-2" do %>
-        <%= image_tag "Logo.svg", class: "w-14 h-14", alt: "logo" %>
-      <% end %>
-      <h1 class="flex font-bold text-2xl items-center" >
-        <%= link_to root_url do %>
-          Menon
+    <header class="flex p-3 max-w-screen-lg mx-auto justify-between">
+      <div class="flex flex-row">
+        <%= link_to root_url, class: "mr-2" do %>
+          <%= image_tag "Logo.svg", class: "w-14 h-14", alt: "logo" %>
         <% end %>
-      </h1>
+        <h1 class="flex font-bold text-2xl items-center" >
+          <%= link_to root_url do %>
+            Menon
+          <% end %>
+        </h1>
+      </div>
+      <button class="uppercase font-bold text-xl">Menu</button>
     </header>
 
     <%= yield %>
