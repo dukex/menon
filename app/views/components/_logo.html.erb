@@ -1,0 +1,10 @@
+<div class="flex flex-row">
+  <%= link_to root_url, class: "mr-2" do %>
+    <%= image_tag "Logo.svg", class: "w-14 h-14", alt: "logo" %>
+  <% end %>
+  <h1 class="flex font-bold text-2xl <%= !defined?(vertical_align) || vertical_align ? "items-center" : "" %> <%= defined?(in_dark) && in_dark ? "text-white" : "" %> ">
+    <%= link_to root_url do %>
+      Menon
+    <% end %>
+  </h1>
+</div>
