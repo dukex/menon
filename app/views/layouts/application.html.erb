@@ -41,20 +41,28 @@
       </div>
     </header>
     <%= yield %>
-    <footer class="p-3 py-5 max-w-screen-lg mx-auto bg-brand-dark">
+    <footer class=" bg-brand-dark">
+      <div class="max-w-screen-lg mx-auto p-3 py-5">
+
+
+
+
       <h2 class="text-white text-2xl font-bold mb-2.5">Search course by category</h2>
       <ul class="flex flex-row flex-wrap mb-5">
-        <li class="py-0.5 w-2/4"><%= link_to 'Development', root_url, class:'text-white text-sm' %></li>
-        <li class="py-0.5 w-2/4"><%= link_to 'Business', root_url, class:'text-white text-sm' %></li>
-        <li class="py-0.5 w-2/4"><%= link_to 'Sale Skills', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Development', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Business', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Sale Skills', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Finance & Accounting', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'IT & Software', root_url, class:'text-white text-sm' %></li>
       </ul>
       <h2 class="text-white text-2xl font-bold mb-2.5">Search course by language</h2>
       <ul class="flex flex-row flex-wrap mb-5">
-        <li class="py-0.5 w-2/4"><%= link_to 'English', root_url, class:'text-white text-sm' %></li>
-        <li class="py-0.5 w-2/4"><%= link_to 'Deutsch', root_url, class:'text-white text-sm' %></li>
-        <li class="py-0.5 w-2/4"><%= link_to 'Español', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'English', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Deutsch', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Español', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Français', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Bahasa Indonesia', root_url, class:'text-white text-sm' %></li>
       </ul>
-      <div>
         <%= render "components/logo", in_dark: true, vertical_align: false %>
         <div class="flex justify-between text-white text-sm text-bold mt-5">
           <p>&copy 2022 Menon</p>
