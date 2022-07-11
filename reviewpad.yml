@@ -16,7 +16,7 @@ rules:
     description: medium-sized pull request
     spec: '$size() > 50 && $size() <= 150'
 
-  - rule: is-large
+  - name: is-large
     kind: patch
     description: large-sized pull request
     spec: '$size() > 150'
