@@ -7,6 +7,7 @@ array_to_tsvector(
     'category:' || split_part(category, '/', 1) || '',
     'subcategory:' || split_part(category, '/', 2) || '',
     'language:' ||language || ''
+    'creator:' || creator_name
     ],
     NULL
   )
