@@ -8,7 +8,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-
+    <%= javascript_importmap_tags %>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -17,28 +17,58 @@
     <meta name="theme-color" content="#ffffff">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-
     <% if Rails.application.config.real_env.production? %>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2309414464751824"
         crossorigin="anonymous"></script>
     <% end %>
   </head>
-
   <body class="bg-blue-100 text-purple-500 text-base">
-    <header class="flex p-3 max-w-screen-lg mx-auto">
-      <%= link_to root_url, class: "mr-2" do %>
-        <%= image_tag "Logo.svg", class: "w-14 h-14", alt: "logo" %>
-      <% end %>
-      <h1 class="flex font-bold text-2xl items-center" >
-        <%= link_to root_url do %>
-          Menon
-        <% end %>
-      </h1>
+    <header class="flex max-w-screen-lg mx-auto flex-col ">
+      <div class="flex justify-between p-3 z-10 bg-blue-100 transition-all	duration-300 ease-in">
+        <%= render "components/logo" %>
+        <button class="transition-all	duration-300 ease-in font-bold text-xl uppercase" data-toggle="menu">Menu</button>
+        <button class="transition-all	duration-300 ease-in font-bold text-xl uppercase hidden text-white" data-toggle="menu">Close <span class="font-extralight">X</span></button>
+      </div>
+      <div class="relative">
+        <nav class="-translate-y-full flex flex-col origin-top 	duration-300	ease-in transition-all justify-between bg-brand-dark border-t border-gray-500 p-3 pt-2 text-right inset-x-0 absolute">
+          <ul>
+            <li class="py-1"><%= link_to 'Sign Up', root_url, class:'text-white text-sm' %></li>
+            <li class="py-1"><%= link_to 'Languages', root_url, class:'text-white text-sm' %></li>
+            <li class="py-1"><%= link_to 'Categories', root_url, class:'text-white text-sm' %></li>
+            <li class="py-1"><%= link_to 'Contact', root_url, class:'text-white text-sm' %></li>
+          </ul>
+        </nav>
+      </div>
     </header>
-
     <%= yield %>
+    <footer class=" bg-brand-dark">
+      <div class="max-w-screen-lg mx-auto p-3 py-5">
 
-    <footer class="p-3 max-w-screen-lg mx-auto">
+
+
+
+      <h2 class="text-white text-2xl font-bold mb-2.5">Search course by category</h2>
+      <ul class="flex flex-row flex-wrap mb-5">
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Development', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Business', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Sale Skills', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Finance & Accounting', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'IT & Software', root_url, class:'text-white text-sm' %></li>
+      </ul>
+      <h2 class="text-white text-2xl font-bold mb-2.5">Search course by language</h2>
+      <ul class="flex flex-row flex-wrap mb-5">
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'English', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Deutsch', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Español', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Français', root_url, class:'text-white text-sm' %></li>
+        <li class="py-0.5 w-1/2 lg:w-1/4"><%= link_to 'Bahasa Indonesia', root_url, class:'text-white text-sm' %></li>
+      </ul>
+        <%= render "components/logo", in_dark: true, vertical_align: false %>
+        <div class="flex justify-between text-white text-sm text-bold mt-5">
+          <p>&copy 2022 Menon</p>
+          <p>Made with ❤️ in Brazil by a5a</p>
+        </div>
+      </div>
     </footer>
   </body>
 </html>
