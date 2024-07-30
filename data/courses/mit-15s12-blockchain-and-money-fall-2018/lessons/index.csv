@@ -1,0 +1,76 @@
+title,description,published_at,provider_id
+"1. Introduction for 15.S12 Blockchain and Money, Fall 2018","MIT 15.S12 Blockchain and Money, Fall 2018
+Instructor: Prof. Gary Gensler
+View the complete course: https://ocw.mit.edu/15-S12F18
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn
+
+This lecture provides an introduction to the course and to blockchain technology.
+
+Chapters
+0:00 Title slates
+0:20 Welcome; course introduction
+4:15 Readings for class
+5:13 A history lesson to give context
+9:22 Cryptography is communication in the presence of adversaries 
+12:14 List of digital currencies that failed between 1989 and 1999
+15:38 What blockchain is
+19:26 Pizza for bitcoins
+21:37 Blockchain technology
+22:41 Role of money and finance
+26:40 Financial sector problems and blockchain potential opportunities
+28:44 Financial sector issues with blockchain technology and what the financial sector favors
+35:00 Public policy framework
+36:46 The duck test
+37:25 Incumbents eyeing crypto finance
+39:35 Financial sector potential use cases
+41:57 Larry Lessig's book ""code and other laws of cyberspace""
+48:46 Outline of all classes
+49:08 Study questions
+50:55 Readings and video
+52:04 Conclusions
+55:13 Questions
+1:01:42 Credits
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu",2019-10-03T20:43:12Z,EH6vE97qIP4
+"2. Money, Ledgers & Bitcoin","MIT 15.S12 Blockchain and Money, Fall 2018
+Instructor: Prof. Gary Gensler
+View the complete course: https://ocw.mit.edu/15-S12F18
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn
+
+In this lecture, Prof. Gensler discusses the history of money, ledgers, fiat currency, central banking, early digital money, and mobile payments.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu",2019-10-03T20:52:59Z,5auv_xrvoJk
+3. Blockchain Basics & Cryptography,"MIT 15.S12 Blockchain and Money, Fall 2018
+Instructor: Prof. Gary Gensler
+View the complete course: https://ocw.mit.edu/15-S12F18
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn
+
+In this lecture, Prof. Gensler, explains the basics of blockchain and covers  Bitcoin design features, hash functions, blocker headers, Merkle trees, among other related topics.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu",2019-10-03T20:51:27Z,0UvVOMZqpEA
+4. Blockchain Basics & Consensus,"MIT 15.S12 Blockchain and Money, Fall 2018
+Instructor: Prof. Gary Gensler
+View the complete course: https://ocw.mit.edu/15-S12F18
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn
+
+This lecture covers blockchain consensus protocols. Because of the decentralized nature of blockchain technology, it is crucial that consensus protocols are used to require that the nodes on the network agree on the same state of a blockchain.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu",2019-10-03T20:54:14Z,w7HDA8gUbpQ
+"5. Blockchain Basics & Transactions, UTXO and Script Code","MIT 15.S12 Blockchain and Money, Fall 2018
+Instructor: Prof. Gary Gensler
+View the complete course: https://ocw.mit.edu/15-S12F18
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn
+
+This session covers design featues of blockchain, like hash functions, append-only timestamped logs, and proof-of-work.  The professor also covers unspent transcation output (UTXO).
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu",2019-10-03T20:46:20Z,zGDTt9Q3vyM
