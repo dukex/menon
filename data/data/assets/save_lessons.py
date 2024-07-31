@@ -22,6 +22,6 @@ def save_lessons(courses_with_lessons):
             newline="\n",
             encoding="utf-8",
         ) as f:
-            json.dump(course["lessons"], f)
+            json.dump(course["lessons"], f, indent=2, sort_keys=True)
 
     return None
