@@ -64,3 +64,265 @@ More courses at https://ocw.mit.edu
 Support OCW at http://ow.ly/a1If50zVRlQ
 
 We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:51:15Z,IycOPFmEQk8
+"6. TM Variants, Church-Turing Thesis","MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Showed that various TM variants are all equivalent to the single-tape model. Discussed the Church-Turing Thesis: Turing machines are equivalent to “algorithms” and model-independence.  Introduced notation for encoding objects and describing TMs.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:33:48Z,TTArY7ojshU
+7. Decision Problems for Automata and Grammars,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Showed the decidability of various problems about automata and grammars. Also showed that acceptance problem for TMs is T-recognizable.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:33:05Z,4MgN6uxd4i4
+8. Undecidability,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Showed that natural numbers and real numbers are not the same size to introduce the diagonalization method and used it to prove acceptance problem for TMs is undecidable. Introduced the reducibility method to show that HALT for TMs is undecidable.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:35:00Z,3PzuSPQPEU4
+9. Reducibility,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Discussed the reducibility method to prove undecidability and T-unrecognizability. Defined mapping reducibility as a type of reducibility. Showed that emptiness problem for TMs is undecidable and T-unrecognizable.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:33:51Z,N28g_YBXY8Y
+10. Computation History Method,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Defined configurations and computation histories. Gave the computation history method to prove undecidability. Showed that acceptance problem for LBA is decidable; emptiness problem for LBA, PCP, and ALL for CFG are undecidable.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:36:28Z,MGqoLm2aAgc
+11. Recursion Theorem and Logic,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Discussed self-reference and the recursion theorem. Gave various applications. Sketched Godel’s first incompleteness theorem in mathematical logic.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:34:58Z,N-_XmLanPYg
+12. Time Complexity,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Gave an introduction to complexity theory.  Discussed limited complexity model-dependence for reasonable models.  Defined TIME(t(n)) complexity classes and the class P.  Showed that PATH is in P.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:36:35Z,asjAc90L8rE
+"14. P and NP, SAT, Poly-Time Reducibility","MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+NOTE: There is no video for Lecture 13 as that was the day for the Midterm Exam.
+
+Quickly reviewed last lecture. Defined NTIME(t(n)) complexity classes and the class NP.  Showed that COMPOSITES is in NP. Discussed the P versus NP question. Proved that acceptance problem for CFG is in P. Introduced the satisfiability problem SAT and polynomial-time reducibility.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:39:44Z,1VhnDdQsELo
+15. NP-Completeness,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Covered NP-completeness; SAT and 3SAT; and more.  Discussed a strategy for proving NP-completeness with a reduction from 3SAT by constructing gadgets that simulate variables and clauses. 
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:33:57Z,iZPzBHGDsWI
+16. Cook-Levin Theorem,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Proved Cook-Levin Theorem: SAT is NP-complete. Also proved 3SAT is NP-complete.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:33:12Z,6Az1gtDRaAU
+"17. Space Complexity, PSPACE, Savitch's Theorem","MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Introduced space complexity. Defined SPACE(f(n)), NSPACE(f(n)) , PSPACE, and NPSPACE. Proved that TQBF is in PSPACE; LADDER for DFA is in NSPACE(n); and LADDER for DFA is in SPACE(n^2).
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:36:05Z,cT_qwkTigv4
+18. PSPACE-Completeness,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Proved Savitch’s Theorem: NSPACE(f(n)) is a subset of SPACE(f^2(n)). Also proved PSPACE-completeness and TQBF is PSPACE-complete.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:33:30Z,aVv9WXwW95w
+"19. Games, Generalized Geography","MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Discussed a connection between games and quantifiers. Described the formula game and showed that generalized geography is PSPACE-complete.  Introduced log space:  L and NL. Defined the configuration graph to prove NL is a subset of P.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:35:16Z,4dFPVJrNLDs
+"20. L and NL, NL = coNL","MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Reviewed log space: NL is a subset of SPACE(log^2n) and NL is a subset of P. Introduced log-space transducers and log-space reducibility. Defined NL-completeness. Proved that PATH is NL-complete. Also proved the Immerman-Szelepcsényi theorem: NL = coNL.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:34:53Z,q3xvno_KgRY
+21. Hierarchy Theorems,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Finished Immerman-Szelepcsenyi theorem: NL = coNL.  Introduced and proved the time and space hierarchy theorems.  Discussed using the hierarchy theorems to separate certain complexity classes.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:33:30Z,vqFRAWeEcUs
+"22. Provably Intractable Problems, Oracles","MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Introduced exponential complexity classes and demonstrated a “natural” provably intractable problem.  Introduced oracles and relativized computation to suggest that pure diagonalization-based methods cannot separate P and NP.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:33:43Z,N32bnUliSzo
+"23. Probabilistic Computation, BPP","MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Defined probabilistic Turing machines and the class BPP. Sketched the amplification lemma. Introduced branching programs and read-once branching programs. Started the proof that EQ for ROBP is in BPP. Introduced the arithmetization method.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:36:15Z,Vp_AzDGQyrA
+24. Probabilistic Computation (cont.),"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Simulated read-once branching programs by polynomials. Gave a probabilistic polynomial equality testing method. Concluded proving that EQ for ROBP is in BPP.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:33:42Z,7J1HD9rqEB4
+"25. Interactive Proof Systems, IP","MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Introduced the interactive proof system model. Defined the class IP. Started showing that #SAT is in IP to prove that coNP is a subset of IP.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:34:12Z,TSI3LR5WZmo
+26. coNP is a subset of IP,"MIT 18.404J Theory of Computation, Fall 2020
+Instructor: Michael Sipser
+View the complete course: https://ocw.mit.edu/18-404JF20
+YouTube Playlist: https://www.youtube.com/playlist?list=PLUl4u3cNGP60_JNv2MmK3wkOt9syvfQWY
+
+Quickly reviewed last lecture. Discussed the arithmetization of Boolean formulas. Finished the theorem: #SAT is in IP and concluded that coNP is a subset of IP.
+
+License: Creative Commons BY-NC-SA
+More information at https://ocw.mit.edu/terms
+More courses at https://ocw.mit.edu
+Support OCW at http://ow.ly/a1If50zVRlQ
+
+We encourage constructive comments and discussion on OCW’s YouTube and other social media channels. Personal attacks, hate speech, trolling, and inappropriate comments are not allowed and may be removed. More details at https://ocw.mit.edu/comments.",2021-09-14T18:38:03Z,eEXSv0jChO4
