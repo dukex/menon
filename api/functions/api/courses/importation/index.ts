@@ -1,8 +1,8 @@
 import slugify from "../../../helpers/slugify";
 
 interface Env {
-	YOUTUBE_API_KEY;  
-  DATABASE: D1Database  
+	YOUTUBE_API_KEY: string;
+	DATABASE: D1Database;
 }
 
 interface RequestBody {
@@ -10,47 +10,40 @@ interface RequestBody {
 	source: string;
 }
 
-interface YoutubePlaylistItemStatus {
-	privacyStatus: string;
-}
-
-interface YoutubeThumbnails {
-	url: string;
-	width: number;
-	height: number;
-}
-
-interface YoutubePlaylistItemSnippet {
-	publishedAt: string;
-	channelId: string;
-	title: string;
-	description: string;
-	thumbnails: {
-		default: YoutubeThumbnails;
-		medium: YoutubeThumbnails;
-		high: YoutubeThumbnails;
-		standard?: YoutubeThumbnails;
-		maxres?: YoutubeThumbnails;
-	};
-	channelTitle: string;
-	localized: {
-		title: string;
-		description: string;
-	};
-}
-
-interface YoutubePlaylistItem {
+interface CourseImported {
 	id: string;
-	status?: YoutubePlaylistItemStatus;
-	snippet?: YoutubePlaylistItemSnippet;
+	slug: string;
 }
 
-interface YoutubePlaylistList {
-	items: YoutubePlaylistItem[];
+interface Course extends CourseImported {
+	provider_uid: string;
+	provider_id: string;
+	name: string;
+	description: string;
+	creator_name: string;
+	thumbnail_url: string;
+	published_at: string;
+	source_url: string;
 }
 
-async function importCourse(body: RequestBody, apiKey: any) {
+async function importCourse(
+	body: RequestBody,
+	apiKey: string,
+	database: D1Database
+): Promise<CourseImported> {
 	const id = body.source.split("list=")[1];
+
+	const stmt = database
+		.prepare(
+			"SELECT id, slug FROM courses WHERE provider_id=?1 AND provider_uid=?2"
+		)
+		.bind(id, body.provider);
+	const alreadyExistentCourse = await stmt.first<CourseImported | null>();
+
+	if (alreadyExistentCourse) {
+		return alreadyExistentCourse;
+	}
+
 	const url = `https://www.googleapis.com/youtube/v3/playlists?id=${id}&key=${apiKey}&part=snippet,id,status`;
 
 	const youtubeResponse = await fetch(url).then((r) =>
@@ -67,24 +60,39 @@ async function importCourse(body: RequestBody, apiKey: any) {
 			playlistItem.snippet.thumbnails.default,
 		].find((thumb) => thumb && thumb.url && thumb.url.length > 0).url;
 
-	return {
-		provider: "youtube-playlist",
+	const course = {
+		id: crypto.randomUUID(),
+		provider_uid: "youtube-playlist",
+		provider_id: id,
 		slug: slugify(playlistItem.snippet.title),
 		name: playlistItem.snippet.title,
 		description: playlistItem.snippet.description,
 		creator_name: playlistItem.snippet.channelTitle,
 		thumbnail_url: thumbnailUrl(),
-		published_at: "2021-09-14T18:09:14Z",
+		published_at: playlistItem.snippet.publishedAt,
 		source_url: body.source,
 	};
+
+	await database
+		.prepare(
+			"INSERT INTO courses (id, provider_uid, provider_id, slug, name, description, creator_name, thumbnail_url, published_at, source_url) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)"
+		)
+		.bind(...Object.values(course))
+		.run();
+
+	return { id: course.id, slug: course.slug };
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
 	const body = await context.request.json<RequestBody>();
 
-	const course = await importCourse(body, context.env.YOUTUBE_API_KEY);
+	const course = await importCourse(
+		body,
+		context.env.YOUTUBE_API_KEY,
+		context.env.DATABASE
+	);
 
-	const responseBody = { c: body, ...course };
+	const responseBody = { ...body, ...course };
 
 	const response = new Response(JSON.stringify(responseBody), {
 		headers: {
