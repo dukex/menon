@@ -1,4 +1,4 @@
-import slugify from "../../../helpers/slugify";
+import slugify from "../../helpers/slugify";
 
 interface Env {
 	YOUTUBE_API_KEY: string;
