@@ -9,9 +9,6 @@ export async function createYoutubePlaylist(
   prevState: { url: string; error: string },
   data: FormData
 ) {
-  console.log("pprevState", prevState);
-  console.log("dsds", data);
-
   const source = data.get("url")?.toString() || "";
   const valid = validUrl(source);
 
@@ -21,7 +18,21 @@ export async function createYoutubePlaylist(
     valid,
   };
 
-  console.log(rawData);
+  if (valid) {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
 
-  return { url: source, error: valid ? "" : "Invalid youtube playlist URL" };
+    const course = await fetch(
+      "http://localhost:8788/api/courses/importation",
+      {
+        method: "POST",
+        body: JSON.stringify(rawData),
+        headers,
+      }
+    ).then((r) => r.json());
+
+    return { url: source, error: "", course };
+  }
+
+  return { url: source, error: "Invalid youtube playlist URL" };
 }
