@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-
-import { FooterCopyright } from './FooterCopyright';
 import { FooterIconList } from './FooterIconList';
+import { FooterCopyright } from './FooterCopyright';
+
 
 type ICenteredFooterProps = {
   logo: ReactNode;

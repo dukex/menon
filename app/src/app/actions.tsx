@@ -23,5 +23,5 @@ export async function createYoutubePlaylist(
 
   console.log(rawData);
 
-  return { error: valid ? "" : "Invalid youtube playlist URL" };
+  return { url: source, error: valid ? "" : "Invalid youtube playlist URL" };
 }

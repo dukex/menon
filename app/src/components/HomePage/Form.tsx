@@ -4,17 +4,15 @@ import { useId } from "react";
 import { Button } from "../Button";
 import { useFormState } from "react-dom";
 
-interface State {
-  url: string;
-  error: string;
-}
-
 const initialState = { url: "", error: "" };
 
 export default function Form({
   createYoutubePlaylist,
 }: {
-  createYoutubePlaylist: (prevState: State, data: FormData) => State;
+  createYoutubePlaylist: (
+    prevState: { url: string; error: string },
+    data: FormData
+  ) => Promise<{ url: string; error: string }>;
 }) {
   const urlId = useId();
   const [state, formAction] = useFormState(createYoutubePlaylist, initialState);
