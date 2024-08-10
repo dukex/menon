@@ -23,7 +23,7 @@ export async function createYoutubePlaylist(
     headers.append("Content-Type", "application/json");
 
     const course = await fetch(
-      "http://localhost:8788/api/courses/importation",
+      "https://api.menon.courses/courses/importation",
       {
         method: "POST",
         body: JSON.stringify(rawData),
