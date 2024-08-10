@@ -4,7 +4,6 @@ import Form from "@/components/HomePage/Form";
 import { createYoutubePlaylist } from "@/app/actions"
 
 export default function Page() {
-
   return (
     <div className="flex h-screen flex-col justify-between bg-gray-100 text-gray-600 antialiased">
       <Hero

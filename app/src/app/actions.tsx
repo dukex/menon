@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 const validUrl = (url: string) => {
   const id = url.split("list=")[1] || "";
