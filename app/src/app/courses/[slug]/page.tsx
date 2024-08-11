@@ -29,15 +29,26 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <main className=" max-w-screen-lg mx-auto">
       <Section yPadding="py-6">
-        <NavbarTwoColumns logo={<Logo xl />}>
+        <NavbarTwoColumns logo={<Logo />}>
           <li>
             <Link href="/app">Sign in</Link>
           </li>
         </NavbarTwoColumns>
       </Section>
 
-      <h2 className="font-bold text-4xl">{course.name}</h2>
-      <p className="my-5">{course.description}</p>
+      <h2 className="font-bold text-4xl text-primary-900">{course.name}</h2>
+      <p className="my-5 text-primary-900">{course.description}</p>
+      {course.status == "error" && (
+      <div className="bg-red-50 border-red-600 border p-5 rounded-md flex items-center">
+          <div className="text-5xl w-32 text-center text-red-900">
+            !
+          </div>
+          <div>
+            <h2 className="font-bold text-lg mb-3">Import error</h2>
+            <p className="mb-2">We are unable to import the course!</p>
+            <p>Make sure the playlist and the videos are public or unlisted and try again.</p>
+          </div>
+        </div>)}
 
       {course.status == "pending" && (
         <div className="bg-yellow-50 border-yellow-600 border p-5 rounded-md flex items-center">
@@ -63,7 +74,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>{" "}
           <div>
             <h2 className="font-bold text-lg mb-3">Importing...</h2>
-            <p>We are importing the course to you learning and enjoy with us!</p>
+            <p className="mb-2">We are importing the course to you learning and enjoy with us!</p>
             <p>For now, take a breath, and back here soon.</p>
           </div>
         </div>

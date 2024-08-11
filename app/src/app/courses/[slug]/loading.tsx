@@ -9,7 +9,7 @@ export default function Loading({ params }: { params: { slug: string } }) {
   return (
     <main className=" max-w-screen-lg mx-auto">
       <Section yPadding="py-6">
-        <NavbarTwoColumns logo={<Logo xl />}>
+        <NavbarTwoColumns logo={<Logo  />}>
           <li>
             <Link href="/app">Sign in</Link>
           </li>
