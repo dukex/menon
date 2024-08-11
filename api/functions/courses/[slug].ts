@@ -1,4 +1,4 @@
-import { CourseImportRequest, getCourse, importCourse } from "../course";
+import { getCourse } from "../course";
 
 interface Env {
 	ACCEPTED_ORIGINS: string;

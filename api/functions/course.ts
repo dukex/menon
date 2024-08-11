@@ -14,6 +14,7 @@ export interface Course extends CourseImported {
 	thumbnail_url: string;
 	published_at: string;
 	source_url: string;
+	status: "pending" | "error" | "imported"
 }
 
 export interface CourseImportRequest {
