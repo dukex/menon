@@ -35,7 +35,7 @@ interface Lesson {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const course = await fetch(
-    `http://localhost:8788/courses/${params.slug}`
+    `https://api.menon.couses/courses/${params.slug}`
   ).then((res) => res.json<Course>());
 
   console.log("data", course);
