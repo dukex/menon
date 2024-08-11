@@ -36,7 +36,13 @@ export const createYoutubePlaylistAndRedirect = async (
       body: JSON.stringify(rawData),
       headers,
     }
-  ).then((r) => r.json());
+  ).then((r) => {
+    if(r.status < 200 || r.status > 300) {
+      throw Error("failed to request imporation")
+    }
+    console.log(r)
+    return r
+  }).then((r) => r.json());
 
   if (!(course.slug || course.id)) {
     return {
@@ -46,7 +52,7 @@ export const createYoutubePlaylistAndRedirect = async (
     };
   }
 
-  redirect(`/courses/${course.slug}`);
+  redirect(`/${course.slug}`);
 
   return { url: source, error: "", course };
 };

@@ -37,7 +37,7 @@ interface Lesson {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const course = await fetch(
-    `https://api.menon.couses/courses/${params.slug}`
+    `https://api.menon.courses/courses/${params.slug}`
   ).then((res) => res.json<Course>());
 
   console.log("data", course);
@@ -128,7 +128,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               course.lessons.map((lesson) => (
                 <li className="py-4" key={lesson.slug}>
                   <Link
-                    href={`/app/couses/${course.slug}/lessons/${lesson.slug}`}
+                    href={`/${course.slug}/lessons/${lesson.slug}`}
                     className="flex"
                   >
                     <div>
