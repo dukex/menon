@@ -1,6 +1,5 @@
 import slugify from "./helpers/slugify";
 
-
 export interface CourseImported {
 	id: string;
 	slug: string;
@@ -45,6 +44,9 @@ export async function importCourse(
 	const youtubeResponse = await fetch(url).then((r) =>
 		r.json<YoutubePlaylistList>()
 	);
+
+	console.log(youtubeResponse);
+
 	const playlistItem = youtubeResponse.items[0];
 
 	const thumbnailUrl = () =>
