@@ -18,10 +18,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
 	const response = new Response(JSON.stringify(responseBody), {
 		headers: {
-
 			"Content-Type": "application/json",
 		},
 	});
+
+	response.headers.append(
+		"Access-Control-Allow-Origin",
+		"https://menon.courses"
+	);
 
 	return response;
 };
