@@ -4,8 +4,6 @@ import { Section } from "@/components/Section";
 import Link from "next/link";
 
 export default function Loading({ params }: { params: { slug: string } }) {
-  console.log(params);
-
   return (
     <main className=" max-w-screen-lg mx-auto">
       <Section yPadding="py-6">

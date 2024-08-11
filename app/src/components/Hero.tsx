@@ -1,9 +1,7 @@
-import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { Logo } from './Logo';
 import { Section } from './Section';
 import { Background } from './Background';
-import { NavbarTwoColumns } from './NavbarTwoColumns';
+import PublicHeader from './PublicHeader';
 
 const Hero = ({
   title,
@@ -15,13 +13,7 @@ const Hero = ({
   children: ReactNode;
 }) => (
   <Background color="bg-gray-100">
-    <Section yPadding="py-6">
-      <NavbarTwoColumns logo={<Logo  />}>
-        <li>
-          <Link href="/app">Sign in</Link>
-        </li>
-      </NavbarTwoColumns>
-    </Section>
+    <PublicHeader />
 
     <Section yPadding="pt-20 pb-32">
       <header className="text-center">
