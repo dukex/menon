@@ -21,6 +21,16 @@ export interface CourseImportRequest {
 	source: string;
 }
 
+export async function getCourse(
+	slug: string,
+	database: D1Database
+): Promise<Course> {
+	const stmt = database
+		.prepare("SELECT * FROM courses WHERE slug=? LIMIT 1")
+		.bind(slug);
+	return await stmt.first<Course>();
+}
+
 export async function importCourse(
 	body: CourseImportRequest,
 	apiKey: string,

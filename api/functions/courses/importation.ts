@@ -1,7 +1,8 @@
-import { CourseImportRequest, importCourse } from "../../course";
+import { CourseImportRequest, importCourse } from "../course";
 
 interface Env {
 	YOUTUBE_API_KEY: string;
+	ACCEPTED_ORIGINS: string;
 	DATABASE: D1Database;
 }
 
@@ -19,24 +20,20 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 	const response = new Response(JSON.stringify(responseBody), {
 		headers: {
 			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": context.env.ACCEPTED_ORIGINS
 		},
 	});
-
-	response.headers.append(
-		"Access-Control-Allow-Origin",
-		"https://menon.courses"
-	);
 
 	return response;
 };
 
-export const onRequestOptions: PagesFunction = async () => {
+export const onRequestOptions: PagesFunction<Env> = async (context) => {
 	return new Response(null, {
 		status: 204,
 		headers: {
-			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Origin": context.env.ACCEPTED_ORIGINS,
 			"Access-Control-Allow-Headers": "*",
-			"Access-Control-Allow-Methods": "GET, OPTIONS",
+			"Access-Control-Allow-Methods": "GET, OPTIONS, POST",
 			"Access-Control-Max-Age": "86400",
 		},
 	});
