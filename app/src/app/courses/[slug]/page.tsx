@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   console.log("data", course);
 
   return (
-    <main className=" max-w-screen-lg mx-auto">
+    <main className="max-w-screen-lg mx-auto text-primary-900">
       <Section yPadding="py-6">
         <NavbarTwoColumns logo={<Logo />}>
           <li>
@@ -36,19 +36,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </NavbarTwoColumns>
       </Section>
 
-      <h2 className="font-bold text-4xl text-primary-900">{course.name}</h2>
-      <p className="my-5 text-primary-900">{course.description}</p>
+      <h2 className="font-bold text-4xl">{course.name}</h2>
+      <p className="my-5">{course.description}</p>
       {course.status == "error" && (
-      <div className="bg-red-50 border-red-600 border p-5 rounded-md flex items-center">
-          <div className="text-5xl w-32 text-center text-red-900">
-            !
-          </div>
+        <div className="bg-red-50 border-red-600 border p-5 rounded-md flex items-center">
+          <div className="text-5xl w-32 text-center text-red-900">!</div>
           <div>
             <h2 className="font-bold text-lg mb-3">Import error</h2>
             <p className="mb-2">We are unable to import the course!</p>
-            <p>Make sure the playlist and the videos are public or unlisted and try again.</p>
+            <p>
+              Make sure the playlist and the videos are public or unlisted and
+              try again.
+            </p>
           </div>
-        </div>)}
+        </div>
+      )}
 
       {course.status == "pending" && (
         <div className="bg-yellow-50 border-yellow-600 border p-5 rounded-md flex items-center">
@@ -74,7 +76,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>{" "}
           <div>
             <h2 className="font-bold text-lg mb-3">Importing...</h2>
-            <p className="mb-2">We are importing the course to you learning and enjoy with us!</p>
+            <p className="mb-2">
+              We are importing the course to you learning and enjoy with us!
+            </p>
             <p>For now, take a breath, and back here soon.</p>
           </div>
         </div>
@@ -93,20 +97,34 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       )}
-      {course.status != "pending" && (
+      {course.status == "imported" && (
         <div className="drop-shadow-md mb-8 bg-white rounded-3xl p-4">
           <h2 className="font-bold mb-2">Lessons</h2>
 
           <ol>
-            % @course.lessons_ordered.each do |lesson| %
             <li className="py-4">
-              %= link_to course_lesson_url(course_id: @course.to_param, id:
-              lesson.to_param), class: "flex" do % %= image_tag 'play.svg',
-              width: "40px", height: "40px", alt: "Start lesson" %
-              <span className="ml-4 flex-1 font-light">%= lesson.name %</span>%
-              end %
+              <Link
+                href={`/app/couses/${course.slug}/lessons/id`}
+                className="flex"
+              >
+                <div>
+                  <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="20" cy="20" r="20" fill="#80EECD" />
+                    <path
+                      d="M32.5162 19.538L14.5162 29.0642L14.5162 10.0117L32.5162 19.538Z"
+                      fill="#080135"
+                    />
+                  </svg>
+                </div>
+                <span className="ml-4 flex-1 font-light">lesson.name</span>
+              </Link>
             </li>
-            % end %
           </ol>
         </div>
       )}
