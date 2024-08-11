@@ -3,6 +3,8 @@ import { NavbarTwoColumns } from "@/components/NavbarTwoColumns";
 import { Section } from "@/components/Section";
 import Link from "next/link";
 
+export const runtime = 'edge';
+
 export interface Course {
   id: string;
   slug: string;
