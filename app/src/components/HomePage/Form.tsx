@@ -1,20 +1,30 @@
 "use client";
-import { useActionState, useId } from "react";
+import {  useId, useState } from "react";
 import { Button } from "../Button";
-import { useFormState } from "react-dom";
+import { useRouter } from 'next/navigation'
 
-const initialState = { url: "", error: "" };
 
 export default function Form({
   createYoutubePlaylist,
 }: {
   createYoutubePlaylist: (
-    prevState: { url: string; error?: string },
     data: FormData
   ) => Promise<{ url: string; error?: string }>;
 }) {
   const urlId = useId();
-  const [state, formAction] = useFormState(createYoutubePlaylist, initialState);
+  const router = useRouter();
+
+  const [error, setError] = useState("");
+
+  const formAction = async (data: FormData) => {
+    const {url, error} = await createYoutubePlaylist(data);
+
+    if(url.length> 1) {
+      router.push(url)
+    }
+
+    setError(error || "");
+  };
 
   return (
     <form className="flex flex-col" action={formAction}>
@@ -34,10 +44,10 @@ export default function Form({
       />
       <p
         className={`${
-          state.error && state.error.length < 1 ? "" : "bg-red-500"
+           error.length < 1 ? "" : "bg-red-500"
         } text-md h-10  p-2 text-white`}
       >
-        {state.error}
+        {error}
       </p>
 
       <div className="mt-2">

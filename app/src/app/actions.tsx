@@ -1,7 +1,4 @@
-"use server";
-
-import { redirect } from "next/navigation";
-
+"use client";
 const URL = "https://api.menon.courses";
 
 const validUrl = (url: string) => {
@@ -9,10 +6,7 @@ const validUrl = (url: string) => {
   return id.length > 2;
 };
 
-export const createYoutubePlaylistAndRedirect = async (
-  prevState: { url: string; error?: string },
-  data: FormData
-) => {
+export const createYoutubePlaylistAndRedirect = async (data: FormData) => {
   try {
     const source = data.get("url")?.toString() || "";
     const valid = validUrl(source);
@@ -55,7 +49,7 @@ export const createYoutubePlaylistAndRedirect = async (
       };
     }
 
-     redirect(`/${course.slug}`);
+    return { url: `/${course.slug}`, error: "" };
   } catch (e) {
     return { url: "", error: "unknow error" };
   }
