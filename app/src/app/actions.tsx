@@ -1,14 +1,18 @@
-"use client";
+"use server";
+
+import { redirect } from 'next/navigation'
+
+const URL = "https://api.menon.courses"
 
 const validUrl = (url: string) => {
   const id = url.split("list=")[1] || "";
   return id.length > 2;
 };
 
-export async function createYoutubePlaylist(
+export const createYoutubePlaylistAndRedirect = async (
   prevState: { url: string; error: string },
   data: FormData
-) {
+) => {
   const source = data.get("url")?.toString() || "";
   const valid = validUrl(source);
 
@@ -18,21 +22,31 @@ export async function createYoutubePlaylist(
     valid,
   };
 
-  if (valid) {
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
-
-    const course = await fetch(
-      "https://api.menon.courses/courses/importation",
-      {
-        method: "POST",
-        body: JSON.stringify(rawData),
-        headers,
-      }
-    ).then((r) => r.json());
-
-    return { url: source, error: "", course };
+  if (!valid) {
+    return { url: source, error: "Invalid youtube playlist URL" };
   }
 
-  return { url: source, error: "Invalid youtube playlist URL" };
-}
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+
+  const course: { slug?: string | null; id?: string | null } = await fetch(
+    `${URL}/courses/importation`,
+    {
+      method: "POST",
+      body: JSON.stringify(rawData),
+      headers,
+    }
+  ).then((r) => r.json());
+
+  if (!(course.slug || course.id)) {
+    return {
+      url: source,
+      error: "Error to fetch youtube playlist data",
+      course,
+    };
+  }
+
+  redirect(`/courses/${course.slug}`);
+
+  return { url: source, error: "", course };
+};

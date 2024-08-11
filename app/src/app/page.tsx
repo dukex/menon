@@ -1,7 +1,7 @@
 import { Hero } from "@/components/Hero";
 import Form from "@/components/HomePage/Form";
 
-import { createYoutubePlaylist } from "@/app/actions"
+import { createYoutubePlaylistAndRedirect } from "@/app/actions";
 
 export default function Page() {
   return (
@@ -9,16 +9,16 @@ export default function Page() {
       <Hero
         title={
           <>
-            {'Transform any YouTube playlist into '}
+            {"Transform any YouTube playlist into "}
             <span className="inline-block bg-primary-500 px-4">
               structured courses
             </span>
           </>
         }
         description=""
-      > 
-        <Form createYoutubePlaylist={createYoutubePlaylist} />
+      >
+        <Form createYoutubePlaylist={createYoutubePlaylistAndRedirect} />
       </Hero>
     </div>
   );
-};
+}
