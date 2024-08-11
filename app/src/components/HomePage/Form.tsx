@@ -9,9 +9,9 @@ export default function Form({
   createYoutubePlaylist,
 }: {
   createYoutubePlaylist: (
-    prevState: { url: string; error: string },
+    prevState: { url: string; error?: string },
     data: FormData
-  ) => Promise<{ url: string; error: string }>;
+  ) => Promise<{ url: string; error?: string }>;
 }) {
   const urlId = useId();
   const [state, formAction] = useFormState(createYoutubePlaylist, initialState);
@@ -34,7 +34,7 @@ export default function Form({
       />
       <p
         className={`${
-          state.error.length < 1 ? "" : "bg-red-500"
+          state.error && state.error.length < 1 ? "" : "bg-red-500"
         } text-md h-10  p-2 text-white`}
       >
         {state.error}

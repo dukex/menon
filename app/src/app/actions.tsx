@@ -1,8 +1,8 @@
 "use server";
 
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
-const URL = "https://api.menon.courses"
+const URL = "https://api.menon.courses";
 
 const validUrl = (url: string) => {
   const id = url.split("list=")[1] || "";
@@ -10,49 +10,53 @@ const validUrl = (url: string) => {
 };
 
 export const createYoutubePlaylistAndRedirect = async (
-  prevState: { url: string; error: string },
+  prevState: { url: string; error?: string },
   data: FormData
 ) => {
-  const source = data.get("url")?.toString() || "";
-  const valid = validUrl(source);
+  try {
+    const source = data.get("url")?.toString() || "";
+    const valid = validUrl(source);
 
-  const rawData = {
-    provider: "youtube-playlist",
-    source,
-    valid,
-  };
-
-  if (!valid) {
-    return { url: source, error: "Invalid youtube playlist URL" };
-  }
-
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
-
-  const course: { slug?: string | null; id?: string | null } = await fetch(
-    `${URL}/courses/importation`,
-    {
-      method: "POST",
-      body: JSON.stringify(rawData),
-      headers,
-    }
-  ).then((r) => {
-    if(r.status < 200 || r.status > 300) {
-      throw Error("failed to request imporation")
-    }
-    console.log(r)
-    return r
-  }).then((r) => r.json());
-
-  if (!(course.slug || course.id)) {
-    return {
-      url: source,
-      error: "Error to fetch youtube playlist data",
-      course,
+    const rawData = {
+      provider: "youtube-playlist",
+      source,
+      valid,
     };
+
+    if (!valid) {
+      return { url: source, error: "Invalid youtube playlist URL" };
+    }
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    const course: { slug?: string | null; id?: string | null } = await fetch(
+      `${URL}/courses/importation`,
+      {
+        method: "POST",
+        body: JSON.stringify(rawData),
+        headers,
+      }
+    )
+      .then((r) => {
+        if (r.status < 200 || r.status > 300) {
+          throw Error("failed to request imporation");
+        }
+        console.log(r);
+        return r;
+      })
+      .then((r) => r.json());
+
+    if (!(course.slug || course.id)) {
+      return {
+        url: source,
+        error: "Error to fetch youtube playlist data",
+        course,
+      };
+    }
+
+     redirect(`/${course.slug}`);
+  } catch (e) {
+    return { url: "", error: "unknow error" };
   }
-
-  redirect(`/${course.slug}`);
-
-  return { url: source, error: "", course };
 };
