@@ -7,4 +7,4 @@
   Referrer-Policy: no-referrer;
 
 https://api.menon.courses/*
-  Access-Control-Allow-Origin: menon.courses;
+  Access-Control-Allow-Origin: https://menon.courses;
