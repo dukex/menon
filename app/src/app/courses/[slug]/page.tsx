@@ -124,7 +124,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <ol>
             {course.lessons &&
               course.lessons.map((lesson) => (
-                <li className="py-4">
+                <li className="py-4" key={lesson.slug}>
                   <Link
                     href={`/app/couses/${course.slug}/lessons/${lesson.slug}`}
                     className="flex"
