@@ -1,0 +1,10 @@
+/*
+  Access-Control-Allow-Origin: *;
+  Access-Control-Allow-Headers: *;
+  X-Robots-Tag: nosnippet;
+  X-Frame-Options: DENY;
+  X-Content-Type-Options: nosniff;
+  Referrer-Policy: no-referrer;
+
+https://api.menon.courses/*
+  Access-Control-Allow-Origin: menon.courses;
