@@ -15,14 +15,28 @@ export interface Course {
   published_at: string;
   source_url: string;
   status: "pending" | "error" | "imported";
+  lessons?: Lesson[];
+}
+
+interface Lesson {
+  slug: string;
+  name: string;
+  duration: number;
+  position: number;
+  provider_uid: "youtube";
+  provider_id: string;
+  thumbnail_url: string;
+  description: string;
+  course_id: string;
+  id: string;
+  published_at: string;
+  source_url: string;
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const course = await fetch(
     `http://localhost:8788/courses/${params.slug}`
   ).then((res) => res.json<Course>());
-
-  console.log(params);
 
   console.log("data", course);
 
@@ -84,47 +98,58 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
       )}
 
-      {course.status != "pending" && (
+      {course.status == "imported" && (
         <div className="flex items-center text-2xl my-5">
           <div className="px-2">
-            <span className="block font-bold">12</span>
+            <span className="block font-bold">{course.lessons?.length}</span>
             <span className="block text-base">vídeos</span>
           </div>
           <span className="block pl-5 mr-5 h-8 border-blue-900 border-r-2"></span>
           <div className="px-2">
-            <span className="block font-bold">4</span>
+            <span className="block font-bold">
+              {course.lessons?.reduce(
+                (a: number, c: Lesson) => a + c.duration,
+                0
+              )}
+            </span>
             <span className="block text-base">hours</span>
           </div>
         </div>
       )}
+
       {course.status == "imported" && (
         <div className="drop-shadow-md mb-8 bg-white rounded-3xl p-4">
           <h2 className="font-bold mb-2">Lessons</h2>
 
           <ol>
-            <li className="py-4">
-              <Link
-                href={`/app/couses/${course.slug}/lessons/id`}
-                className="flex"
-              >
-                <div>
-                  <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+            {course.lessons &&
+              course.lessons.map((lesson) => (
+                <li className="py-4">
+                  <Link
+                    href={`/app/couses/${course.slug}/lessons/${lesson.slug}`}
+                    className="flex"
                   >
-                    <circle cx="20" cy="20" r="20" fill="#80EECD" />
-                    <path
-                      d="M32.5162 19.538L14.5162 29.0642L14.5162 10.0117L32.5162 19.538Z"
-                      fill="#080135"
-                    />
-                  </svg>
-                </div>
-                <span className="ml-4 flex-1 font-light">lesson.name</span>
-              </Link>
-            </li>
+                    <div>
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle cx="20" cy="20" r="20" fill="#80EECD" />
+                        <path
+                          d="M32.5162 19.538L14.5162 29.0642L14.5162 10.0117L32.5162 19.538Z"
+                          fill="#080135"
+                        />
+                      </svg>
+                    </div>
+                    <span className="ml-4 flex-1 font-light">
+                      {lesson.name}
+                    </span>
+                  </Link>
+                </li>
+              ))}
           </ol>
         </div>
       )}

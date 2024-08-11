@@ -1,4 +1,4 @@
-import { getCourse } from "../course";
+import { getCourse, getLessons } from "../course";
 
 interface Env {
 	ACCEPTED_ORIGINS: string;
@@ -9,8 +9,10 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 	const slug = context.params.slug as string;
 
 	const course = await getCourse(slug, context.env.DATABASE);
+	const lessons = await getLessons(course.id, context.env.DATABASE);
 
-	const response = new Response(JSON.stringify(course), {
+
+	const response = new Response(JSON.stringify({ ...course, lessons: lessons}), {
 		headers: {
 			"Content-Type": "application/json",
 			"Access-Control-Allow-Origin": context.env.ACCEPTED_ORIGINS,
