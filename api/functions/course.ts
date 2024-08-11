@@ -66,18 +66,7 @@ export async function importCourse(
     r.json<YoutubePlaylistList>()
   );
 
-  console.log(youtubeResponse);
-
   const playlistItem = youtubeResponse.items[0];
-
-  const thumbnailUrl = () =>
-    [
-      playlistItem.snippet.thumbnails.maxres,
-      playlistItem.snippet.thumbnails.standard,
-      playlistItem.snippet.thumbnails.high,
-      playlistItem.snippet.thumbnails.medium,
-      playlistItem.snippet.thumbnails.default,
-    ].find((thumb) => thumb && thumb.url && thumb.url.length > 0).url;
 
   const course = {
     id: crypto.randomUUID(),
@@ -87,7 +76,7 @@ export async function importCourse(
     name: playlistItem.snippet.title,
     description: playlistItem.snippet.description,
     creator_name: playlistItem.snippet.channelTitle,
-    thumbnail_url: thumbnailUrl(),
+    thumbnail_url: thumbnailUrl(playlistItem),
     published_at: playlistItem.snippet.publishedAt,
     source_url: body.source,
   };
@@ -144,14 +133,14 @@ async function importLessons(
   apiKey: string,
   database: D1Database
 ) {
-  const items = await listAll<YoutubePlaylistItemItem>(
+  const items = (await listAll<YoutubePlaylistItemItem>(
     "https://www.googleapis.com/youtube/v3/playlistItems",
     {
       playlistId: id,
       key: apiKey,
       part: "contentDetails,snippet,id,status",
     }
-  );
+  )).filter(i => i.status.privacyStatus !== "private");
 
   const stmt = database.prepare(
     "" +
