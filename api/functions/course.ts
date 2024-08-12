@@ -15,7 +15,7 @@ export interface Course extends CourseImported {
   thumbnail_url: string;
   published_at: string;
   source_url: string;
-  lessons: Lesson[]
+  lessons: Lesson[];
 }
 
 export interface CourseImportRequest {
@@ -133,14 +133,16 @@ async function importLessons(
   apiKey: string,
   database: D1Database
 ) {
-  const items = (await listAll<YoutubePlaylistItemItem>(
-    "https://www.googleapis.com/youtube/v3/playlistItems",
-    {
-      playlistId: id,
-      key: apiKey,
-      part: "contentDetails,snippet,id,status",
-    }
-  )).filter(i => i.status.privacyStatus !== "private");
+  const items = (
+    await listAll<YoutubePlaylistItemItem>(
+      "https://www.googleapis.com/youtube/v3/playlistItems",
+      {
+        playlistId: id,
+        key: apiKey,
+        part: "contentDetails,snippet,id,status",
+      }
+    )
+  ).filter((i) => i.status.privacyStatus !== "private");
 
   const stmt = database.prepare(
     "" +
@@ -160,8 +162,7 @@ async function importLessons(
       ") VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12) ON CONFLICT (course_id, slug) DO NOTHING"
   );
 
-
-  const operations = items.map((item) => 
+  const operations = items.map((item) =>
     stmt.bind(
       slugify(item.snippet.title),
       item.snippet.title,
@@ -175,19 +176,17 @@ async function importLessons(
       crypto.randomUUID(),
       item.contentDetails.videoPublishedAt,
       ""
-    ),
+    )
   );
 
-  await database.batch(operations)
+  await database.batch(operations);
 
   await database
-  .prepare(
-    "UPDATE courses SET status='imported' WHERE id=?1"
-  )
-  .bind(courseId)
-  .run();
+    .prepare("UPDATE courses SET status='imported' WHERE id=?1")
+    .bind(courseId)
+    .run();
 
-  return true
+  return true;
 }
 
 const thumbnailUrl = (item) =>
@@ -199,7 +198,28 @@ const thumbnailUrl = (item) =>
     item.snippet.thumbnails.default,
   ].find((thumb) => thumb && thumb.url && thumb.url.length > 0).url;
 
+export async function searchCourses(
+  params: URLSearchParams,
+  database: D1Database
+) {
+  const bindings = [];
+  let queries = "WHERE 1=1";
 
+  params.forEach((value, key) => {
+    console.log(value, key);
+    bindings.push(value);
+
+    queries = queries + ` AND ${key}=?`;
+  });
+
+  console.log(`SELECT * FROM courses ${queries}`, bindings);
+
+  const stmt = database
+    .prepare(`SELECT * FROM courses ${queries}`)
+    .bind(...bindings);
+
+  return (await stmt.all<Course>()).results;
+}
 
 export async function getLessons(
   courseId: string,
@@ -213,16 +233,16 @@ export async function getLessons(
 }
 
 interface Lesson {
-  slug: string,
-  name: string,
-  duration: number,
-  position: number,
-  provider_uid: 'youtube',
-  provider_id: string,
-  thumbnail_url: string,
-  description: string,
-  course_id: string,
-  id: string,
-  published_at: string,
-  source_url: string
+  slug: string;
+  name: string;
+  duration: number;
+  position: number;
+  provider_uid: "youtube";
+  provider_id: string;
+  thumbnail_url: string;
+  description: string;
+  course_id: string;
+  id: string;
+  published_at: string;
+  source_url: string;
 }
