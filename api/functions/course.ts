@@ -28,8 +28,8 @@ export async function getCourse(
   database: D1Database
 ): Promise<Course> {
   const stmt = database
-    .prepare("SELECT * FROM courses WHERE slug=? LIMIT 1")
-    .bind(slug);
+    .prepare("SELECT * FROM courses WHERE (slug=? OR id=?) LIMIT 1")
+    .bind(slug, slug);
   return await stmt.first<Course>();
 }
 
@@ -144,7 +144,7 @@ async function importLessons(
     )
   ).filter((i) => i.status.privacyStatus !== "private");
 
-  const stmt = database.prepare(
+  const insertStmt = database.prepare(
     "" +
       "INSERT INTO lessons (" +
       " slug," +
@@ -155,15 +155,18 @@ async function importLessons(
       " provider_id," +
       " thumbnail_url," +
       " description," +
-      " course_id," +
       " id," +
       " published_at," +
       " source_url" +
-      ") VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12) ON CONFLICT (course_id, slug) DO NOTHING"
+      ") VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11) ON CONFLICT (provider_id, provider_uid) DO NOTHING RETURNING id"
   );
 
-  const operations = items.map((item) =>
-    stmt.bind(
+  const selectStmt = database.prepare(
+    "SELECT id FROM lessons WHERE provider_id = ?"
+  );
+
+  const operations = items.flatMap((item) => [
+    insertStmt.bind(
       slugify(item.snippet.title),
       item.snippet.title,
       0,
@@ -172,18 +175,28 @@ async function importLessons(
       item.id,
       thumbnailUrl(item),
       item.snippet.description,
-      courseId,
       crypto.randomUUID(),
       item.contentDetails.videoPublishedAt,
       ""
-    )
+    ),
+    selectStmt.bind(item.id),
+  ]);
+
+  const lessonsInsertResults = await database.batch<{ id: string }>(operations);
+
+  const courseLessonsStmt = database.prepare(
+    "INSERT INTO courses_lessons(id, course_id, lesson_id) VALUES (?1,?2,?3) ON CONFLICT (course_id, lesson_id) DO NOTHING"
   );
 
-  await database.batch(operations);
+  await database.batch(
+    lessonsInsertResults
+      .flatMap((o) => o.results)
+      .map((l) => courseLessonsStmt.bind(crypto.randomUUID(), courseId, l.id))
+  );
 
   await database
-    .prepare("UPDATE courses SET status='imported' WHERE id=?1")
-    .bind(courseId)
+    .prepare("UPDATE courses SET status='imported',updated_at=?1 WHERE id=?2")
+    .bind(new Date().toISOString(), courseId)
     .run();
 
   return true;
@@ -241,7 +254,6 @@ interface Lesson {
   provider_id: string;
   thumbnail_url: string;
   description: string;
-  course_id: string;
   id: string;
   published_at: string;
   source_url: string;
