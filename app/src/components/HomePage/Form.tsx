@@ -1,8 +1,7 @@
 "use client";
-import {  useId, useState } from "react";
+import { useId, useState } from "react";
 import { Button } from "../Button";
-import { useRouter } from 'next/navigation'
-
+import { useRouter } from "next/navigation";
 
 export default function Form({
   createYoutubePlaylist,
@@ -17,10 +16,10 @@ export default function Form({
   const [error, setError] = useState("");
 
   const formAction = async (data: FormData) => {
-    const {url, error} = await createYoutubePlaylist(data);
+    const { url, error } = await createYoutubePlaylist(data);
 
-    if(url.length> 1) {
-      router.push(url)
+    if (url.length > 1) {
+      router.push(url);
     }
 
     setError(error || "");
@@ -44,7 +43,7 @@ export default function Form({
       />
       <p
         className={`${
-           error.length < 1 ? "" : "bg-red-500"
+          error.length < 1 ? "" : "bg-red-500"
         } text-md h-10  p-2 text-white`}
       >
         {error}

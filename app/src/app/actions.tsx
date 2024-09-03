@@ -1,8 +1,9 @@
 "use client";
-const URL = "https://api.menon.courses";
+
+import config from "../config/App";
 
 const validUrl = (url: string) => {
-  const id = url.split("list=")[1] || "";
+  const id = url.split("youtube.com/playlist?list=")[1] || "";
   return id.length > 2;
 };
 
@@ -18,14 +19,14 @@ export const createYoutubePlaylistAndRedirect = async (data: FormData) => {
     };
 
     if (!valid) {
-      return { url: source, error: "Invalid youtube playlist URL" };
+      return { url: "", error: "Invalid youtube playlist URL" };
     }
 
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
     const course: { slug?: string | null; id?: string | null } = await fetch(
-      `${URL}/courses/importation`,
+      `${config.apiURL}/courses/importation`,
       {
         method: "POST",
         body: JSON.stringify(rawData),
@@ -43,7 +44,7 @@ export const createYoutubePlaylistAndRedirect = async (data: FormData) => {
 
     if (!(course.slug || course.id)) {
       return {
-        url: source,
+        url: "",
         error: "Error to fetch youtube playlist data",
         course,
       };
