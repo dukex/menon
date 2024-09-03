@@ -1,18 +1,9 @@
-import { Logo } from "@/components/Logo";
-import { NavbarTwoColumns } from "@/components/NavbarTwoColumns";
-import { Section } from "@/components/Section";
-import Link from "next/link";
+import PublicHeader from "@/components/PublicHeader";
 
 export default function Loading({ params }: { params: { slug: string } }) {
   return (
     <main className=" max-w-screen-lg mx-auto">
-      <Section yPadding="py-6">
-        <NavbarTwoColumns logo={<Logo  />}>
-          <li>
-            <Link href="/app">Sign in</Link>
-          </li>
-        </NavbarTwoColumns>
-      </Section>
+      <PublicHeader />
 
       <h2 className="font-bold text-4xl bg-gray-200 text-gray-200 rounded-md">
         loading
