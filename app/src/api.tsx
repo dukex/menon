@@ -30,18 +30,29 @@ interface Lesson {
   source_url: string;
 }
 
-export const getCourse = async (slug: string) => {
-  const course = await fetch(`${config.apiURL}/courses/${slug}`).then((res) =>
-    res.json<Course>()
-  );
+export const getCourse = async (slug: string): Promise<Course | undefined> => {
+  try {
+    const course = await fetch(`${config.apiURL}/courses/${slug}`).then((res) =>
+      res.json<Course>()
+    );
 
-  return course;
+    return course;
+  } catch (error) {
+    return;
+  }
 };
 
-export const getLessonForMe = async (courseId: string, lessonId: string) => {
-  const lesson = await fetch(
-    `${config.apiURL}/me/courses/${courseId}/${lessonId}`
-  ).then((res) => res.json<Lesson>());
+export const getLessonForMe = async (
+  courseId: string,
+  lessonId: string
+): Promise<Lesson | undefined> => {
+  try {
+    const lesson = await fetch(
+      `${config.apiURL}/me/courses/${courseId}/${lessonId}`
+    ).then((res) => res.json<Lesson>());
 
-  return lesson;
+    return lesson;
+  } catch (error) {
+    return;
+  }
 };

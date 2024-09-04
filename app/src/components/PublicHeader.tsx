@@ -21,12 +21,20 @@ export default function PublicHeader() {
       <NavbarTwoColumns logo={<Logo />}>
         {!logged && (
           <li>
-            <Link href="/app">Sign in</Link>
+            <Link href="/platform">Sign in</Link>
           </li>
         )}
         {logged && (
           <li>
-            <Link href="/app" className="flex items-center text-sm"><img className="rounded-full m-2" src={user.picture} width={30} heigth={30} /><span className="underline">{user.name}</span></Link>
+            <Link href="/platform" className="flex items-center text-sm">
+              <img
+                className="rounded-full m-2"
+                src={user.picture}
+                width={30}
+                heigth={30}
+              />
+              <span className="underline">{user.name}</span>
+            </Link>
           </li>
         )}
       </NavbarTwoColumns>
