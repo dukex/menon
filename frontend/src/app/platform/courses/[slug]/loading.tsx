@@ -1,6 +1,4 @@
-import PublicHeader from "@/components/PublicHeader";
-
-export default function Loading({ params }: { params: { slug: string } }) {
+export default function Loading() {
   return (
     <main className=" max-w-screen-lg mx-auto">
       <h2 className="font-bold text-4xl bg-gray-200 text-gray-200 rounded-md">

@@ -44,7 +44,7 @@ export default function RootLayout({
       <UserProvider>
         <body className={inter.className}>
           <AuthOnly>
-            <div className="overflow-hidden h-screen">
+            <div className="overflow-hidden">
               <PrivateHeader />
               {children}
             </div>

@@ -1,15 +1,15 @@
 import { redirect } from "next/navigation";
-import { getCourse as _getCourse } from "../../../../api";
+import { getCourseForMe as _getCourseForMe } from "../../../../api";
 
-export const getLessonIdCourse = async (slug: string) => {
-  const course = await _getCourse(slug);
+export const getLessonIdCourse = async (slug: string, token: string) => {
+  const course = await _getCourseForMe(slug, token);
 
   if (!course) {
     return;
   }
 
-  // TODO: get user last lesson
-  const lessonId = course.lessons![0].id;
+  const lessonId =
+    course.lessons.find((l) => l.time > 0)?.id || course.lessons[0].id;
 
   return lessonId;
 };

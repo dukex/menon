@@ -15,6 +15,15 @@ export interface Course {
   lessons?: Lesson[];
 }
 
+export interface CourseForMe extends Course {
+  lessons: LessonForMe[];
+}
+
+export interface LessonForMe extends Lesson {
+  time: number;
+  finished: boolean;
+}
+
 interface Lesson {
   slug: string;
   name: string;
@@ -42,16 +51,18 @@ export const getCourse = async (slug: string): Promise<Course | undefined> => {
   }
 };
 
-export const getLessonForMe = async (
-  courseId: string,
-  lessonId: string
-): Promise<Lesson | undefined> => {
+export const getCourseForMe = async (
+  slug: string,
+  token: string
+): Promise<CourseForMe | undefined> => {
   try {
-    const lesson = await fetch(
-      `${config.apiURL}/me/courses/${courseId}/${lessonId}`
-    ).then((res) => res.json<Lesson>());
+    const course = await fetch(`${config.apiURL}/me/courses/${slug}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => res.json<CourseForMe>());
 
-    return lesson;
+    return course;
   } catch (error) {
     return;
   }

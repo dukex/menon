@@ -1,6 +1,6 @@
-import { redirect } from "next/navigation";
-import { getCourse as _getCourse, getLessonForMe } from "@/api";
+import { getCourseForMe as _getCourseForMe } from "@/api";
 
-export const getCourse = async (slug: string) => {
-  const course = await _getCourse(slug);
+export const getCourseForMe = async (slug: string, token: string) => {
+  await new Promise((resolve) => setTimeout(resolve, 7000));
+  return await _getCourseForMe(slug, token);
 };
