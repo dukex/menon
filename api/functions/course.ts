@@ -98,6 +98,25 @@ export async function importCourse(
   };
 }
 
+export async function getLessonsForMe(
+  courseId: string,
+  userId: string,
+  database: D1Database
+) {
+  const stmt = database
+    .prepare(
+      "SELECT l.*, COALESCE(ls.time, 0) as time, COALESCE(ls.finished, 0) as finished " +
+        "FROM courses_lessons cl " +
+        "LEFT JOIN lessons l ON l.id = cl.lesson_id " +
+        "LEFT JOIN lesson_statues ls ON ls.lesson_id = l.id AND ls.user_id=?2  " +
+        "WHERE cl.course_id=?1" +
+        "ORDER BY l.position ASC"
+    )
+    .bind(courseId, userId);
+
+  return (await stmt.all<Lesson>()).results;
+}
+
 async function listAll<T>(
   url: string,
   params: Record<string, any>,
