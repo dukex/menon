@@ -1,4 +1,5 @@
 import { getCourse, getLessonsForMe } from "../../course";
+import { User } from "../../types";
 
 interface Env {
   DATABASE: D1Database;
