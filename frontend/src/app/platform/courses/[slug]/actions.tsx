@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { getCourseForMe as _getCourseForMe } from "../../../../api";
 
 export const getLessonIdCourse = async (slug: string, token: string) => {

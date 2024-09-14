@@ -1,6 +1,4 @@
-"use client";
-
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { getSession } from "@auth0/nextjs-auth0/edge";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -8,12 +6,10 @@ import { Logo } from "./Logo";
 import { NavbarTwoColumns } from "./NavbarTwoColumns";
 import { Section } from "./Section";
 
-export default function PublicHeader() {
-  const { user, error, isLoading } = useUser();
+export default async function PublicHeader() {
+  const session = await getSession();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
-
+  const user = session?.user;
   const logged = !!user;
 
   return (
@@ -27,13 +23,14 @@ export default function PublicHeader() {
         {logged && (
           <li>
             <Link href="/platform" className="flex items-center text-sm">
-              <img
+              <Image
                 className="rounded-full m-2"
-                src={user.picture}
+                src={user?.picture}
+                alt="User avatar"
                 width={30}
-                heigth={30}
+                height={30}
               />
-              <span className="underline">{user.name}</span>
+              <span className="underline">{user?.name}</span>
             </Link>
           </li>
         )}

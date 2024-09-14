@@ -8,6 +8,11 @@ export const runtime = "edge";
 export default async function Page({ params }: { params: { slug: string } }) {
   const course = await getCourse(params.slug);
 
+  if (!course) {
+    // TODO: better not found page, with a nice message
+    return <div>Course not found</div>;
+  }
+
   return (
     <main className="max-w-screen-lg mx-auto text-primary-900">
       <PublicHeader />

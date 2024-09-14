@@ -3,6 +3,8 @@ import Form from "@/components/HomePage/Form";
 
 import { createYoutubePlaylistAndRedirect } from "@/app/actions";
 
+export const runtime = "edge";
+
 export default function Page() {
   return (
     <div className="flex h-screen flex-col justify-between bg-gray-100 text-gray-600 antialiased">
