@@ -2,6 +2,7 @@ import { getSession } from "@auth0/nextjs-auth0/edge";
 import { getCourseForMe } from "./actions";
 import Link from "next/link";
 import YoutubePlayer from "@/components/YoutubePlayer";
+import { SetTitle } from "@/components/Title";
 
 export const runtime = "edge";
 
@@ -26,12 +27,10 @@ export default async function Page({
 
   return (
     <div className="flex">
+      <SetTitle title={course.name} />
       <div className="w-2/12">
         <div className="p-2">
-          <h3 className="text-lg font-bold border-b border-gray-200 pb-2">
-            {course?.name}
-          </h3>
-          <ol className="mt-2 overflow-y-scroll h-[calc(100vh-10rem)]">
+          <ol className="mt-2 overflow-y-scroll h-[calc(100vh-4rem)]">
             {course?.lessons?.map((lesson) => (
               <li
                 className={`${

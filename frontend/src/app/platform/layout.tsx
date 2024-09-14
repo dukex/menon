@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
-import AuthOnly from "@/lib/auth/AuthOnly";
 import PrivateHeader from "@/components/PrivateHeader";
+import { TitleProvider } from "@/components/Title";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,14 +42,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <body className={inter.className}>
-          <AuthOnly>
-            <div className="overflow-hidden">
-              <PrivateHeader />
-              {children}
-            </div>
-          </AuthOnly>
-        </body>
+        <TitleProvider>
+          <body className={inter.className}>
+            <PrivateHeader />
+            <div className="overflow-hidden">{children}</div>
+          </body>
+        </TitleProvider>
       </UserProvider>
     </html>
   );
