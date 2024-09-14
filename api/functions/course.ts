@@ -37,13 +37,10 @@ export async function searchCourses(
   let queries = "WHERE 1=1";
 
   params.forEach((value, key) => {
-    console.log(value, key);
     bindings.push(value);
 
     queries = queries + ` AND ${key}=?`;
   });
-
-  console.log(`SELECT * FROM courses ${queries}`, bindings);
 
   const stmt = database
     .prepare(`SELECT * FROM courses ${queries}`)
@@ -67,4 +64,28 @@ export async function getLessons(
     .bind(courseId);
 
   return (await stmt.all<Lesson>()).results;
+}
+
+export async function updateProgress(
+  userId: string,
+  lessonId: string,
+  progress: number,
+  finished: boolean,
+  database: D1Database
+) {
+  const stmt = database
+    .prepare(
+      "INSERT INTO lesson_statues (id, lesson_id, user_id, time, finished, created_at, updated_at) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7) ON CONFLICT (lesson_id, user_id) DO UPDATE SET time=?4, finished=?5, updated_at=?7"
+    )
+    .bind(
+      crypto.randomUUID(),
+      lessonId,
+      userId,
+      progress,
+      finished,
+      Date.now(),
+      Date.now()
+    );
+
+  return stmt.run();
 }
