@@ -1,6 +1,7 @@
 import { getSession } from "@auth0/nextjs-auth0/edge";
 import { getCourseForMe } from "./actions";
 import Link from "next/link";
+import YoutubePlayer from "@/components/YoutubePlayer";
 
 export const runtime = "edge";
 
@@ -14,6 +15,14 @@ export default async function Page({
   const lesson = course?.lessons?.find(
     (lesson) => lesson.id === params.lessonId
   );
+
+  if (!course) {
+    return <div>Course not found</div>;
+  }
+
+  if (!lesson) {
+    return <div>Lesson not found</div>;
+  }
 
   return (
     <div className="flex">
@@ -45,19 +54,13 @@ export default async function Page({
         </div>
       </div>
       <div className="w-10/12">
-        <div className="relative h-0 overflow-hidden max-w-full pb-[56%] py-2">
-          <iframe
-            title="Lesson video"
-            className="absolute top-0 left-0 w-full h-full"
-            id="ytplayer"
-            src={`http://www.youtube.com/embed/${lesson?.provider_id}?origin=https://menon.courses`}
-            frameBorder="0"
-            allowFullScreen
-          ></iframe>
-        </div>
+        <YoutubePlayer
+          courseId={course!.id}
+          lesson={lesson!}
+          token={session?.accessToken!}
+        />
         <h4 className="text-lg font-bold p-2">{lesson?.name}</h4>
-
-        <div className="mt-2 p-2">{lesson?.description}</div>
+        <div className="mt-2 px-2">{lesson?.description}</div>
       </div>
     </div>
   );
