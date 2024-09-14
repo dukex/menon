@@ -67,3 +67,21 @@ export const getCourseForMe = async (
     return;
   }
 };
+
+export const saveProgress = async (
+  courseId: string,
+  lessonId: string,
+  progress: number,
+  token: string
+) => {
+  return await fetch(
+    `${config.apiURL}/me/courses/${courseId}/${lessonId}/progress`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ progress }),
+    }
+  ).then((res) => res.json());
+};
