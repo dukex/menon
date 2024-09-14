@@ -6,7 +6,6 @@ interface Env {
 }
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
-  console.log(context.params);
   const courseId = context.params.id as string;
   const lessonId = context.params.lessonid as string;
 
