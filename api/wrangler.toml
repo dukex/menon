@@ -1,7 +1,7 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "menon-api"
-compatibility_date = "2024-04-29"
-compatibility_flags = [ "experimental:nodejs_compat_v2" ]
+compatibility_date = "2024-08-06"
+compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "./"
 
 [[d1_databases]]
