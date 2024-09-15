@@ -1,5 +1,31 @@
 import config from "@/config/App";
 
+export class NotFoundError extends Error {}
+export class UnauthorizedError extends Error {}
+export class ForbiddenError extends Error {}
+
+async function request<T>(path: string, token?: string): Promise<T> {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+  return await fetch(`${config.apiURL}/${path}`, {
+    headers: headers as HeadersInit,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json<T>();
+    } else {
+      if (res.status === 404) {
+        throw new NotFoundError("Not found");
+      } else if (res.status === 401) {
+        throw new UnauthorizedError("Unauthorized");
+      } else if (res.status === 403) {
+        throw new ForbiddenError("Forbidden");
+      } else {
+        throw new Error("Unknown error");
+      }
+    }
+  });
+}
+
 export interface Course {
   id: string;
   slug: string;
@@ -55,17 +81,7 @@ export const getCourseForMe = async (
   slug: string,
   token: string
 ): Promise<CourseForMe | undefined> => {
-  try {
-    const course = await fetch(`${config.apiURL}/me/courses/${slug}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => res.json<CourseForMe>());
-
-    return course;
-  } catch (error) {
-    return;
-  }
+  return await request(`me/courses/${slug}`, token);
 };
 
 export const saveProgress = async (

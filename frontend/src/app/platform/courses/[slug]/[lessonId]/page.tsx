@@ -24,9 +24,11 @@ export default async function Page({
   );
 
   const lesson = course.lessons[index];
-  const previousLesson = course.lessons.find((lesson) => !lesson.finished);
+  const previousLesson = course.lessons.find(
+    (lesson, i) => !lesson.finished && i < index
+  );
 
-  if (index !== 0 && previousLesson) {
+  if (previousLesson) {
     redirect(`/platform/courses/${course.slug}/${previousLesson.id}`);
   }
 
@@ -53,7 +55,13 @@ export default async function Page({
                       lesson.id === params.lessonId ? "font-bold" : ""
                     } text-sm `}
                   >
-                    {lesson.time ? (lesson.finished ? "✅" : "🕒 ") : "🔒 "}
+                    {lesson.time
+                      ? lesson.finished
+                        ? "✅ "
+                        : "🕒 "
+                      : lesson.id === params.lessonId
+                      ? "🕒 "
+                      : "🔒 "}
 
                     {lesson.name}
                   </h5>
