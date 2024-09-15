@@ -80,7 +80,7 @@ mode = "smart"
 ######## PRODUCTION environment config ########
 
 [env.production.vars]
-API_URL = "https://api.menon.courses"
+NEXT_PUBLIC_API_URL = "https://api.menon.courses"
 
 # [[env.production.kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"

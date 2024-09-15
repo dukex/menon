@@ -1,5 +1,5 @@
 export const App = {
-  apiURL: process.env.API_URL,
+  apiURL: process.env.NEXT_PUBLIC_API_URL,
   siteName: "Menon",
   title: "Menon",
   description:
