@@ -31,7 +31,7 @@ export const getLessonIdCourse = async (slug: string) => {
     if (error instanceof UnauthorizedError || error instanceof ForbiddenError) {
       redirect("/api/auth/logout");
     } else if (error instanceof NotFoundError) {
-      return redirect("/platform");
+      return redirect("/platform/courses");
     } else if (error instanceof Error) {
       console.error(error);
     }
