@@ -2,6 +2,8 @@ interface Env {
   ACCEPTED_ORIGINS: string;
 }
 
+// fix for wrangler
+
 export const onRequestOptions: PagesFunction<Env> = async (context) => {
   return new Response(null, {
     status: 204,
