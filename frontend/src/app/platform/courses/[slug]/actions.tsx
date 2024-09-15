@@ -17,15 +17,18 @@ export const getLessonIdCourse = async (slug: string) => {
       return;
     }
 
-    const lessonId =
-      course.lessons.find((l) => l.time > 0)?.id || course.lessons[0].id;
+    const lastLessons = course.lessons
+      .map((l) => [l.finished ? 20 : l.time > 0 ? 0 : 5, l.id])
+      .sort((a, b) => a[0] - b[0]);
+
+    const lessonId = lastLessons[0][1];
 
     return lessonId;
   } catch (error) {
     if (error instanceof UnauthorizedError || error instanceof ForbiddenError) {
       redirect("/api/auth/logout");
     } else if (error instanceof NotFoundError) {
-      return redirect("/platform/courses");
+      return redirect("/platform");
     } else if (error instanceof Error) {
       console.error(error);
     }
