@@ -14,18 +14,15 @@ export default async function PrivateHeader() {
 
   return (
     <div className="px-2 flex h-10">
-      <NavbarTwoColumns logoLink="/platform/courses" logo={<Logo />}>
+      <NavbarTwoColumns logoLink="/platform" logo={<Logo />}>
         {!logged && (
           <li>
-            <Link href="/platform/courses">Sign in</Link>
+            <Link href="/platform">Sign in</Link>
           </li>
         )}
         {logged && (
           <li>
-            <Link
-              href="/platform/courses"
-              className="flex items-center text-sm"
-            >
+            <Link href="/platform" className="flex items-center text-sm">
               <Image
                 alt="you"
                 className="rounded-full mx-2"

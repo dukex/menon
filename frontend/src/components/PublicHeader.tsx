@@ -17,15 +17,12 @@ export default async function PublicHeader() {
       <NavbarTwoColumns logo={<Logo />}>
         {!logged && (
           <li>
-            <Link href="/platform/courses">Sign in</Link>
+            <Link href="/platform">Sign in</Link>
           </li>
         )}
         {logged && (
           <li>
-            <Link
-              href="/platform/courses"
-              className="flex items-center text-sm"
-            >
+            <Link href="/platform" className="flex items-center text-sm">
               <Image
                 className="rounded-full m-2"
                 src={user?.picture}
