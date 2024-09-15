@@ -17,7 +17,7 @@ export const onRequestGet: PagesFunction<Env> = async (
 
   const lessons = await getLessonsForMe(
     course.id,
-    user.sub,
+    user.email,
     context.env.DATABASE
   );
 
