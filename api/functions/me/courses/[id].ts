@@ -21,8 +21,11 @@ export const onRequestGet: PagesFunction<Env> = async (
     context.env.DATABASE
   );
 
+  const progress =
+    lessons.filter((lesson) => lesson.finished).length / lessons.length;
+
   const response = new Response(
-    JSON.stringify({ ...course, lessons: lessons }),
+    JSON.stringify({ ...course, lessons, progress }),
     {
       headers: {
         "Content-Type": "application/json",

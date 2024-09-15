@@ -43,6 +43,7 @@ export interface Course {
 
 export interface CourseForMe extends Course {
   lessons: LessonForMe[];
+  progress: number;
 }
 
 export interface LessonForMe extends Lesson {
@@ -82,6 +83,12 @@ export const getCourseForMe = async (
   token: string
 ): Promise<CourseForMe | undefined> => {
   return await request(`me/courses/${slug}`, token);
+};
+
+export const getCoursesForMe = async (
+  token: string
+): Promise<CourseForMe[]> => {
+  return await request("me/courses", token);
 };
 
 export const saveProgress = async (
