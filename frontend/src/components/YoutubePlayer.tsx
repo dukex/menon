@@ -50,7 +50,7 @@ export default function YoutubePlayer({
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (playState === PlayerState.PLAYING) {
-        setCurrentTime(player.getCurrentTime());
+        setCurrentTime(player.getCurrentTime() * 1000);
       }
     }, 3000);
 

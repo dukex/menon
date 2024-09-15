@@ -2,6 +2,7 @@ import Link from "next/link";
 import PublicHeader from "@/components/PublicHeader";
 import { LinkButton } from "@/components/Button";
 import { getCourse } from "./actions";
+import { Course, Lesson } from "@/api";
 
 export const runtime = "edge";
 
@@ -12,6 +13,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
     // TODO: better not found page, with a nice message
     return <div>Course not found</div>;
   }
+
+  const hours = calculateHours(course);
 
   return (
     <main className="max-w-screen-lg mx-auto text-primary-900">
@@ -71,16 +74,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <span className="block font-bold">{course.lessons?.length}</span>
               <span className="block text-base">lessons</span>
             </div>
-            <span className="block pl-5 mr-5 h-8 border-blue-900 border-r-2"></span>
-            <div className="px-2">
-              <span className="block font-bold">
-                {course.lessons?.reduce(
-                  (a: number, c: { duration: number }) => a + c.duration,
-                  0
-                )}
-              </span>
-              <span className="block text-base">hours</span>
-            </div>
+            {hours > 0.0 && (
+              <>
+                <span className="block pl-5 mr-5 h-8 border-blue-900 border-r-2"></span>
+
+                <div className="px-2">
+                  <span className="block font-bold">{hours}</span>
+                  <span className="block text-base">hours</span>
+                </div>
+              </>
+            )}
           </div>
           <LinkButton href={`/platform/courses/${params.slug}`}>
             Join now
@@ -127,3 +130,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
     </main>
   );
 }
+
+const calculateHours = (course: Course) => {
+  if (!course.lessons) {
+    return 0;
+  }
+
+  const totalDuration = course.lessons.reduce<number>(
+    (total: number, lesson: Lesson) => total + lesson.duration!,
+    0
+  );
+
+  if (totalDuration == 0) {
+    return 0;
+  }
+
+  return Math.floor(totalDuration / 1000.0 / 60 / 60);
+};

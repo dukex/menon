@@ -24,7 +24,7 @@ export interface LessonForMe extends Lesson {
   finished: boolean;
 }
 
-interface Lesson {
+export interface Lesson {
   slug: string;
   name: string;
   duration: number;

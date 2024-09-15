@@ -1,5 +1,6 @@
 import slugify from "./helpers/slugify";
 import { CourseImported } from "./types";
+import { Temporal } from "temporal-polyfill";
 
 export interface CourseImportRequest {
   provider: string;
@@ -18,7 +19,8 @@ export async function importLessons(
         playlistId: id,
         key: apiKey,
         part: "contentDetails,snippet,id,status",
-      }
+      },
+      async (items) => await enrichVideoList(items, apiKey)
     )
   ).filter((i) => i.status.privacyStatus !== "private");
 
@@ -44,11 +46,13 @@ export async function importLessons(
     "SELECT id FROM lessons WHERE provider_id = ?"
   );
 
+  console.log(items.flatMap((i) => i.duration));
+
   const operations = items.flatMap((item) => [
     insertStmt.bind(
       slugify(item.snippet.title),
       item.snippet.title,
-      0,
+      item.duration,
       item.snippet.position,
       "youtube",
       item.contentDetails.videoId,
@@ -159,6 +163,7 @@ const thumbnailUrl = (item) =>
 async function listAll<T>(
   url: string,
   params: Record<string, any>,
+  enrich: (items: T[]) => Promise<T[]> = (i) => Promise.resolve(i),
   nextPageToken?: string | null
 ): Promise<T[]> {
   const fullUrl = [
@@ -173,15 +178,48 @@ async function listAll<T>(
     r.json<YoutubePagination<T>>()
   );
 
+  const enrichedItems = await enrich(youtubeResponse.items);
+
   if (youtubeResponse.nextPageToken) {
     const nextItems = await listAll<T>(
       url,
       params,
+      enrich,
       youtubeResponse.nextPageToken
     );
 
-    return [...youtubeResponse.items, ...nextItems];
+    return [...enrichedItems, ...nextItems];
   }
 
-  return youtubeResponse.items;
+  return enrichedItems;
+}
+
+interface YoutubeVideo {
+  id: string;
+  contentDetails: {
+    duration: string;
+  };
+}
+
+async function enrichVideoList(
+  items: YoutubePlaylistItemItem[],
+  apiKey: string
+) {
+  const videosIds = items.map((i) => i.contentDetails.videoId);
+
+  const url = "https://www.googleapis.com/youtube/v3/videos";
+
+  const videos = await listAll<YoutubeVideo>(url, {
+    id: videosIds.join(","),
+    key: apiKey,
+    part: "contentDetails",
+  });
+
+  return items.map((i) => {
+    const video = videos.find((v) => v.id === i.contentDetails.videoId);
+
+    const duration = Temporal.Duration.from(video.contentDetails.duration);
+
+    return { ...i, duration: duration.total("millisecond") };
+  });
 }

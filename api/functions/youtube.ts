@@ -49,6 +49,7 @@ interface YoutubePlaylistItemItem {
   kind: "youtube#playlistItem";
   etag: string;
   id: string;
+  duration?: number;
   snippet: {
     publishedAt: string;
     channelId: string;

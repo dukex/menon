@@ -8,7 +8,6 @@ interface Env {
 
 interface ProgressInputBody {
   progress: number;
-  finished?: boolean;
 }
 
 export const onRequestPost: PagesFunction<Env> = async (
@@ -16,16 +15,9 @@ export const onRequestPost: PagesFunction<Env> = async (
 ) => {
   const { user } = context.data;
   const lessonId = context.params.lessonid as string;
-  const { progress, finished = false } =
-    await context.request.json<ProgressInputBody>();
+  const { progress } = await context.request.json<ProgressInputBody>();
 
-  await updateProgress(
-    user.email,
-    lessonId,
-    progress,
-    finished,
-    context.env.DATABASE
-  );
+  await updateProgress(user.email, lessonId, progress, context.env.DATABASE);
 
   const response = new Response(JSON.stringify({}), {
     headers: {
