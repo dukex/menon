@@ -46,8 +46,6 @@ export async function importLessons(
     "SELECT id FROM lessons WHERE provider_id = ?"
   );
 
-  console.log(items.flatMap((i) => i.duration));
-
   const operations = items.flatMap((item) => [
     insertStmt.bind(
       slugify(item.snippet.title),
