@@ -48,17 +48,31 @@ export async function searchCourses(
   const bindings = [];
   let queries = "WHERE 1=1";
 
-  params.forEach((value, key) => {
-    bindings.push(value);
+  const offset = parseInt(params.get("offset")) || 0;
 
-    queries = queries + ` AND ${key}=?`;
+  params.forEach((value, key) => {
+    if (key !== "offset") {
+      bindings.push(value);
+      queries = queries + ` AND ${key}=?`;
+    }
   });
 
   const stmt = database
-    .prepare(`SELECT * FROM courses ${queries}`)
+    .prepare(`SELECT * FROM courses ${queries} LIMIT 2 OFFSET ${offset}`)
     .bind(...bindings);
 
-  return (await stmt.all<Course>()).results;
+  const meta: Record<string, any> = Array.from(params.entries()).reduce(
+    (acc, entry) => {
+      acc[entry[0]] = entry[1];
+      return acc;
+    },
+    {}
+  );
+
+  return {
+    meta,
+    results: (await stmt.all<Course>()).results,
+  };
 }
 
 export async function getLessons(
