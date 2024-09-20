@@ -58,7 +58,9 @@ export async function searchCourses(
   });
 
   const stmt = database
-    .prepare(`SELECT * FROM courses ${queries} LIMIT 50 OFFSET ${offset}`)
+    .prepare(
+      `SELECT * FROM courses ${queries} LIMIT 50 OFFSET ${offset} ORDER BY published_at DESC`
+    )
     .bind(...bindings);
 
   const meta: Record<string, any> = Array.from(params.entries()).reduce(
