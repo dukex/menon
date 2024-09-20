@@ -1,0 +1,46 @@
+# Privacy Policy for Menon
+
+Last updated: 2024-09-20
+
+## Introduction
+
+Welcome to Menon, the app that transforms YouTube playlists into courses. This Privacy Policy explains how we collect, use, and protect your personal information.
+
+## Information We Collect
+
+We collect the following information:
+
+1. Email Address: Used to identify you and track your progress.
+2. Course Progress: We record which lessons you've watched and which courses you've completed.
+
+## How We Use Your Information
+
+Your information is used to:
+
+1. Provide and improve our services
+2. Track your progress through courses
+3. Identify completed courses
+
+## Data Storage and Security
+
+We are committed to protecting your data. We implement industry-standard security measures to prevent unauthorized access or disclosure.
+
+## Data Sharing
+
+We do not sell, trade, or otherwise transfer your personal information to outside parties.
+
+## Your Rights
+
+You have the right to:
+
+1. Access your personal data
+2. Correct inaccurate data
+3. Request deletion of your data
+
+## Changes to This Policy
+
+We may update this policy from time to time. Please review it periodically.
+
+## Contact Us
+
+If you have questions about this policy, please contact us at privacy@menon.courses.
