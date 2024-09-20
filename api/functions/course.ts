@@ -59,7 +59,7 @@ export async function searchCourses(
 
   const stmt = database
     .prepare(
-      `SELECT * FROM courses ${queries} LIMIT 50 OFFSET ${offset} ORDER BY published_at DESC`
+      `SELECT * FROM courses ${queries} ORDER BY published_at DESC LIMIT 50 OFFSET ${offset} `
     )
     .bind(...bindings);
 
