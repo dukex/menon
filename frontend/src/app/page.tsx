@@ -31,7 +31,7 @@ export default async function Page() {
         <h2 className="text-3xl font-bold mb-6 text-gray-800">
           Available Courses
         </h2>
-        <div className="flex gap-4">
+        <div className="flex gap-4 flex-wrap">
           {courses.map((course) => (
             <div
               key={course.id}
