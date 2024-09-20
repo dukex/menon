@@ -47,7 +47,9 @@ export default async function Page() {
                 />
                 <div className="p-6 flex-1">
                   <h2 className="text-xl font-semibold mb-2">{course.name}</h2>
-                  <p className="text-gray-600 mb-4">{course.description}</p>
+                  <p className="text-gray-600 mb-4 hidden">
+                    {course.description}
+                  </p>
                 </div>
                 <div className="p-6">
                   <Link
