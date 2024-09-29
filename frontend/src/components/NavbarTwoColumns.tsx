@@ -9,19 +9,22 @@ type INavbarProps = {
 };
 
 const NavbarTwoColumns = (props: INavbarProps) => (
-  <div className="flex flex-wrap items-center justify-between flex-1">
-    <Link className="block" href={props.logoLink ?? "/"}>
-      {props.logo}
-    </Link>
+  <>
+    <div className="flex flex-wrap items-center justify-between flex-1">
+      <Link className="block" href={props.logoLink ?? "/"}>
+        {props.logo}
+      </Link>
 
-    <Title />
+      <Title className="hidden md:block" />
 
-    <nav>
-      <ul className="navbar flex items-center text-md font-medium text-gray-800">
-        {props.children}
-      </ul>
-    </nav>
-  </div>
+      <nav>
+        <ul className="navbar flex items-center text-md font-medium text-gray-800">
+          {props.children}
+        </ul>
+      </nav>
+    </div>
+    <Title className="md:hidden mt-2" />
+  </>
 );
 
 export { NavbarTwoColumns };

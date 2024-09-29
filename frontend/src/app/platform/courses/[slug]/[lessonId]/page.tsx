@@ -37,11 +37,11 @@ export default async function Page({
   }
 
   return (
-    <div className="flex">
+    <div className="flex flex-col-reverse md:flex-row">
       <SetTitle title={course.name} />
-      <div className="w-3/12">
-        <div className="p-2">
-          <ol className="mt-2 overflow-y-scroll h-[calc(100vh-4rem)]">
+      <div className="md:w-3/12">
+        <div className="md:p-2">
+          <ol className="mt-2 md:overflow-y-scroll md:h-[calc(100vh-4rem)]">
             {course?.lessons?.map((lesson) => (
               <li
                 className={`${
@@ -71,7 +71,7 @@ export default async function Page({
           </ol>
         </div>
       </div>
-      <div className="w-9/12">
+      <div className="md:w-9/12 mt-2">
         <YoutubePlayer
           courseId={course!.id}
           lesson={lesson!}

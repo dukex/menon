@@ -13,7 +13,7 @@ export default async function PrivateHeader() {
   const logged = !!user;
 
   return (
-    <div className="px-2 flex h-10">
+    <div className="px-2 md:h-10">
       <NavbarTwoColumns logoLink="/" logo={<Logo />}>
         {!logged && (
           <li>
