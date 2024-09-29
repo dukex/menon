@@ -40,6 +40,7 @@ export default function YoutubePlayer({
       "h-full"
     );
 
+    event.target.seekTo(parseInt(lesson.time) / 1000, true);
     setPlayer(event.target);
   };
 
@@ -67,7 +68,11 @@ export default function YoutubePlayer({
     <div className="relative h-0 overflow-hidden max-w-full pb-[56%] py-2">
       <YouTube
         videoId={lesson?.provider_id}
-        opts={{}}
+        opts={{
+          playerVars: {
+            rel: 0,
+          },
+        }}
         onReady={_onReady}
         onStateChange={_onStateChange}
       />

@@ -47,7 +47,7 @@ export interface CourseForMe extends Course {
 }
 
 export interface LessonForMe extends Lesson {
-  time: number;
+  time: string;
   finished: boolean;
 }
 
