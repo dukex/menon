@@ -1,4 +1,4 @@
-import { Database } from "../../types";
+import { IDatabase } from "../../types";
 
 export async function saveCourse(
   data: {
@@ -13,11 +13,12 @@ export async function saveCourse(
     published_at: string;
     source_url: string;
   },
-  database: Database
+  database: IDatabase
 ) {
-  await database
+  return database
     .prepare(
-      "INSERT INTO courses (id, provider_uid, provider_id, slug, name, description, creator_name, thumbnail_url, published_at, source_url) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)"
+      "INSERT INTO courses (id, provider_uid, provider_id, slug, name, description, creator_name, thumbnail_url, published_at, source_url) " +
+        " VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)"
     )
     .bind(...Object.values(data))
     .run();

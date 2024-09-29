@@ -10,7 +10,7 @@ export async function getPlaylist(
     r.json()
   )) as YoutubePlaylistList;
 
-  const item = youtubeResponse.items[1];
+  const item = youtubeResponse.items[0];
   return item;
 }
 

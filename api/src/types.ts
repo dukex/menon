@@ -51,18 +51,18 @@ export class InvalidBodyError extends Error {}
 
 export interface IDatabase {
   prepare(query: string): IDatabaseStatement;
-  batch<T>(values: IDatabaseStatement[]): Promise<DatabaseResult<T>[]>;
+  batch<T>(values: IDatabaseStatement[]): Promise<IDatabaseResult<T>[]>;
 }
 
 interface IDatabaseStatement {
   bind(...values: any[]): IDatabaseStatement;
   first<T = unknown>(colName?: string): Promise<T>;
-  run<T = unknown>(): Promise<DatabaseResult<T>>;
-  all<T = unknown>(): Promise<DatabaseResult<T>>;
+  run<T = unknown>(): Promise<IDatabaseResult<T>>;
+  all<T = unknown>(): Promise<IDatabaseResult<T>>;
   raw<T = unknown>(): Promise<T[]>;
 }
 
-interface DatabaseResult<T> {
+interface IDatabaseResult<T> {
   results?: T[];
   success: boolean;
   error?: string;

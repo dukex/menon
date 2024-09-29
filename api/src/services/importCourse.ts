@@ -45,6 +45,7 @@ export default async function importCourse(
 
     return course;
   } catch (error) {
+    console.log("error", error);
     throw new ImportCourseError();
   }
 }

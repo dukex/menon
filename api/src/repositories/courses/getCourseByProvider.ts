@@ -1,10 +1,10 @@
-import { Database } from "../../types";
+import { IDatabase } from "../../types";
 import { Course } from "../../types";
 
 export async function getCourseByProvider(
   provider: string,
   id: string,
-  database: Database
+  database: IDatabase
 ): Promise<Course | null> {
   const stmt = database
     .prepare(
