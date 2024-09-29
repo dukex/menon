@@ -55,7 +55,7 @@ export default async function Page({
                       lesson.id === params.lessonId ? "font-bold" : ""
                     } text-sm `}
                   >
-                    {lesson.time
+                    {parseInt(lesson.time) > 0
                       ? lesson.finished
                         ? "✅ "
                         : "🕒 "

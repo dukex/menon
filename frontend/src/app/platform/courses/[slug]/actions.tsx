@@ -19,7 +19,7 @@ export const getLessonIdCourse = async (slug: string) => {
 
     const lastLessons = course.lessons
       .map<[number, string]>((l) => [
-        l.finished ? 20 : l.time > 0 ? 0 : 5,
+        l.finished ? 20 : parseInt(l.time) > 0 ? 0 : 5,
         l.id,
       ])
       .sort((a, b) => a[0] - b[0]);
