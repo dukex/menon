@@ -27,7 +27,6 @@ export default async function Page() {
             />
             <div className="p-6">
               <h2 className="text-xl font-semibold mb-2">{course.name}</h2>
-              <p className="text-gray-600 mb-4">{course.description}</p>
               <div className="mb-4">
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
                   <div

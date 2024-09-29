@@ -14,7 +14,7 @@ export default async function PrivateHeader() {
 
   return (
     <div className="px-2 flex h-10">
-      <NavbarTwoColumns logoLink="/platform" logo={<Logo />}>
+      <NavbarTwoColumns logoLink="/" logo={<Logo />}>
         {!logged && (
           <li>
             <Link href="/platform">Sign in</Link>
