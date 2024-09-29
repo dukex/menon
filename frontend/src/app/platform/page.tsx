@@ -1,3 +1,4 @@
+import { SetTitle } from "@/components/Title";
 import { getCoursesForMe } from "./actions";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +10,7 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <SetTitle title={""} />
       <h1 className="text-3xl font-bold mb-8">My Courses</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {courses.map((course) => (

@@ -10,8 +10,6 @@ export const runtime = "edge";
 export default async function Page() {
   const courses = await listCourses();
 
-  console.log(courses);
-
   return (
     <div className="flex flex-col justify-between bg-gray-100 text-gray-600 antialiased">
       <Hero
