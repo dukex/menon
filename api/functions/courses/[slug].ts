@@ -1,4 +1,5 @@
-import { getCourse, getLessons } from "../course";
+import getCourseWithLessons from "../../src/services/getCourseWithLessons";
+import response from "../../src/web/response";
 
 interface Env {
   ACCEPTED_ORIGINS: string;
@@ -8,35 +9,11 @@ interface Env {
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const slug = context.params.slug as string;
 
-  const course = await getCourse(slug, context.env.DATABASE);
+  try {
+    const course = await getCourseWithLessons(slug, context.env.DATABASE);
 
-  if (!course) {
+    return response(course, context.env.ACCEPTED_ORIGINS);
+  } catch (error) {
     return new Response(null, { status: 404 });
   }
-
-  const lessons = await getLessons(course.id, context.env.DATABASE);
-
-  const response = new Response(
-    JSON.stringify({ ...course, lessons: lessons }),
-    {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": context.env.ACCEPTED_ORIGINS,
-      },
-    }
-  );
-
-  return response;
-};
-
-export const onRequestOptions: PagesFunction<Env> = async (context) => {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": context.env.ACCEPTED_ORIGINS,
-      "Access-Control-Allow-Headers": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Max-Age": "86400",
-    },
-  });
 };

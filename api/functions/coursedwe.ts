@@ -1,15 +1,5 @@
 import { Course, Lesson } from "./types";
 
-export async function getCourse(
-  slug: string,
-  database: D1Database
-): Promise<Course> {
-  const stmt = database
-    .prepare("SELECT * FROM courses WHERE (slug=? OR id=?) LIMIT 1")
-    .bind(slug, slug);
-  return await stmt.first<Course>();
-}
-
 export async function getCoursesForMe(userId: string, database: D1Database) {
   const stmt = database
     .prepare(
@@ -37,59 +27,6 @@ export async function getLessonsForMe(
         "ORDER BY l.position ASC"
     )
     .bind(courseId, userId);
-
-  return (await stmt.all<Lesson>()).results;
-}
-
-export async function searchCourses(
-  params: URLSearchParams,
-  database: D1Database
-) {
-  const bindings = [];
-  let queries = "WHERE 1=1";
-
-  const offset = parseInt(params.get("offset")) || 0;
-
-  params.forEach((value, key) => {
-    if (key !== "offset") {
-      bindings.push(value);
-      queries = queries + ` AND ${key}=?`;
-    }
-  });
-
-  const stmt = database
-    .prepare(
-      `SELECT * FROM courses ${queries} ORDER BY published_at DESC LIMIT 50 OFFSET ${offset} `
-    )
-    .bind(...bindings);
-
-  const meta: Record<string, any> = Array.from(params.entries()).reduce(
-    (acc, entry) => {
-      acc[entry[0]] = entry[1];
-      return acc;
-    },
-    {}
-  );
-
-  return {
-    meta,
-    results: (await stmt.all<Course>()).results,
-  };
-}
-
-export async function getLessons(
-  courseId: string,
-  database: D1Database
-): Promise<Lesson[]> {
-  const stmt = database
-    .prepare(
-      "SELECT l.*" +
-        "FROM courses_lessons cl " +
-        "LEFT JOIN lessons l ON l.id = cl.lesson_id " +
-        "WHERE cl.course_id=?1" +
-        "ORDER BY l.position ASC"
-    )
-    .bind(courseId);
 
   return (await stmt.all<Lesson>()).results;
 }

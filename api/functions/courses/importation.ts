@@ -1,40 +1,45 @@
-import { CourseImportRequest, importCourse } from "../importation";
+import response from "../../src/web/response";
+import importCourse from "../../src/services/importCourse";
+import {
+  CourseImportRequest,
+  InvalidBodyError,
+  ProviderNotFoundError,
+  InvalidProviderError,
+  ImportCourseError,
+} from "../../src/types";
+import { getRequestBody } from "../../src/helpers/getRequestBody";
 
-interface Env {
+export interface Env {
   YOUTUBE_API_KEY: string;
   ACCEPTED_ORIGINS: string;
   DATABASE: D1Database;
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const body = await context.request.json<CourseImportRequest>();
+  const origin = context.env.ACCEPTED_ORIGINS;
 
-  const course = await importCourse(
-    body,
-    context.env.YOUTUBE_API_KEY,
-    context.env.DATABASE
-  );
+  try {
+    const body = await getRequestBody<CourseImportRequest>(context);
 
-  const responseBody = { ...body, ...course };
+    const course = await importCourse(
+      body,
+      context.env.YOUTUBE_API_KEY,
+      context.env.DATABASE
+    );
 
-  const response = new Response(JSON.stringify(responseBody), {
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": context.env.ACCEPTED_ORIGINS,
-    },
-  });
-
-  return response;
-};
-
-export const onRequestOptions: PagesFunction<Env> = async (context) => {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": context.env.ACCEPTED_ORIGINS,
-      "Access-Control-Allow-Headers": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS, POST",
-      "Access-Control-Max-Age": "86400",
-    },
-  });
+    return response(course, origin);
+  } catch (error) {
+    if (error instanceof ProviderNotFoundError) {
+      return response({ error: "provider not found" }, origin, 422);
+    } else if (error instanceof InvalidProviderError) {
+      return response({ error: "invliad provider error" }, origin, 422);
+    } else if (error instanceof InvalidBodyError) {
+      return response({ error: "invalid body" }, origin, 400);
+    } else if (error instanceof ImportCourseError) {
+      return response({ error: "import error" }, origin, 500);
+    } else {
+      console.log("error", error);
+      return response({ error: "error" }, origin, 500);
+    }
+  }
 };
