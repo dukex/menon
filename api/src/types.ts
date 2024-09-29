@@ -10,6 +10,7 @@ export interface Lesson {
   id: string;
   published_at: string;
   source_url: string;
+  finished: boolean;
 }
 
 export interface CourseImported {
