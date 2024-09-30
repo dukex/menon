@@ -18,17 +18,20 @@ export async function getPlaylistItems(
   id: string,
   key: string
 ): Promise<YoutubePlaylistItemItem[]> {
-  const items = (
-    await listAll<YoutubePlaylistItemItem>(
-      "https://www.googleapis.com/youtube/v3/playlistItems",
-      {
-        playlistId: id,
-        key: key,
-        part: "contentDetails,snippet,id,status",
-      },
-      async (items) => await enrichVideoList(items, key)
-    )
-  ).filter((i) => i.status.privacyStatus !== "private");
+  const items = await listAll<YoutubePlaylistItemItem>(
+    "https://www.googleapis.com/youtube/v3/playlistItems",
+    {
+      playlistId: id,
+      key: key,
+      part: "contentDetails,snippet,id,status",
+    },
+    {
+      filter: (i) =>
+        i.status.privacyStatus !== "private" &&
+        i.status.privacyStatus !== "privacyStatusUnspecified",
+      enrich: async (items) => await enrichVideoList(items, key),
+    }
+  );
 
   return items;
 }
@@ -45,6 +48,8 @@ async function enrichVideoList(items: YoutubePlaylistItemItem[], key: string) {
   });
 
   return items.map((i) => {
+    console.log(i);
+
     const video = videos.find((v) => v.id === i.contentDetails.videoId)!;
 
     const duration = Temporal.Duration.from(video.contentDetails.duration);
@@ -56,7 +61,13 @@ async function enrichVideoList(items: YoutubePlaylistItemItem[], key: string) {
 async function listAll<T>(
   url: string,
   params: Record<string, any>,
-  enrich: (items: T[]) => Promise<T[]> = (i) => Promise.resolve(i),
+  {
+    enrich,
+    filter,
+  }: { enrich: (items: T[]) => Promise<T[]>; filter: (i: T) => boolean } = {
+    enrich: (i) => Promise.resolve(i),
+    filter: (i) => true,
+  },
   nextPageToken?: string | null
 ): Promise<T[]> {
   const fullUrl = [
@@ -73,13 +84,13 @@ async function listAll<T>(
     r.json()
   )) as YoutubePagination<T>;
 
-  const enrichedItems = await enrich(youtubeResponse.items);
+  const enrichedItems = await enrich(youtubeResponse.items.filter(filter));
 
   if (youtubeResponse.nextPageToken) {
     const nextItems = await listAll<T>(
       url,
       params,
-      enrich,
+      { enrich, filter },
       youtubeResponse.nextPageToken
     );
 
